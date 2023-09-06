@@ -26,7 +26,7 @@
 
 </head>
 
-<body class="bg-main-color main-font">
+<body class="bg-main-color main-font d-flex flex-column min-vh-100">
 
     <nav class="bg-secondary-color d-flex justify-content-between align-items-center main-shadow px-5 m-4 rounded">
         <a href="{% url 'home' %}" class="large-font black-color accent-font font-weight-bolder text-decoration-none">
@@ -55,7 +55,11 @@
         {% endblock content %}
     </div>
 
-
+    <footer class="mt-auto bg-secondary-color d-flex justify-content-center align-items-center">
+        <span class="subtle-color small-font">
+            Musicary® 2023 <i>spirteque</i>
+        </span>
+    </footer>
         
 </body>
 </html>

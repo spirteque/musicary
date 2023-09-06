@@ -32,6 +32,13 @@
     color: var(--accent-color);
 }
 
+.bg-subtle-color {
+    background-color: var(--subtle-color);
+}
+
+.subtle-color {
+    color: var(--subtle-color);
+}
 
 /* ----- fonts ----- */
 
@@ -53,6 +60,10 @@
 
 .small-medium-font {
     font-size: var(--small-medium-font);
+}
+
+.small-font {
+    font-size: var(--small-font);
 }
 
 /* ------------------- */

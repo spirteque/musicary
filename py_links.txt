@@ -3,6 +3,7 @@ https://stackoverflow.com/questions/55369645/how-to-customize-default-auth-login
 https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 https://stackoverflow.com/questions/8919682/remove-all-styling-formatting-from-hyperlinks
 https://fonts.google.com/specimen/Lexend
+https://radu.link/make-footer-stay-bottom-page-bootstrap/
 
 
 

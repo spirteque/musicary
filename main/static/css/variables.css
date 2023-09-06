@@ -3,10 +3,12 @@
     --secondary-color: #cccccc;
     --black-color: black;
     --accent-color: #96233f;
+    --subtle-color: #666666;
     --main-font: 'Lexend', sans-serif;
     --accent-font: 'Judson', serif;
     --font-weight-bolder: 700;
     --main-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     --large-font: 2.25rem;
     --small-medium-font: 1.125rem;
+    --small-font: 0.75rem;
 }
