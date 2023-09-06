@@ -1,0 +1,66 @@
+/* ---- colors ---- */
+
+.bg-main-color {
+    background-color: var(--main-color);
+}
+
+.main-color {
+    color: var(--main-color);
+}
+
+.bg-secondary-color {
+    background-color: var(--secondary-color);
+}
+
+.secondary-color {
+    color: var(--secondary-color);
+}
+
+.bg-black-color {
+    background-color: var(--black-color);
+}
+
+.black-color {
+    color: var(--black-color);
+}
+
+.bg-accent-color {
+    background-color: var(--accent-color);
+}
+
+.accent-color {
+    color: var(--accent-color);
+}
+
+
+/* ----- fonts ----- */
+
+.main-font {
+    font-family: var(--main-font);
+}
+
+.accent-font {
+    font-family: var(--accent-font);
+}
+
+.font-weight-bolder {
+    font-weight: var(--font-weight-bolder);
+}
+
+.large-font {
+    font-size: var(--large-font);
+}
+
+.small-medium-font {
+    font-size: var(--small-medium-font);
+}
+
+/* ------------------- */
+
+.main-shadow {
+    filter: drop-shadow(var(--main-shadow));
+}
+
+.main-shadow-box {
+    box-shadow: var(--main-shadow);
+}

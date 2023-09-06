@@ -1,0 +1,22 @@
+a {
+    text-decoration: none;
+    color: var(--black-color);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+hr {
+    height: 2px;
+    opacity: 1;
+    border: 0;  
+}
+
+nav {
+    height: 3.5rem;
+}
+
+.description {
+    height: 20rem
+}

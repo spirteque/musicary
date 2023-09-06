@@ -18,27 +18,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Judson&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Judson&family=Lexend:wght@300&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <link href="{% static 'css/variables.css' %}" rel="stylesheet">
+    <link href="{% static 'css/utils.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
 </head>
 
-<body>
-    <nav class="nav">
-        <a class="logo" href="{% url 'home' %}">
+<body class="bg-main-color main-font">
+
+    <nav class="bg-secondary-color d-flex justify-content-between align-items-center main-shadow px-5 m-4 rounded">
+        <a href="{% url 'home' %}" class="large-font black-color accent-font font-weight-bolder text-decoration-none">
             Musicary
         </a>
-        <span class="nav-actions">
-            <a href="{% url 'login' %}" class="nav-action link">
+        <span class="gap-2 d-flex">
+            <a href="{% url 'login' %}" class="p-2 small-medium-font">
                 Zaloguj się
             </a>
-            <a href="{% url 'logout' %}" class="nav-action link">
+            <a href="{% url 'logout' %}" class="p-2 pe-0 small-medium-font">
                 Zarejestruj się
             </a>
         </span>
     </nav>
-
 
     <div class="container text-center">
         
@@ -46,9 +48,9 @@
         {% endblock header %}
 
         <div class="row">
-            <hr class="hr hr-bold" />
+            <hr class="hr hr-bold bg-accent-color" />
         </div>
-        
+
         {% block content %}
         {% endblock content %}
     </div>
