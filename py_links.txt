@@ -1,1 +1,2 @@
 https://www.w3schools.com/django/django_add_bootstrap5.php
+https://stackoverflow.com/questions/55369645/how-to-customize-default-auth-login-form-in-django

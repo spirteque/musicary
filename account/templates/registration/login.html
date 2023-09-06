@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+
+
+{% block title %}Logowanie{% endblock %}
+
+{% block header %}
+    <div class="row justify-content-center m-4 mt-5">
+        <h1 class="main-header m-0">
+            Logowanie
+        </h1>
+    </div>
+{% endblock header %}
+
+{% block content %}
+
+    <p>Wypełnij poniższy formularz, aby się zalogować:</p>
+
+    <div>
+            <form action="{% url 'login' %}" method="post">
+                {{ form.non_field_errors }}
+                <div>
+                    {{ form.username }}
+                    {{ form.username.errors }}
+                </div>
+
+                <div>
+                    {{ form.password }}
+                    {{ form.password.errors }}
+                </div>
+
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}"/>
+
+                {% if form.errors %}
+                    <p>
+                    Nazwa użytkownika lub hasło są nieprawidłowe. 
+                    Spróbuj ponownie.
+                    </p>
+                {% endif %}
+
+                <button type="submit" class="btn btn-outline-dark">Zaloguj się</button>
+
+            </form>
+        
+        <p>
+            <a href="#" class="link font-weight-bolder">
+            Nie pamiętasz hasła?
+            </a>
+        </p>
+
+        <p>
+            Nie posiadasz jeszcze konta? <a href="#" class="link font-weight-bolder">Zarejestruj się!</a>
+        </p>
+
+    </div>
+{% endblock %}

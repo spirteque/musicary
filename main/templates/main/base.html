@@ -26,15 +26,34 @@
 
 <body>
     <nav class="nav">
-        <a class="logo" href="#">
+        <a class="logo" href="{% url 'home' %}">
             Musicary
         </a>
-        {% block nav %}    
-        {% endblock nav %}
+        <span class="nav-actions">
+            <a href="{% url 'login' %}" class="nav-action link">
+                Zaloguj się
+            </a>
+            <a href="{% url 'logout' %}" class="nav-action link">
+                Zarejestruj się
+            </a>
+        </span>
     </nav>
 
-    {% block content %}
-    {% endblock content %}
+
+    <div class="container text-center">
+        
+        {% block header %}
+        {% endblock header %}
+
+        <div class="row">
+            <hr class="hr hr-bold" />
+        </div>
+        
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+
         
 </body>
 </html>
