@@ -8,13 +8,15 @@ class UserLoginForm(AuthenticationForm):
 
     username = UsernameField(widget=forms.TextInput(
         attrs={'class': 'form-control',
-               'placeholder': 'Nazwa użytkownika lub e-mail'
+               'placeholder': 'Nazwa użytkownika lub e-mail',
+               'id': 'username_input'
         }
     ))
     
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
-            'placeholder': 'Hasło'
+            'placeholder': 'Hasło',
+            'id': 'password_input'
         }
     ))

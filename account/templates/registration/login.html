@@ -1,4 +1,5 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 
 {% block title %}Logowanie{% endblock %}
@@ -13,17 +14,17 @@
 
 {% block content %}
 
-    <p>Wypełnij poniższy formularz, aby się zalogować:</p>
+    <div class="row">
+        <div class="col-6 offset-3">
+            <p>Wypełnij poniższy formularz, aby się zalogować:</p>
 
-    <div>
-            <form action="{% url 'login' %}" method="post">
-                {{ form.non_field_errors }}
-                <div>
+            <form id="login_form" action="{% url 'login' %}" method="post">
+                <div class="mb-1">
                     {{ form.username }}
                     {{ form.username.errors }}
                 </div>
 
-                <div>
+                <div class="mb-3">
                     {{ form.password }}
                     {{ form.password.errors }}
                 </div>
@@ -38,19 +39,28 @@
                     </p>
                 {% endif %}
 
-                <button type="submit" class="btn btn-outline-dark">Zaloguj się</button>
-
+                {% verbatim %}
+                    <div id="login_button">
+                        <button type="submit" class="btn btn-outline-dark my-3" @click="onClick">
+                            <span v-if="clicked" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span v-if="clicked" class="sr-only"> Logowanie...</span>
+                            <span v-else class="sr-only">Zaloguj się</span>
+                        </button>
+                    </div>
+                {% endverbatim %}
             </form>
         
-        <p>
             <a href="#" class="font-weight-bolder">
-            Nie pamiętasz hasła?
+                Nie pamiętasz hasła?
             </a>
-        </p>
 
-        <p>
-            Nie posiadasz jeszcze konta? <a href="#" class="font-weight-bolder">Zarejestruj się!</a>
-        </p>
+            <p>
+                Nie posiadasz jeszcze konta? <a href="#" class="font-weight-bolder">Zarejestruj się!</a>
+            </p>
 
+        </div>
     </div>
+
+    <script src="{% static 'js/login_button.js' %}"></script>
+
 {% endblock %}
