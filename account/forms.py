@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm, UsernameField, UserCreationForm
+from django.contrib.auth import password_validation
+from django.contrib.auth.forms import AuthenticationForm, UsernameField, SetPasswordForm, PasswordResetForm
+from django.utils.translation import gettext_lazy as _
 from django import forms
 
 
@@ -78,3 +80,46 @@ class UserRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Hasła nie są identyczne.')
         return cd['password2']
+    
+    
+class UserSetNewPasswordForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(UserSetNewPasswordForm, self).__init__(*args, **kwargs)
+    
+    new_password1 = forms.CharField(
+        required=True,
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs = {
+            'class': 'form-control',
+            'placeholder': 'Nowe hasło',
+            'id': 'new_password_input',
+            'autocomplete': 'new-password',}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+        )
+    
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Powtórz nowe hasło',
+            'id': 'new_password2_input',
+            "autocomplete": "new-password"}),
+    )
+    
+
+class UserPasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordResetForm, self).__init__(*args, **kwargs)
+    
+    email = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        widget=forms.EmailInput(attrs={
+            "autocomplete": "email",
+            'class': 'form-control',
+            'placeholder': 'Adres e-mail',
+            'id': 'email_input'}),
+    )
+
