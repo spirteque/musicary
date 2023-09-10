@@ -33,7 +33,7 @@
                 <input type="hidden" name="next" value="{{ next }}"/>
 
                 {% if form.errors %}
-                    <p>
+                    <p class="text-danger">
                     Nazwa użytkownika lub hasło są nieprawidłowe. 
                     Spróbuj ponownie.
                     </p>
@@ -55,7 +55,7 @@
             </a>
 
             <p>
-                Nie posiadasz jeszcze konta? <a href="#" class="font-weight-bolder">Zarejestruj się!</a>
+                Nie posiadasz jeszcze konta? <a href="{% url 'register' %}" class="font-weight-bolder">Zarejestruj się!</a>
             </p>
 
         </div>

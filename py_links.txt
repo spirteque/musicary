@@ -5,11 +5,11 @@ https://stackoverflow.com/questions/8919682/remove-all-styling-formatting-from-h
 https://fonts.google.com/specimen/Lexend
 https://radu.link/make-footer-stay-bottom-page-bootstrap/
 https://docs.djangoproject.com/en/dev/ref/templates/builtins/?from=olddocs#verbatim
-
-
-
-
-
+https://vuejs.org/guide/essentials/component-basics.html#defining-a-component
+https://vuejs.org/guide/essentials/conditional.html#v-else
+https://vuejs.org/guide/quick-start.html#using-vue-from-cdn
+https://vuejs.org/guide/essentials/event-handling.html#method-handlers
+https://itnext.io/https-medium-com-joshstudley-form-field-validation-with-html-and-a-little-javascript-1bda6a4a4c8c
 
 
 

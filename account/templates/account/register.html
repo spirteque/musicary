@@ -1,0 +1,57 @@
+{% extends "main/base.html" %}
+{% load static %}
+ 
+{% block title %}Utwórz konto{% endblock %}
+ 
+{% block header %}
+    <div class="row justify-content-center m-4 mt-5">
+        <h1 class="m-0 font-weight-bolder">
+            Utwórz konto
+        </h1>
+    </div>
+{% endblock header %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-6 offset-3">
+
+            <p>Wypełnij poniższy formularz, aby się zarejestrować:</p>
+            <form id="register_form" action="." method="post">
+
+                <div class="mb-1">
+                    {{ user_form.username }}
+                </div>
+                <div class="mb-1">
+                    {{ user_form.email }}
+                </div>
+                <div class="mb-1">
+                    {{ user_form.password }}
+                </div>
+                <div class="mb-3">
+                    {{ user_form.password2 }}
+                </div>
+                <div class = "mb-2">
+                    {{ user_form.statute_accept }}
+                    Akceptuję <a href="#" class="font-weight-bolder"> Regulamin</a> serwisu Musicary.
+                    <p class="text-danger">{{ user_form.statute_accept.errors }}</p>
+                </div>
+
+                {% csrf_token %}
+
+                {% verbatim %}
+                    <div id="register_button">
+                        <button type="submit" class="btn btn-outline-dark my-3" @click="onClick">
+                            <span v-if="clicked" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span v-if="clicked" class="sr-only"> Rejestracja...</span>
+                            <span v-if="!clicked" class="sr-only">Zarejestruj się</span>
+                        </button>
+                    </div>
+                {% endverbatim %}
+
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'js/register_button.js' %}"></script>
+
+{% endblock %}

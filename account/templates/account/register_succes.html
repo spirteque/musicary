@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+
+{% block title %}Witaj{% endblock %}
+ 
+{% block header %}
+    <div class="row justify-content-center m-4 mt-5">
+        <h1 class="m-0 font-weight-bolder">
+            Witaj w Musicary!
+        </h1>
+    </div>
+{% endblock header %}
+
+{% block content %}
+    <p>
+        Twoje konto jest już aktywne!
+        Możesz się <a href="{% url 'login' %}" class="font-weight-bolder">zalogować</a>!
+    </p>
+{% endblock %}
