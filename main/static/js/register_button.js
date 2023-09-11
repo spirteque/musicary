@@ -5,7 +5,7 @@ const username = document.getElementById('username_input');
 const email = document.getElementById('email_input');
 const password = document.getElementById('password_input');
 const password2 = document.getElementById('password_input2');
-const statute = document.getElementById('statute_input')
+const statute = document.getElementById('statute_input');
 
 createApp({
     data() {

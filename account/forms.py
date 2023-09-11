@@ -3,6 +3,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import AuthenticationForm, UsernameField, SetPasswordForm, PasswordResetForm
 from django.utils.translation import gettext_lazy as _
 from django import forms
+from django.forms.utils import ErrorList
 
 
 class UserLoginForm(AuthenticationForm):
@@ -26,48 +27,35 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegistrationForm(forms.ModelForm):            
-    username = UsernameField(required=True,
-                             widget=forms.TextInput(
-                                attrs={'class': 'form-control',
-                                       'placeholder': 'Nazwa użytkownika',
-                                       'id': 'username_input',
-                                }
-                            ))
+    username = UsernameField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control',
+                   'placeholder': 'Nazwa użytkownika',
+                   'id': 'username_input',}))
     
-    email = forms.EmailField(required=True,
-                             widget=forms.TextInput(
-                                attrs={'class': 'form-control',
-                                    'placeholder': 'Adres e-mail',
-                                    'id': 'email_input',
-                                }
-                        ))
+    email = forms.EmailField(
+        error_messages={'invalid': 'Wprowadź poprawny adres e-mail.'},
+        widget=forms.TextInput(
+            attrs={'class': 'form-control',
+                    'placeholder': 'Adres e-mail',
+                    'id': 'email_input'}))
     
-    password = forms.CharField(required=True, 
-                               widget=forms.PasswordInput(
-                                   attrs = {
-                                        'class': 'form-control',
-                                        'placeholder': 'Hasło',
-                                        'id': 'password_input'
-                                   }
-                               ))
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs = {'class': 'form-control',
+                     'placeholder': 'Hasło',
+                     'id': 'password_input'}))
     
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control',
+                   'placeholder': 'Powtórz hasło',
+                   'id': 'password_input2'}))
     
-    password2 = forms.CharField(required=True,
-                                widget=forms.PasswordInput(
-                                    attrs={
-                                        'class': 'form-control',
-                                        'placeholder': 'Powtórz hasło',
-                                        'id': 'password_input2'
-                                    }
-                                ))
-    
-    statute_accept = forms.BooleanField(required=True,
-                                        error_messages={'required': 'Aby utworzyć konto musisz zaakceptować Regulamin serwisu.'},
-                                        widget=forms.CheckboxInput(
-                                            attrs={
-                                                'id': 'statute_input'
-                                            }
-                                        ))
+    statute_accept = forms.BooleanField(
+        error_messages={'required': 'Aby utworzyć konto musisz zaakceptować Regulamin serwisu.'},
+        widget=forms.CheckboxInput(
+            attrs={'id': 'statute_input'}))
     
     class Meta:
         model = User

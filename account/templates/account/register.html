@@ -20,16 +20,24 @@
 
                 <div class="mb-1">
                     {{ user_form.username }}
+                    {{ user_form.username.errors }}
                 </div>
+
                 <div class="mb-1">
                     {{ user_form.email }}
+                    {{ user_form.email.errors }}
                 </div>
+
                 <div class="mb-1">
                     {{ user_form.password }}
+                    {{ user_form.password.errors }}
                 </div>
+
                 <div class="mb-3">
                     {{ user_form.password2 }}
+                    {{ user_form.password2.errors }}
                 </div>
+                
                 <div class = "mb-2">
                     {{ user_form.statute_accept }}
                     Akceptuję <a href="#" class="font-weight-bolder"> Regulamin</a> serwisu Musicary.
