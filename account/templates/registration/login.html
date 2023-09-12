@@ -19,6 +19,8 @@
             <p>Wypełnij poniższy formularz, aby się zalogować:</p>
 
             <form id="login_form" action="{% url 'login' %}" method="post">
+                {% comment %} {{ form.non_field_errors }} {% endcomment %}
+
                 <div class="mb-1">
                     {{ form.username }}
                     {{ form.username.errors }}
@@ -33,9 +35,8 @@
                 <input type="hidden" name="next" value="{{ next }}"/>
 
                 {% if form.errors %}
-                    <p class="text-danger">
-                    Nazwa użytkownika lub hasło są nieprawidłowe. 
-                    Spróbuj ponownie.
+                    <p class="error_class">
+                    Nazwa użytkownika lub hasło są nieprawidłowe. Spróbuj ponownie.
                     </p>
                 {% endif %}
 

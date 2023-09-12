@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django import forms
 from django.forms.utils import ErrorList
 
+ErrorList.template_name = "main/errors.html"
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -28,13 +29,14 @@ class UserLoginForm(AuthenticationForm):
 
 class UserRegistrationForm(forms.ModelForm):            
     username = UsernameField(
+        error_messages={'unique': 'Podana nazwa użytkownika już istnieje.'},
         widget=forms.TextInput(
             attrs={'class': 'form-control',
                    'placeholder': 'Nazwa użytkownika',
                    'id': 'username_input',}))
     
     email = forms.EmailField(
-        error_messages={'invalid': 'Wprowadź poprawny adres e-mail.'},
+        error_messages={'invalid': 'Podany adres e-mail jest nieprawidłowy.'},
         widget=forms.TextInput(
             attrs={'class': 'form-control',
                     'placeholder': 'Adres e-mail',
@@ -110,4 +112,11 @@ class UserPasswordResetForm(PasswordResetForm):
             'placeholder': 'Adres e-mail',
             'id': 'email_input'}),
     )
+
+
+# class DivErrorList(ErrorList):
+#     def __init__(self, *args, **kwargs):
+#         super(DivErrorList, self).__init__(*args, **kwargs)
+        
+#     template_name = "main/errors.html"
 

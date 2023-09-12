@@ -12,6 +12,10 @@ https://vuejs.org/guide/essentials/event-handling.html#method-handlers
 https://itnext.io/https-medium-com-joshstudley-form-field-validation-with-html-and-a-little-javascript-1bda6a4a4c8c
 https://www.javatpoint.com/django-user-registration-with-email-confirmation
 https://stackoverflow.com/questions/34445801/django-change-field-validation-message
+https://docs.djangoproject.com/en/4.2/ref/forms/renderers/#overriding-built-in-form-templates
+
+
+
 
 
 

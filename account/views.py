@@ -9,7 +9,6 @@ from django.core.mail import EmailMessage
 from .forms import UserRegistrationForm
 from .token import account_activation_token
 
-
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)

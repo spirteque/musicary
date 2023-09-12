@@ -37,11 +37,11 @@
                     {{ user_form.password2 }}
                     {{ user_form.password2.errors }}
                 </div>
-                
-                <div class = "mb-2">
+
+                <div class="mb-2">
                     {{ user_form.statute_accept }}
                     Akceptuję <a href="#" class="font-weight-bolder"> Regulamin</a> serwisu Musicary.
-                    <p class="text-danger">{{ user_form.statute_accept.errors }}</p>
+                    {{ user_form.statute_accept.errors }}
                 </div>
 
                 {% csrf_token %}

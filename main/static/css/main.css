@@ -24,3 +24,11 @@ footer {
 .description {
     height: 20rem
 }
+
+.error_class {
+    color: rgba(var(--bs-danger-rgb))!important;
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
