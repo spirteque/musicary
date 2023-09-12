@@ -13,7 +13,8 @@ https://itnext.io/https-medium-com-joshstudley-form-field-validation-with-html-a
 https://www.javatpoint.com/django-user-registration-with-email-confirmation
 https://stackoverflow.com/questions/34445801/django-change-field-validation-message
 https://docs.djangoproject.com/en/4.2/ref/forms/renderers/#overriding-built-in-form-templates
-
+https://docs.djangoproject.com/en/4.2/topics/auth/customizing/#specifying-custom-user-model
+https://www.devhandbook.com/django/user-profile/
 
 
 

@@ -8,6 +8,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .forms import UserRegistrationForm
 from .token import account_activation_token
+from .models import Profile
 
 def register(request):
     if request.method == 'POST':
@@ -18,6 +19,8 @@ def register(request):
                 user_form.cleaned_data['password'])
             new_user.is_active = False
             new_user.save()
+            
+            profile = Profile.objects.create(user=new_user)
             
             current_site = get_current_site(request)
             mail_subject = 'Link aktywacyjny do konta Musicary'
