@@ -40,6 +40,14 @@
     color: var(--subtle-color);
 }
 
+.bg-gentle-color {
+    background-color: var(--gentle-color);
+}
+
+.gentle-color {
+    color: var(--gentle-color);
+}
+
 /* ----- fonts ----- */
 
 .main-font {

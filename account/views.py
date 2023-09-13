@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -9,6 +10,7 @@ from django.core.mail import EmailMessage
 from .forms import UserRegistrationForm
 from .token import account_activation_token
 from .models import Profile
+
 
 def register(request):
     if request.method == 'POST':
@@ -61,3 +63,8 @@ def activate(request, uidb64, token):
         return render(request, 'account/register_succes.html')
     else:
         return render(request, 'account/register_error.html')
+    
+
+@login_required
+def dashboard(request):
+    return render(request, 'account/dashboard.html', {'section': 'dashboard'})
