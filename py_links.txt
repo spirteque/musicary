@@ -16,6 +16,9 @@ https://docs.djangoproject.com/en/4.2/ref/forms/renderers/#overriding-built-in-f
 https://docs.djangoproject.com/en/4.2/topics/auth/customizing/#specifying-custom-user-model
 https://www.devhandbook.com/django/user-profile/
 https://getbootstrap.com/docs/5.3/components/navbar/
+https://www.svgrepo.com/svg/176202/trumpet?edit=true
+https://getbootstrap.com/docs/5.3/components/dropdowns/#menu-alignment
+https://icons.getbootstrap.com/icons/list/
 
 
 

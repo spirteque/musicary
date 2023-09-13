@@ -74,7 +74,7 @@
     font-size: var(--small-font);
 }
 
-/* ------------------- */
+/* --------- shadows ---------- */
 
 .main-shadow {
     filter: drop-shadow(var(--main-shadow));
@@ -83,3 +83,35 @@
 .main-shadow-box {
     box-shadow: var(--main-shadow);
 }
+
+/* ------------------- */
+
+
+.w-40 {
+    width: 40% !important;
+}
+
+.mt-1\.5 {
+    margin-top: 0.4rem !important;
+}
+
+.content-none::after {
+    content: none;
+}
+
+/* -------- overridden Bootstrap ----------- */
+
+.dropdown-item:hover {
+    background-color: var(--gentle-color);
+}
+
+/* ------------------- */
+
+.rounded-bottom-only {
+    border-bottom-right-radius: var(--bs-border-radius)!important;
+    border-bottom-left-radius: var(--bs-border-radius)!important;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+
