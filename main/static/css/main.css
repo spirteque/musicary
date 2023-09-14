@@ -38,3 +38,20 @@ footer {
     box-shadow: none !important;
     --webkit-box-shadow: none !important;
 }
+
+.profile-pic {
+    width: 5.625rem;
+    height: 5.625rem;
+}
+
+.profile-pic-container {
+    left: 8%;
+    top: 25%;
+}
+
+.new-post-btn-container {
+    left: initial;
+    top: initial;
+    right: 8%;
+    bottom: 10%;
+}

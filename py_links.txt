@@ -19,6 +19,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 https://www.svgrepo.com/svg/176202/trumpet?edit=true
 https://getbootstrap.com/docs/5.3/components/dropdowns/#menu-alignment
 https://icons.getbootstrap.com/icons/list/
+https://icons8.com/icons/set/cat-profile
 
 
 

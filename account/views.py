@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -65,6 +65,8 @@ def activate(request, uidb64, token):
         return render(request, 'account/register_error.html')
     
 
+# TODO take query parameter from url and mark znajomi or kanał główny as focus
+# ?views=friends / ?views=main_channel
 @login_required
 def dashboard(request):
-    return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+    return render(request, 'account/dashboard.html', {'section': 'dashboard',})

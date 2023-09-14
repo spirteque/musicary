@@ -1,10 +1,36 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load thumbnail %}
 
 
 {% block content %}
-    <div class="row">
-        
+    <div class="row mt-5">
+        <div class="col-2 d-flex align-items-center flex-column">
+            {% comment %} TODO add href to profile {% endcomment %}
+                <div class="d-flex justify-content-center profile-pic bg-gentle-color rounded border border-black border-1 accent-shadow-box">
+                    {% thumbnail request.user.profile.photo "90x90" as im %}
+                    <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-2">
+                </div>
+                <p class="mt-2 small-medium-font">{{ request.user.username }}</p>
+        </div>
+        <div class="col-8">
+            <div class="d-flex mb-2 justify-content-evenly">
+                <a href="#" class="small-medium-font">Znajomi</a>
+                <a href="#" class="small-medium-font">Kanał główny</a>
+            </div>
+            <div class="row mb-2 d-flex justify-content-center">
+                <hr class="hr hr-bold bg-accent-color w-75" />
+            </div>
+            <p>POST</p>
+        </div>
+        <div class="col-2 new-post-btn-container fixed-bottom">
+            <a href="#">
+                {% comment %} TODO add href to create post {% endcomment %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                </svg>
+            </a>
+        </div>
     </div>
 {% endblock content %}
     

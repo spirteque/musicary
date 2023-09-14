@@ -84,6 +84,14 @@
     box-shadow: var(--main-shadow);
 }
 
+.accent-shadow {
+    filter: drop-shadow(var(--accent-shadow));
+}
+
+.accent-shadow-box {
+    box-shadow: var(--accent-shadow);
+}
+
 /* ------------------- */
 
 
@@ -97,6 +105,10 @@
 
 .content-none::after {
     content: none;
+}
+
+.w-fit-content {
+    width: fit-content !important;
 }
 
 /* -------- overridden Bootstrap ----------- */
