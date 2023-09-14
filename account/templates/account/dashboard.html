@@ -1,69 +1,11 @@
 {% extends "main/base.html" %}
 {% load static %}
 
-{% block header %}
-<a href="#">Znajomi</a>
-<a href="#">Kanał główny</a>
-{% endblock header %}
 
-
-
-{% comment %} <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand large-font black-color accent-font font-weight-bolder text-decoration-none" href="{% url 'home' %}">
-            Musicary
-        </a>
-
-        {% if request.user.is_authenticated %}
-
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Szukaj..." aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                </svg>
-            </button>
-        </form>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+{% block content %}
+    <div class="row">
         
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">
-                        Strona główna
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Ranking
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <span class="badge badge-light">
-                        <svg height="24px" width="24px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16.316 16.316" xml:space="preserve" fill="#96233f" stroke="#96233f" stroke-width="0.00016316" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path style="fill:#96233f;" d="M11.253,0.107c0.307,0.972-0.298,3.72-0.637,4.189l0.142,0.137l-2.549,2.55 C8.206,6.985,8.205,6.986,8.203,6.988c0,0-0.001,0.002-0.002,0.002L7.118,8.073L6.563,7.519l0.053-0.053 C6.673,7.409,6.647,7.29,6.559,7.203C6.471,7.114,6.352,7.089,6.295,7.147L5.699,7.742C5.641,7.799,5.667,7.918,5.755,8.005 C5.844,8.094,5.962,8.119,6.02,8.063l0.053-0.053l0.555,0.555L6.181,9.011L5.626,8.457l0.048-0.049 c0.057-0.057,0.032-0.176-0.056-0.265C5.528,8.056,5.41,8.031,5.353,8.087L4.757,8.682C4.7,8.741,4.725,8.859,4.813,8.947 C4.901,9.034,5.02,9.061,5.077,9.003l0.056-0.056l0.555,0.554L5.264,9.925L4.709,9.371l0.053-0.053 c0.057-0.057,0.032-0.176-0.056-0.264S4.498,8.941,4.442,8.998L3.846,9.594C3.788,9.651,3.814,9.77,3.902,9.857 c0.089,0.089,0.207,0.114,0.265,0.057l0.053-0.053l0.554,0.555l-0.811,0.811c-0.028,0.027-0.052,0.058-0.073,0.089 c-0.031,0.021-0.061,0.046-0.089,0.072C3.765,11.424,3.733,11.463,3.7,11.5l-0.004-0.004l-3.044,3.044 c-0.093-0.071-0.226-0.068-0.31,0.018c-0.092,0.092-0.092,0.242,0,0.336L1.3,15.852c0.092,0.092,0.243,0.092,0.336,0 c0.092-0.092,0.092-0.243,0-0.337L1.533,15.42l1.47-1.47c0.101,0.558,0.366,1.092,0.796,1.522 c1.111,1.111,2.906,1.122,4.036,0.042v0.003c0.005-0.005,0.009-0.012,0.014-0.018c0.011-0.01,0.021-0.018,0.032-0.027 c0.025-0.025,0.046-0.053,0.067-0.082c0.005-0.005,0.008-0.008,0.015-0.015c0.027-0.02,0.054-0.041,0.08-0.064l0.003-0.018 c0.733-0.726,4.215-4.201,4.239-4.226c1.124-1.124,1.124-2.956,0-4.08c-0.414-0.413-0.923-0.674-1.458-0.783l0.863-0.863 l0.164,0.161c0.524-0.339,3.043-1.029,4.042-0.525C17.063,5.081,10.944-0.864,11.253,0.107z M10.642,10.874 c-0.757,0.76-1.837,1.844-1.851,1.866c-0.03,0.021-0.089,0.073-0.089,0.073l-0.257,0.265l-0.01,0.01l-0.51,0.509 c-0.355,0.276-0.869,0.257-1.195-0.071c-0.354-0.353-0.353-0.93,0-1.282c0.017-0.017,1.461-1.465,1.474-1.482 c0.018-0.013,0.051-0.042,0.051-0.042l0.146-0.152l0.006-0.005l0.595-0.596L9.008,9.96l0.151-0.146c0,0,0.03-0.033,0.042-0.052 C9.219,9.75,9.235,9.738,9.251,9.722c0.354-0.354,0.93-0.354,1.284,0C10.848,10.035,10.883,10.521,10.642,10.874z M11.364,7.909 c0.567,0.566,0.607,1.457,0.133,2.078c-0.067-0.29-0.209-0.566-0.435-0.792c-0.635-0.635-1.664-0.642-2.31-0.022V9.17 C8.748,9.172,8.747,9.176,8.744,9.178C8.737,9.185,8.731,9.189,8.725,9.195C8.71,9.211,8.698,9.226,8.687,9.243 C8.684,9.246,8.682,9.248,8.679,9.25C8.662,9.262,8.647,9.273,8.633,9.287l-0.001,0.01c-0.42,0.416-2.412,2.404-2.427,2.419 c-0.644,0.643-0.644,1.692,0,2.335c0.233,0.233,0.522,0.382,0.825,0.446c-0.024,0.018-0.049,0.034-0.07,0.056 c-0.618,0.619-1.623,0.619-2.241,0c-0.619-0.619-0.619-1.624,0-2.242c0.001-0.001,0.001-0.001,0.002-0.002l0.16-0.16l0.261-0.261 l3.56-3.56l0.261-0.262l0.16-0.159c0.001-0.001,0.002-0.001,0.002-0.002C9.739,7.29,10.745,7.29,11.364,7.909z"></path> </g> </g> </g></svg>
-                    </span>
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Powiadomienia
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="#">Action</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Another action</a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
     </div>
-</nav> {% endcomment %}
+{% endblock content %}
+    
+
