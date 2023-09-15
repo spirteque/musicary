@@ -42,6 +42,7 @@
             <div class="w-40 ms-5">
                 <div class="input-group">
                     <input class="form-control bg-gentle-color border-0" type="search" placeholder="Szukaj..." aria-label="Search">
+                    {% comment %} TODO: elastyczny gyzik z lupką {% endcomment %}
                     <button type="button" class="btn btn-outline-dark border-0 bg-gentle-color px-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -84,8 +85,11 @@
                             </svg>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end bg-secondary-color rounded-bottom-only mt-1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another ac</a></li>
+                            <li><a class="dropdown-item" href="{% url 'edit' %}">Ustawienia</a></li>
+                            <li><a class="dropdown-item" href="#">Statystyki</a></li>
+                            <li><a class="dropdown-item pointer-events-none subtle-color" href="#">Samouczek</a></li>
+                            <li><a class="dropdown-item" href="#">FAQ</a></li>
+                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'logout' %}">Wyloguj się</a></li>
                         </ul>
                     </li>

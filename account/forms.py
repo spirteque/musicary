@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, UsernameField, SetPass
 from django.utils.translation import gettext_lazy as _
 from django import forms
 from django.forms.utils import ErrorList
+from .models import Profile
 
 ErrorList.template_name = "main/errors.html"
 
@@ -114,9 +115,14 @@ class UserPasswordResetForm(PasswordResetForm):
     )
 
 
-# class DivErrorList(ErrorList):
-#     def __init__(self, *args, **kwargs):
-#         super(DivErrorList, self).__init__(*args, **kwargs)
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
         
-#     template_name = "main/errors.html"
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('photo',)
 

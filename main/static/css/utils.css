@@ -37,7 +37,7 @@
 }
 
 .subtle-color {
-    color: var(--subtle-color);
+    color: var(--subtle-color) !important;
 }
 
 .bg-gentle-color {
@@ -109,6 +109,10 @@
 
 .w-fit-content {
     width: fit-content !important;
+}
+
+.pointer-events-none {
+    pointer-events: none;
 }
 
 /* -------- overridden Bootstrap ----------- */

@@ -1,0 +1,69 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+
+{% block title %}
+    Edycja konta
+{% endblock title %}
+
+{% block header %}
+    <div class="row justify-content-center m-4">
+        <h1 class="m-0 font-weight-bolder">
+            Ustawienia
+        </h1>
+    </div>
+{% endblock header %}
+
+{% block content %}
+
+    <div class="row d-flex align-items-center">
+        <div class="col-3 d-flex justify-content-center">
+            <nav class="nav flex-column justify-content-center flex-nowrap border border-black border-1 h-100 rounded bg-secondary-color py-2">
+                <a class="nav-link active" aria-current="page" href="#">Konto</a>
+                <a class="nav-link" href="#">Preferencje</a>
+                <a class="nav-link" href="#">Prywatność</a>
+                <a class="nav-link" href="#">Powiadomienia</a>
+            </nav>
+        </div>
+
+        <div class="col-6 d-flex align-items-center justify-content-start text-start w-50 mt-5">
+            <form action="." method="post" enctype="multipart/form-data">
+
+                <div class="mb-3">
+                    <span class="me-2">Zdjęcie profilowe:</span>
+                    {{ profile_form.photo }}
+                    {{ profile_form.photo.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <span class="me-2">Nazwa użytkownika:</span>
+                    {{ user_form.username }}
+                    {{ user_form.username.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <span class="me-2">Adres e-mail:</span>
+                    {{ user_form.email }}
+                    {{ user_form.email.errors }}
+                </div>
+
+                {% csrf_token %}
+                <p class=" d-flex justify-content-end">
+                    <input type="submit" value="Zapisz zmiany">
+                </p>
+            </form>
+        </div>
+
+        <div class="col-3 d-flex justify-content-center align-items-baseline">
+            <div class="d-flex justify-content-center profile-pic bg-gentle-color rounded border border-black border-1 accent-shadow-box">
+                {% thumbnail request.user.profile.photo "90x90" as im %}
+                <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-2">
+            </div>
+        </div>
+
+    </div>
+    
+
+{% endblock content %}
+    
