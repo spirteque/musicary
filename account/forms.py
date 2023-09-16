@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import AuthenticationForm, UsernameField, SetPasswordForm, PasswordResetForm
+from django.forms.widgets import ClearableFileInput
 from django.utils.translation import gettext_lazy as _
 from django import forms
 from django.forms.utils import ErrorList
@@ -116,12 +117,34 @@ class UserPasswordResetForm(PasswordResetForm):
 
 
 class UserEditForm(forms.ModelForm):
+    username = UsernameField(
+        error_messages={'unique': 'Podana nazwa użytkownika już istnieje.'},
+        widget=forms.TextInput(
+            attrs={'class': 'form-control',
+                   'placeholder': 'Nazwa użytkownika',
+                   'id': 'username_input',}))
+    
+    email = forms.EmailField(
+        error_messages={'invalid': 'Podany adres e-mail jest nieprawidłowy.'},
+        widget=forms.TextInput(
+            attrs={'class': 'form-control',
+                    'placeholder': 'Adres e-mail',
+                    'id': 'email_input'}))
+    
     class Meta:
         model = User
         fields = ('username', 'email')
         
 
 class ProfileEditForm(forms.ModelForm):
+    photo = forms.ImageField(
+        error_messages={'invalid_image': _('Prześlij poprawny obraz, np. w formacie .png, .jpeg.')})
+        # widget=forms.ImageField(
+        #     attrs={'class': 'form-control',
+        #            'id': 'photo_input'}))
+        
+    ClearableFileInput.template_name = "main/clearable_file_input.html"
+    
     class Meta:
         model = Profile
         fields = ('photo',)

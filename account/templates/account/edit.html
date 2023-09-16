@@ -9,56 +9,65 @@
 
 {% block header %}
     <div class="row justify-content-center m-4">
-        <h1 class="m-0 font-weight-bolder">
+        <h1 class="m-0 mb-1 font-weight-bolder">
             Ustawienia
         </h1>
     </div>
 {% endblock header %}
 
 {% block content %}
+    <div class="row mb-2">
+        <hr class="hr hr-bold bg-accent-color" />
+    </div>
 
     <div class="row d-flex align-items-center">
-        <div class="col-3 d-flex justify-content-center">
+        <div class="col-3 d-flex justify-content-end">
             <nav class="nav flex-column justify-content-center flex-nowrap border border-black border-1 h-100 rounded bg-secondary-color py-2">
-                <a class="nav-link active" aria-current="page" href="#">Konto</a>
-                <a class="nav-link" href="#">Preferencje</a>
-                <a class="nav-link" href="#">Prywatność</a>
-                <a class="nav-link" href="#">Powiadomienia</a>
+                <a class="nav-link small-medium-font" href="#">Konto</a>
+                <a class="nav-link small-medium-font" href="#">Preferencje</a>
+                <a class="nav-link small-medium-font" href="#">Prywatność</a>
+                <a class="nav-link small-medium-font" href="#">Powiadomienia</a>
             </nav>
         </div>
 
-        <div class="col-6 d-flex align-items-center justify-content-start text-start w-50 mt-5">
-            <form action="." method="post" enctype="multipart/form-data">
+        <div class="col-6 d-flex align-items-center justify-content-center text-start w-50 mt-5">
+            <form action="." method="post" enctype="multipart/form-data" class="w-75">
 
                 <div class="mb-3">
-                    <span class="me-2">Zdjęcie profilowe:</span>
-                    {{ profile_form.photo }}
+                    <span class="me-2 fw-bolder ms-1">Zdjęcie profilowe:</span>
+                    {% comment %} {{ profile_form.photo }} {% endcomment %}
+                    <div class="input-group">
+                        <input type="file" name="photo" accept="image/*" id="id_photo" class="form-control">
+                    </div>
+                    
                     {{ profile_form.photo.errors }}
                 </div>
 
                 <div class="mb-3">
-                    <span class="me-2">Nazwa użytkownika:</span>
+                    <span class="me-2 fw-bolder ms-1">Nazwa użytkownika:</span>
                     {{ user_form.username }}
                     {{ user_form.username.errors }}
                 </div>
 
                 <div class="mb-3">
-                    <span class="me-2">Adres e-mail:</span>
+                    <span class="me-2 fw-bolder ms-1">Adres e-mail:</span>
                     {{ user_form.email }}
                     {{ user_form.email.errors }}
                 </div>
 
                 {% csrf_token %}
-                <p class=" d-flex justify-content-end">
-                    <input type="submit" value="Zapisz zmiany">
-                </p>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-outline-dark my-3">
+                        Zapisz zmiany
+                    </button>
+                </div>
             </form>
         </div>
 
-        <div class="col-3 d-flex justify-content-center align-items-baseline">
-            <div class="d-flex justify-content-center profile-pic bg-gentle-color rounded border border-black border-1 accent-shadow-box">
-                {% thumbnail request.user.profile.photo "90x90" as im %}
-                <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-2">
+        <div class="col-3 d-flex align-self-start justify-content-start mt-5">
+            <div class="d-flex justify-content-center profile-pic-large bg-gentle-color rounded border border-black border-2 accent-shadow-box">
+                {% thumbnail request.user.profile.photo "100x100" crop="true" as im %}
+                <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-1 rounded">
             </div>
         </div>
 

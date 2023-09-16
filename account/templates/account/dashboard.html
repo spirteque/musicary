@@ -7,9 +7,9 @@
     <div class="row mt-5">
         <div class="col-2 d-flex align-items-center flex-column">
             {% comment %} TODO add href to profile {% endcomment %}
-                <div class="d-flex justify-content-center profile-pic bg-gentle-color rounded border border-black border-1 accent-shadow-box">
-                    {% thumbnail request.user.profile.photo "90x90" as im %}
-                    <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-2">
+                <div class="d-flex justify-content-center profile-pic bg-gentle-color rounded border border-black border-2 accent-shadow-box">
+                    {% thumbnail request.user.profile.photo "90x90" crop="true" as im %}
+                    <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-1">
                 </div>
                 <p class="mt-2 small-medium-font">{{ request.user.username }}</p>
         </div>
