@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import password_validation
-from django.contrib.auth.forms import AuthenticationForm, UsernameField, SetPasswordForm, PasswordResetForm
+from django.contrib.auth.forms import AuthenticationForm, UsernameField, SetPasswordForm, PasswordResetForm, PasswordChangeForm
 from django.forms.widgets import ClearableFileInput
 from django.utils.translation import gettext_lazy as _
 from django import forms
@@ -78,6 +78,10 @@ class UserSetNewPasswordForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
         super(UserSetNewPasswordForm, self).__init__(*args, **kwargs)
     
+    error_messages = {
+        "password_mismatch": _("Nowe hasło nie jest identyczne w obu polach."),
+    }
+    
     new_password1 = forms.CharField(
         required=True,
         label=_("New password"),
@@ -115,6 +119,45 @@ class UserPasswordResetForm(PasswordResetForm):
             'id': 'email_input'}),
     )
 
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordChangeForm, self).__init__(*args, **kwargs)
+        
+    error_messages = {
+        **UserSetNewPasswordForm.error_messages,
+        "password_incorrect": _(
+            "Twoje stare hasło jest niepoprawne. Wprowadź go ponownie"
+        ),
+    }
+    
+    old_password = forms.CharField(
+        label=_("Old password"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control',
+                   'id': 'old_password_input',
+                   "autocomplete": "current-password",}))
+    
+    new_password1 = forms.CharField(
+        required=True,
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs = {
+            'class': 'form-control',
+            'id': 'new_password_input',
+            'autocomplete': 'new-password',}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+        )
+    
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'id': 'new_password2_input',
+            "autocomplete": "new-password"}),
+    )
 
 class UserEditForm(forms.ModelForm):
     username = UsernameField(

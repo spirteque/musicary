@@ -23,7 +23,8 @@
     <div class="row d-flex align-items-center">
         <div class="col-3 d-flex justify-content-end">
             <nav class="nav flex-column justify-content-center flex-nowrap border border-black border-1 h-100 rounded bg-secondary-color py-2">
-                <a class="nav-link small-medium-font" href="#">Konto</a>
+                <a class="nav-link small-medium-font fw-bolder" href="{% url 'edit' %}">Konto</a>
+                <a class="nav-link small-medium-font" href="{% url 'password_change' %}">Hasło</a>
                 <a class="nav-link small-medium-font" href="#">Preferencje</a>
                 <a class="nav-link small-medium-font" href="#">Prywatność</a>
                 <a class="nav-link small-medium-font" href="#">Powiadomienia</a>
