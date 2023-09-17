@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+
+{% block header %}
+    <div class="row justify-content-center m-4">
+        <h1 class="m-0 mb-1 font-weight-bolder">
+            Ustawienia
+        </h1>
+    </div>
+{% endblock header %}
+
+{% block content %}
+    <div class="row mb-2">
+        <hr class="hr hr-bold bg-accent-color" />
+    </div>
+    
+    {% block forms %}
+    {% endblock forms %}
+    
+    <div class="row d-flex align-items-center justify-content-center">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="d-flex w-50 justify-content-center align-items-center py-3 mb-5 mt-3 rounded bg-secondary-color main-shadow-box" role="alert">
+                    {{ message|safe }}
+                </div>
+            {% endfor %}  
+        {% endif %}
+    </div>
+{% endblock content %}
+    
