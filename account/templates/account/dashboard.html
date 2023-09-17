@@ -11,7 +11,9 @@
                     {% thumbnail request.user.profile.photo "90x90" crop="true" as im %}
                     <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-1">
                 </div>
-                <p class="mt-2 small-medium-font">{{ request.user.username }}</p>
+                <p class="mt-2 small-medium-font">
+                    <a href="{% url 'user_profile' request.user.username %}">{{ request.user.username }}</a>
+                </p>
         </div>
         <div class="col-8">
             <div class="d-flex mb-2 justify-content-evenly">

@@ -22,5 +22,7 @@ urlpatterns = [
     
     path('dashboard/', views.dashboard, name='dashboard'),
     
-    path('edit/', views.edit, name='edit')
+    path('edit/', views.edit, name='edit'),
+    
+    path('users/<username>/', views.user_profile, name='user_profile'),
 ]
