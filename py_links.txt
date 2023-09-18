@@ -21,8 +21,8 @@ https://getbootstrap.com/docs/5.3/components/dropdowns/#menu-alignment
 https://icons.getbootstrap.com/icons/list/
 https://icons8.com/icons/set/cat-profile
 https://stackoverflow.com/questions/38576503/how-to-remove-the-arrow-in-dropdown-in-bootstrap-4
-
-
+https://developer.spotify.com/policy
+https://pypi.org/project/djangorestframework/
 
 
 

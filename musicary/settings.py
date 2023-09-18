@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "easy_thumbnails",
     "posts.apps.PostsConfig",
     "taggit",
+    "rest_framework",
+    "api.apps.ApiConfig",
 ]
 
 MIDDLEWARE = [
@@ -150,3 +152,10 @@ ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_profile',
                                         args=[u.username])
 }
+
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
