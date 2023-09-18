@@ -44,6 +44,11 @@ footer {
     height: 5.625rem;
 }
 
+.profile-pic-medium {
+    width: 7rem;
+    height: 7rem;
+}
+
 .profile-pic-large {
     width: 8rem;
     height: 8rem;

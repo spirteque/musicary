@@ -1,4 +1,5 @@
 {% extends "main/base.html" %}
+{% load static %}
 {% load thumbnail %}
 
 {% block title %}
@@ -6,58 +7,91 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="row">
+    <div class="row d-flex justify-content-center my-5">
 
-        <div class=col-1>
-            <button>
-                Statystyki
-            </button>
-        </div>
-        <div class="col-2">
-            <div>
-                {% thumbnail user.profile.photo "100x100" crop="True" as im %}
-                <img src="{{ im.url }}">
+        <div class="col-2 d-flex justify-content-center p-0 mx-2">
+            <div class="d-flex profile-pic-medium bg-gentle-color rounded border border-black border-2 accent-shadow-box">
+                {% thumbnail user.profile.photo "90x90" crop="true" as im %}
+                <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-1">
             </div>
         </div>
 
         {% with total_followers=user.followers.count %}
-        <div class="col-1">
-            {{ user.get_username }}
-            <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user %}{% endif %}">
-                {% if request.user not in user.followers.all %}
-                    Obserwuj
-                {% else %}
-                    Nie obserwuj
+        <div class="col-2 d-flex flex-column align-items-start justify-content-start p-0">
+            <div class="mb-auto justify-content-start font-weight-bolder">
+                {{ user.get_username }}
+            </div>
+            
+            <div class="d-flex align-items-end justify-content-start">
+                {% if request.user != user %}
+                    {% if user in request.user.followers.all %}
+                    <span>
+                        Obserwuje Cię
+                    </span>
+                    {% endif %}
+
+                    <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user %}{% endif %}">
+                        {% if request.user not in user.followers.all %}
+                            <button class="btn btn-outline-dark">
+                                Obserwuj
+                            </button>  
+                        {% else %}
+                            <button class="btn btn-outline-dark">
+                                Nie obserwuj
+                            </button>
+                        {% endif %}
+                    </a>
                 {% endif %}
-            </a>
+            </div>
         </div>
 
-        <div class="col-2">
+        <div class="col-2 p-0 justify-content-end">
             Liczba postów
             <p>{{ user.posts_created.count }}</p>
         </div>
 
-        <div class="col-2">
-            Obserwowani
+        <div class="col-1 p-0">
+            <a href="#">Obserwowani</a>
             <p>XXX</p>
         </div>
 
-        <div class="col-2">
-            Obserwujący
+        <div class="col-2 p-0">
+            <a href="#">Obserwujący</a>
             <p>{{ total_followers }}</p>
         </div>
         {% endwith %}
-
+        
+        <div class="col-1 d-flex justify-content-center p-1">
+            {% if request.user == user %}
+                <a href="#" class="h-25">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-bar-graph-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-2 11.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1z"/>
+                    </svg>
+                </a>
+            {% else %}
+                <div class="btn-group dropstart">
+                    <button class="btn btn-sm h-25 rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                        </svg>
+                    </button>
+                    <ul class="dropdown-menu bg-secondary-color">
+                        <li><a class="dropdown-item" href="#">Zgłoś użytkownika</a></li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
     </div>
 
     <div class="row">
-        <div class="d-flex mb-2 justify-content-evenly">
+        <div class="d-flex mb-2 mt-5 justify-content-evenly">
             <a href="#" class="small-medium-font">Posty</a>
             <a href="#" class="small-medium-font">Z oznaczeniem</a>
         </div>
-        <div class="row mb-2 d-flex justify-content-center">
-            <hr class="hr hr-bold bg-accent-color w-75" />
-        </div>
+    </div>
+    
+    <div class="row mb-2 d-flex justify-content-center">
+        <hr class="hr hr-bold bg-accent-color w-75" />
     </div>
 
 
