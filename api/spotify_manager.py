@@ -1,16 +1,21 @@
 from datetime import datetime
 from django.conf import settings
+from musicary.utils import log_message
 import requests
+
+
 
 def spotify_headers_manager():
     # https://stackoverflow.com/questions/1291755/how-can-i-tell-whether-my-django-application-is-running-on-development-server-or
-    # if (RUNNING_DEVSERVER):
-    #     def create():
-    #         return {
-                
-    #         }
+    if settings.DEBUG:
+        log_message('Using Spotify headers manager DEBUG version.')
+        
+        def create():
+            return {
+                'Authorization': f'Bearer {settings.DEBUG_SPOTIFY_TOKEN}'
+            }
             
-    #     return create
+        return create
     
     previous_time = None
     headers = None
