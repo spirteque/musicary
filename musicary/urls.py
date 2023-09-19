@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include("main.urls")),
     path('account/', include("account.urls")),
     path('posts/', include(('posts.urls', 'posts'), namespace='posts')),
-    path('api/', include(('api.urls', 'api'), namespace='api')),
+    path('api/music/', include(('api.urls', 'api'), namespace='api')),
     
 ]
 

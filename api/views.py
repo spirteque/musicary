@@ -1,21 +1,36 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.conf import settings
+from .spotify_manager import create_spotify_headers
 import requests
-
-
-base_url = 'https://api.spotify.com/'
-
-class MusicView(APIView):
-    def get(self, request, *args, artist_id, **kwargs):
-        r = requests.get(url=f'{base_url}v1/artists/{artist_id}',
-                         headers={
-                             'Authorization': 'Bearer'
-                         })
-        green_day = r.json()
-        print(args, artist_id)
-        return Response(green_day['genres'])
+        
     
-    def post(self, request):
-        return Response(request.data)
+@api_view(['GET'])
+def search_artist(request):
+    id = request.query_params['id']
+    url = f'{settings.SPOTIFY_API_URL}v1/artists/{id}'
+
+    spotify_response = requests.get(url=url, headers=create_spotify_headers())
+
+    return Response(spotify_response.json())
+
+
+@api_view(['GET'])
+def search_song(request):
+    spotify_query_params = {
+        'type': 'track',
+        'market': 'PL',
+        'limit': '5',
+        'include_external': 'audio',
+        'q': request.query_params['title'],
+    }
+    url = f'{settings.SPOTIFY_API_URL}v1/search'
+
+    spotify_response = requests.get(url=url,
+                                    headers=create_spotify_headers(),
+                                    params=spotify_query_params)
+    
+    return Response(spotify_response.json())
 

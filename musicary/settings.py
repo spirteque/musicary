@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from dotenv import load_dotenv
 from django.urls import reverse_lazy
 from pathlib import Path
 import os
@@ -153,9 +154,15 @@ ABSOLUTE_URL_OVERRIDES = {
                                         args=[u.username])
 }
 
-
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': [
 #         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
 #     ]
 # }
+
+load_dotenv()
+
+SPOTIFY_API_TOKEN_URL = os.getenv('SPOTIFY_API_TOKEN_URL')
+SPOTIFY_API_URL = os.getenv('SPOTIFY_API_URL')
+SPOTIFY_CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
+SPOTIFY_CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
