@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model
@@ -38,8 +39,9 @@ def register(request):
             })
             
             to_email = user_form.cleaned_data.get('email')
-            email = EmailMessage(mail_subject, 
-                                 message, 
+            email = EmailMessage(subject=mail_subject, 
+                                 body=message,
+                                 from_email=settings.EMAIL_SENDER,
                                  to=[to_email])
             email.send()
             

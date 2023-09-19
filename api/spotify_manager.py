@@ -4,7 +4,6 @@ from musicary.utils import log_message
 import requests
 
 
-
 def spotify_headers_manager():
     # https://stackoverflow.com/questions/1291755/how-can-i-tell-whether-my-django-application-is-running-on-development-server-or
     if settings.DEBUG:

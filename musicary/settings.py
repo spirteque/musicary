@@ -15,6 +15,9 @@ from django.urls import reverse_lazy
 from pathlib import Path
 import os
 
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -136,7 +139,13 @@ MEDIA_URL = '/media/' # Public URL at the browser
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_SENDER = os.getenv('EMAIL_SENDER')
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -160,7 +169,6 @@ ABSOLUTE_URL_OVERRIDES = {
 #     ]
 # }
 
-load_dotenv()
 
 SPOTIFY_API_TOKEN_URL = os.getenv('SPOTIFY_API_TOKEN_URL')
 SPOTIFY_API_URL = os.getenv('SPOTIFY_API_URL')

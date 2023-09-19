@@ -25,7 +25,7 @@ https://developer.spotify.com/policy
 https://pypi.org/project/djangorestframework/
 https://pypi.org/project/python-dotenv/
 https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1
-
-
+https://dev.emaillabs.io/pl/?_ga=2.229737627.600307085.1695150716-1504801229.1695150716
+https://docs.emaillabs.pl/wprowadzenie/konfiguracja-wysylki-wiadomosci-e-mail-za-pomoca-smtp-oraz-api/
 
 
