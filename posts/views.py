@@ -15,7 +15,7 @@ def post_create(request):
             
             return render(request, 'account/dashboard.html', {'section': 'dashboard',})
     else:
-        form = PostCreateForm(data=request.GET)
+        form = PostCreateForm()
         
     return render(request, 'posts/post/create.html', {'section': 'posts',
                                                       'form': form})

@@ -65,13 +65,19 @@
 .large-font {
     font-size: var(--large-font);
 }
-
+.medium-font {
+    font-size: var(--medium-font);
+}
 .small-medium-font {
     font-size: var(--small-medium-font);
 }
 
 .small-font {
     font-size: var(--small-font);
+}
+
+.xsmall-font {
+    font-size: var(--xsmall-font);
 }
 
 /* --------- shadows ---------- */

@@ -69,3 +69,13 @@ footer {
 .side-navbar {
     height: 14.25rem;
 }
+
+.input-name-inline {
+    display: -webkit-flex;
+    text-align: -webkit-left;
+}
+
+.post-draft {
+    width: 450px;
+    height: 253px;
+}

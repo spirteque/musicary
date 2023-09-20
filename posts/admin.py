@@ -4,8 +4,8 @@ from .models import Post, Comment
 # Register your models here.
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('author', 'title', 'slug', 'created')
-    list_filter = ('author', 'created', 'tags')
+    list_display = ('author', 'title', 'slug', 'created', 'image')
+    list_filter = ('author', 'created', 'author_tags')
     search_fields = ('title',)
     raw_id_fields = ('author',)
     prepopulated_fields = {'slug': ('title',)}

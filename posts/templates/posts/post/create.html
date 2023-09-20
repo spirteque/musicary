@@ -16,14 +16,98 @@
 {% endblock header %}
 
 {% block content %}
-    <div class="row mb-2">
+    <div class="row mb-3">
         <hr class="hr hr-bold bg-accent-color" />
     </div>
-    <form action="." method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <input type="submit" value="Dodaj post">
-    </form>
+    <div class="row mb-5 small-medium-font fst-italic subtle-color justify-content-center">
+        Co gra Ci dzisiaj w duszy?
+    </div>
+
+    <div class="row d-flex">
+        <div class="col-6 d-flex">
+            <form action="." method="post" class="w-100">
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Tytuł:</span>
+                    <div class="w-75">
+                        {{ form.title }}
+                        {{ form.title.errors }}
+                    </div>
+                </div>
+        
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Album:</span>
+                    <div class="w-75">
+                        {{ form.album }}
+                        {{ form.album.errors }}
+                    </div>
+                </div>
+        
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Wykonawca:</span>
+                    <div class="w-75">
+                        {{ form.artist }}
+                        {{ form.artist.errors }}
+                    </div>
+                </div>
+        
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Gatunki:</span>
+                    <div class="w-75">
+                        {{ form.genre }}
+                        {{ form.genre.errors }}
+                    </div>
+                </div>
+        
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Tagi:</span>
+                    <div class="w-75">
+                        {{ form.author_tags }}
+                        {{ form.author_tags.errors }}
+                    </div>
+                </div>
+        
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Oznacz znajomych:</span>
+                    <div class="w-75">
+                        {{ form.friend_tags }}
+                        {{ form.friend_tags.errors }}
+                    </div>
+                </div>
+
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Wybierz zdjęcie:</span>
+                    <div class="w-75 input-group">
+                        <input type="file" name="photo" accept="image/*" id="id_photo" class="form-control">
+                    </div>
+                    {{ form.image.errors }}
+                </div>
+        
+                {% csrf_token %}
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-outline-dark my-3">
+                        Udostępnij post
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-6 d-flex flex-column align-items-center">
+            <div class="small-medium-font mb-3">
+                Podgląd
+            </div>
+            <div class="post-draft border border-1 border-black rounded bg-secondary-color">
+                *spotify things*
+            </div>
+            <div class="accent-font medium-font fw-bolder text-start">
+                Tytuł piosenki
+            </div>
+            <div class="xsmall-font mx-5 w-75 fst-italic subtle-color">
+                #usertag1 #usertag2 #usertag3 #usertag4 #zespoł #album #gatunek1 #gatunek2 #gatunek3 #gatunek4
+            </div>
+        </div>
+    </div>
+
 {% endblock content %}
     
     

@@ -11,6 +11,8 @@
     --main-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     --accent-shadow: 0 0 3px 4px var(--accent-color);
     --large-font: 2.25rem;
+    --medium-font: 1.25rem;
     --small-medium-font: 1.125rem;
     --small-font: 0.75rem;
+    --xsmall-font: 0.65rem;
 }

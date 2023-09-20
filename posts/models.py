@@ -3,26 +3,48 @@ from django.conf import settings
 from django.utils.text import slugify
 from taggit.managers import TaggableManager
 
+
+# class FriendTag(models.Model):
+#     user_from = models.ForeignKey(settings.AUTH_USER_MODEL,
+#                                   related_name='tag_from_set',
+#                                   on_delete=models.CASCADE)
+    
+#     user_to = models.ForeignKey(settings.AUTH_USER_MODEL,
+#                                 related_name='tag_to_set',
+#                                 on_delete=models.CASCADE)
+    
+#     created = models.DateTimeField(auto_now_add=True,
+#                                    db_index=True)
+    
+#     def __str__(self):
+#         return f'{self.user_from} oznaczył {self.user_to}'
+    
+
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name='posts_created',
                              on_delete=models.CASCADE)
     
     title = models.CharField(max_length=200)
-    artist = models.CharField(max_length=200,
-                              blank=True)
-    genre = models.CharField(max_length=200,
-                             blank=True)
+    album = models.CharField(max_length=200)
+    artist = models.CharField(max_length=200)
+    genre = models.CharField(max_length=200)
+    author_tags = TaggableManager()
+    friend_tags = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                        #  through=FriendTag,
+                                         related_name='tagged_users',
+                                         blank=True)
+    image = models.ImageField(upload_to='posts_photos/%Y/%m/%d')
     
     slug = models.SlugField(max_length=200,
                             blank=True)
-    url = models.URLField()
+
     created = models.DateField(auto_now_add=True,
                                db_index=True)
+    
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                         related_name='posts_liked',
                                         blank=True)
-    tags = TaggableManager()
     
     def save(self, *args, **kwargs):
         if not self.slug:
