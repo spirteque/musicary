@@ -26,10 +26,21 @@
     <div class="row d-flex">
         <div class="col-6 d-flex">
             <form action="." method="post" class="w-100">
+                
                 <div class="mb-3 input-name-inline align-items-center justify-content-between">
                     <span class="fw-bolder">Tytuł:</span>
                     <div class="w-75">
-                        {{ form.title }}
+                        {% comment %} {{ form.title }} {% endcomment %}
+                        
+                        {% verbatim %}
+                        <div id="song_title_input">
+                            <input type="text" list="songs" name="title" class="form-control" id="title_input" required @input="onChange">
+                            <datalist id="songs">
+                                <option v-for="song in songs">{{ song }}</option>
+                            </datalist>
+                        </div>
+                        {% endverbatim %}
+                            
                         {{ form.title.errors }}
                     </div>
                 </div>
@@ -107,6 +118,9 @@
             </div>
         </div>
     </div>
+
+
+    <script src="{% static 'js/song_title_input.js' %}"></script>
 
 {% endblock content %}
     
