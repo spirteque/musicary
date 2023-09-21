@@ -1,5 +1,3 @@
-from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.conf import settings
@@ -22,7 +20,7 @@ def search_song(request):
     spotify_query_params = {
         'type': 'track',
         'market': 'PL',
-        'limit': '5',
+        'limit': '6',
         'include_external': 'audio',
         'q': request.query_params['title'],
     }

@@ -4,22 +4,6 @@ from django.utils.text import slugify
 from taggit.managers import TaggableManager
 
 
-# class FriendTag(models.Model):
-#     user_from = models.ForeignKey(settings.AUTH_USER_MODEL,
-#                                   related_name='tag_from_set',
-#                                   on_delete=models.CASCADE)
-    
-#     user_to = models.ForeignKey(settings.AUTH_USER_MODEL,
-#                                 related_name='tag_to_set',
-#                                 on_delete=models.CASCADE)
-    
-#     created = models.DateTimeField(auto_now_add=True,
-#                                    db_index=True)
-    
-#     def __str__(self):
-#         return f'{self.user_from} oznaczył {self.user_to}'
-    
-
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name='posts_created',

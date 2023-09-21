@@ -1,0 +1,120 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+
+{% block title %}
+    Dodaj post
+{% endblock title %}
+
+{% block header %}
+    <div class="row justify-content-center m-4">
+        <h1 class="m-0 mb-1 font-weight-bolder">
+            Dodaj post
+        </h1>
+    </div>
+{% endblock header %}
+
+{% block content %}
+    <div class="row mb-3">
+        <hr class="hr hr-bold bg-accent-color" />
+    </div>
+    <div class="row mb-5 small-medium-font fst-italic subtle-color justify-content-center">
+        Co gra Ci dzisiaj w duszy?
+    </div>
+
+    <div class="row d-flex">
+        <div class="col-6 d-flex">
+            <form action="." method="post" class="w-100" enctype="multipart/form-data">
+                
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Tytuł:</span>
+                    <div class="w-75">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            {{ form_search.title }}
+                            {% comment %} <input class="form-control" type="text" placeholder="Wyszukaj piosenkę" id="title_input required"> {% endcomment %}
+                            <button type="button" class="btn btn-outline-dark border-0 bg-gentle-color px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        {% comment %} {{ form.title }} {% endcomment %}
+                        {{ form_search.title.errors }}
+                    </div>
+                </div>
+
+                <div class="d-flex border border-2 border-black rounded flex-column mb-3 flex-wrap">
+                    {% for item in search_result.tracks.items %}
+                        <div class="d-flex flex-column small-font border border-1 border-black rounded my-3 mx-1 w-50">
+                            <img src="{{ item.album.images.1.url }}" class="create-post-image">
+                            <p class="m-1">tytuł: {{ item.name }}</p>
+                            <p class="m-1">album: {{ item.album.name }}</p>
+                            <p class="m-1">wykonawca:
+                                {% for artist in item.artists %}
+                                    | {{ artist.name }} | 
+                                {% endfor %}
+                            </p>
+                            <p class="m-1">gatunki muzyczne wykonawcy:
+                                {% for el in genres %}
+                                    {% for artist in item.artists %}                                  
+                                        {% if artist.id == el.id %}
+                                            {% for genre in el.genres %}
+                                                | {{ genre }} |
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}                                        
+                                {% endfor %}
+                            </p>
+                        </div>
+                    {% endfor %}  
+                </div>
+                
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Tagi:</span>
+                    <div class="w-75">
+                        {{ form_pick.author_tags }}
+                        {{ form_pick.author_tags.errors }}
+                    </div>
+                </div>
+        
+                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                    <span class="fw-bolder">Oznacz znajomych:</span>
+                    <div class="w-75">
+                        {{ form_pick.friend_tags }}
+                        {{ form_pick.friend_tags.errors }}
+                    </div>
+                </div>
+        
+                {% csrf_token %}
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-outline-dark my-3">
+                        Udostępnij post
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-6 d-flex flex-column align-items-center">
+            <div class="w-75">
+                <div class="small-medium-font mb-3">
+                    Podgląd
+                </div>
+                <div class="post-draft border border-1 border-black rounded bg-secondary-color">
+                    *spotify things*
+                </div>
+                <div class="accent-font medium-font fw-bolder text-start">
+                    Tytuł piosenki
+                </div>
+                <div class="xsmall-font fst-italic subtle-color text-start">
+                    #usertag1 #usertag2 #usertag3 #usertag4 #zespoł #album #gatunek1 #gatunek2 #gatunek3 #gatunek4
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+    
+    

@@ -31,3 +31,15 @@ https://www.youtube.com/watch?v=RnFwK_Z_f70
 https://vuejs.org/guide/essentials/list.html#v-for
 https://vuejs.org/guide/essentials/forms.html
 https://blog.logrocket.com/debounce-throttle-vue/
+https://www.geeksforgeeks.org/python-ways-to-remove-duplicates-from-list/
+
+
+
+
+
+
+
+
+
+
+

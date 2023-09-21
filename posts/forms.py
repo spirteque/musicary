@@ -6,35 +6,21 @@ from .models import Post
 
 ErrorList.template_name = "main/errors.html"
 
-class PostCreateForm(forms.ModelForm):
+class FindSongForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(
             attrs={'class': 'form-control',
-                   'id': 'title_input'}
+                   'id': 'title_input',
+                   'placeholder': 'Wyszukaj tytuł piosenki'}
         )
     )
     
-    album = forms.CharField(
-        widget=forms.TextInput(
-            attrs={'class': 'form-control',
-                   'id': 'album_input'}
-        )
-    )
-    
-    artist = forms.CharField(
-        widget=forms.TextInput(
-            attrs={'class': 'form-control',
-                   'id': 'artist_input'}
-        )
-    )
-    
-    genre = forms.CharField(
-        widget=forms.TextInput(
-            attrs={'class': 'form-control',
-                   'id': 'genre_input'}
-        )
-    )
-    
+    class Meta:
+        model = Post
+        fields = ('title',)
+
+class PostCreateForm(FindSongForm):
+
     author_tags = forms.CharField(
         widget=forms.TextInput(
             attrs={'class': 'form-control',
@@ -49,11 +35,11 @@ class PostCreateForm(forms.ModelForm):
         )
     )
     
-    image = forms.ImageField(
-        error_messages={'invalid_image': _('Prześlij poprawny obraz, np. w formacie .png, .jpeg.')})
+    # image = forms.ImageField(
+    #     error_messages={'invalid_image': _('Prześlij poprawny obraz, np. w formacie .png, .jpeg.')})
         
-    ClearableFileInput.template_name = "main/clearable_file_input.html"
+    # ClearableFileInput.template_name = "main/clearable_file_input.html"
     
     class Meta:
         model = Post
-        fields = ('title', 'album', 'artist', 'genre', 'author_tags', 'friend_tags', 'image')
+        fields = ('title', 'author_tags', 'friend_tags')
