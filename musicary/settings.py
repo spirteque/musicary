@@ -169,6 +169,39 @@ ABSOLUTE_URL_OVERRIDES = {
 #     ]
 # }
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[{name}][{asctime}][{levelname}]: {message}\n",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "verbose": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose"
+        },
+    },
+    "root": {
+        "handlers": ["verbose"],
+        "level": "INFO",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["verbose"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+
+}
+
 
 SPOTIFY_API_TOKEN_URL = os.getenv('SPOTIFY_API_TOKEN_URL')
 SPOTIFY_API_URL = os.getenv('SPOTIFY_API_URL')

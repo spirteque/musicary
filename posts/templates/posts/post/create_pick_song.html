@@ -25,31 +25,37 @@
 
     <div class="row d-flex">
         <div class="col-6 d-flex">
-            <form action="." method="post" class="w-100" enctype="multipart/form-data">
+            <form action="." method="{% if current_status.value == 3%}post{% else %}get{% endif %}" class="w-100" enctype="multipart/form-data">
                 
                 <div class="mb-3 input-name-inline align-items-center justify-content-between">
                     <span class="fw-bolder">Tytuł:</span>
                     <div class="w-75">
-                        {% csrf_token %}
+                        {% comment %} {% csrf_token %} {% endcomment %}
                         <div class="input-group">
-                            {{ form_search.title }}
-                            {% comment %} <input class="form-control" type="text" placeholder="Wyszukaj piosenkę" id="title_input required"> {% endcomment %}
-                            <button type="button" class="btn btn-outline-dark border-0 bg-gentle-color px-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                </svg>
-                            </button>
+                            {{ form.title }}
+                            
+                            {% comment %} {% if current_status.value == 1 %} {% endcomment %}
+                                <button type="submit" class="btn btn-outline-dark border-0 bg-gentle-color px-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </button>
+                            {% comment %} {% endif %} {% endcomment %}
+                                
                         </div>
-                        {% comment %} {{ form.title }} {% endcomment %}
-                        {{ form_search.title.errors }}
+                        {{ form.title.errors }}
                     </div>
                 </div>
+
+                {% if current_status.value == 2 or current_status.value == 3 %}
+                    
+                {{ form.song_choice }}
 
                 <div class="d-flex border border-2 border-black rounded flex-column mb-3 flex-wrap">
                     {% for item in search_result.tracks.items %}
                         <div class="d-flex flex-column small-font border border-1 border-black rounded my-3 mx-1 w-50">
-                            <img src="{{ item.album.images.1.url }}" class="create-post-image">
-                            <p class="m-1">tytuł: {{ item.name }}</p>
+                            <img src="{{ item.album.images.1.url }}" class="create-post-image img-thumbnail mx-auto">
+                            <p class="m-1"><b>{{ item.name }}</b></p>
                             <p class="m-1">album: {{ item.album.name }}</p>
                             <p class="m-1">wykonawca:
                                 {% for artist in item.artists %}
@@ -70,8 +76,10 @@
                         </div>
                     {% endfor %}  
                 </div>
-                
-                <div class="mb-3 input-name-inline align-items-center justify-content-between">
+                {% endif %}
+
+                {% if current_status.value == 3 %}
+                 <div class="mb-3 input-name-inline align-items-center justify-content-between">
                     <span class="fw-bolder">Tagi:</span>
                     <div class="w-75">
                         {{ form_pick.author_tags }}
@@ -86,13 +94,14 @@
                         {{ form_pick.friend_tags.errors }}
                     </div>
                 </div>
-        
+                
                 {% csrf_token %}
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-outline-dark my-3">
                         Udostępnij post
                     </button>
                 </div>
+                {% endif %}
 
             </form>
         </div>

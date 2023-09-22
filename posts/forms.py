@@ -18,9 +18,22 @@ class FindSongForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title',)
+        
 
-class PostCreateForm(FindSongForm):
+class SelectSongForm(FindSongForm):    
+    song_choice = forms.ChoiceField(choices=[])
+    
+    def __init__(self, songs_ids, *args, **kwargs):
+        super(SelectSongForm, self).__init__(*args, **kwargs)
+        
+        self.fields['song_choice'].choices = songs_ids
+    
+    class Meta:
+        model = Post
+        fields = ('title', 'song_choice')
+        
 
+class PostCreateForm(SelectSongForm):
     author_tags = forms.CharField(
         widget=forms.TextInput(
             attrs={'class': 'form-control',
