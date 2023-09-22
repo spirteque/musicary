@@ -65,7 +65,7 @@
                             <p class="m-1">gatunki muzyczne wykonawcy:
                                 {% for el in genres %}
                                     {% for artist in item.artists %}                                  
-                                        {% if artist.id == el.id %}
+                                        {% if artist.id == el.artist_id %}
                                             {% for genre in el.genres %}
                                                 | {{ genre }} |
                                             {% endfor %}

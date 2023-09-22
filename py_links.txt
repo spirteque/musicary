@@ -32,6 +32,9 @@ https://vuejs.org/guide/essentials/list.html#v-for
 https://vuejs.org/guide/essentials/forms.html
 https://blog.logrocket.com/debounce-throttle-vue/
 https://www.geeksforgeeks.org/python-ways-to-remove-duplicates-from-list/
+https://docs.djangoproject.com/en/4.2/howto/logging/
+https://docs.djangoproject.com/en/4.2/topics/logging/
+https://www.freecodecamp.org/news/logging-in-python-debug-your-django-projects/
 
 
 

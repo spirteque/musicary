@@ -6,6 +6,3 @@ def log_message(message):
     
     print(line + '\n' + message + '\n' + line)
     
-def log_message_debug(message):
-    if settings.DEBUG:
-        log_message(message)
