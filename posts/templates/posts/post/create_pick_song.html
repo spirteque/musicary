@@ -24,7 +24,7 @@
     </div>
 
     <div class="row d-flex">
-        <div class="col-6 d-flex">
+        <div class="col-7 d-flex">
             <form action="." method="{% if current_status.value == 3%}post{% else %}get{% endif %}" class="w-100" enctype="multipart/form-data">
                 
                 <div class="mb-3 input-name-inline align-items-center justify-content-between">
@@ -51,28 +51,47 @@
                     
                 {{ form.song_choice }}
 
-                <div class="d-flex border border-2 border-black rounded flex-column mb-3 flex-wrap">
-                    {% for item in search_result.tracks.items %}
-                        <div class="d-flex flex-column small-font border border-1 border-black rounded my-3 mx-1 w-50">
-                            <img src="{{ item.album.images.1.url }}" class="create-post-image img-thumbnail mx-auto">
-                            <p class="m-1"><b>{{ item.name }}</b></p>
-                            <p class="m-1">album: {{ item.album.name }}</p>
-                            <p class="m-1">wykonawca:
-                                {% for artist in item.artists %}
-                                    | {{ artist.name }} | 
-                                {% endfor %}
-                            </p>
-                            <p class="m-1">gatunki muzyczne wykonawcy:
-                                {% for el in genres %}
-                                    {% for artist in item.artists %}                                  
-                                        {% if artist.id == el.artist_id %}
-                                            {% for genre in el.genres %}
-                                                | {{ genre }} |
-                                            {% endfor %}
-                                        {% endif %}
-                                    {% endfor %}                                        
-                                {% endfor %}
-                            </p>
+                <div class="d-flex border border-1 border-black rounded flex-wrap gap-4 justify-content-center bg-white pb-3">
+                    {% for song in songs %}
+                        <div class="bg-main-color d-flex flex-column small-font border border-1 border-secondary rounded mt-3 w-45 justify-content-between">
+                            
+                            <div class="d-flex mb-1 mt-2">
+                                <div class="w-50">
+                                    <img src="{{ song.album.images.1.url }}" class="create-post-image img-thumbnail">
+                                </div>
+
+                                <div class="w-50">
+                                    <p class="me-1 mb-1 text-start"><b>{{ song.name|truncatechars:45 }}</b></p>
+                                    <p class="me-1 mb-1 text-start">{{ song.album.name|truncatechars:45 }}</p>
+                                    <p class="me-1 mb-1 text-start">
+                                        {% for artist in song.artists %}
+                                            | {{ artist.name }} | 
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column justify-content-end mt-1">
+                                <div class="my-1 w-100">gatunki muzyczne wykonawcy:
+                                    <br>
+                                    {% for el in genres_with_artist_id %}
+                                        {% for artist in song.artists %}                                  
+                                            {% if artist.id == el.artist_id %}
+                                                {% for genre in el.artist_genres %}
+                                                    | {{ genre }} |
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}                                        
+                                    {% endfor %}
+                                </div>
+
+                                <div class="d-flex justify-content-center w-100 mb-2">
+                                    <audio controls>
+                                        <source src="{{ song.preview_url }}" type="audio/mpeg">
+                                    </audio>
+                                </div>
+                            </div>
+
                         </div>
                     {% endfor %}  
                 </div>
@@ -106,7 +125,7 @@
             </form>
         </div>
 
-        <div class="col-6 d-flex flex-column align-items-center">
+        <div class="col-5 d-flex flex-column align-items-center">
             <div class="w-75">
                 <div class="small-medium-font mb-3">
                     Podgląd

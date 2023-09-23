@@ -15,7 +15,7 @@ def spotify_request(url, params=None):
     else:
         response = requests.get(url=url, headers=headers)  
         
-    logger.info(msg=f'GET {response.url}')
+    logger.info(msg=f'"GET {response.url}')
     
     return response
 
@@ -42,7 +42,7 @@ def get_songs_ids(spotify_song_response):
     
     return songs_ids
 
-def get_genres(spotify_song_response):
+def get_genres_with_artist_id(spotify_song_response):
     artists_ids = set()
     for item in spotify_song_response['tracks']['items']:
         [artists_ids.add(artist['id']) for artist in item['artists']]
@@ -51,15 +51,16 @@ def get_genres(spotify_song_response):
     for id in artists_ids:
         url = f'{settings.SPOTIFY_API_URL}v1/artists/{id}'
         spotify_artist_response_json = spotify_request(url=url).json()
-        genres = spotify_artist_response_json['genres']
+        artist_genres = spotify_artist_response_json['genres']
+        artist_id = spotify_artist_response_json['id']
 
-        genres.append({'artist_id': id, 'genres': genres})
+        genres.append({'artist_id': artist_id, 'artist_genres': artist_genres})
 
     return genres
 
 def get_spotify_details(title):
     spotify_song_response = get_spotify_song_response(title)
     songs_ids = get_songs_ids(spotify_song_response)
-    genres = get_genres(spotify_song_response)
+    genres_with_artist_id = get_genres_with_artist_id(spotify_song_response)
     
-    return [songs_ids, spotify_song_response, genres,]
+    return [songs_ids, spotify_song_response['tracks']['items'], genres_with_artist_id]

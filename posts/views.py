@@ -21,26 +21,26 @@ def post_create(request):
         if title_from_query and song_choice_from_query:
             current_status = PostCreateStatus.SONG_FOUND_AND_SELECTED
 
-            [songs_ids, spotify_song_response, genres] = get_spotify_details(title_from_query)
+            [songs_ids, songs, genres_with_artist_id] = get_spotify_details(title_from_query)
             create_post_form = PostCreateForm(data={'title': title_from_query,
                                                     'song_choice': song_choice_from_query},
                                               songs_ids=songs_ids)
                 
             return render(request, 'posts/post/create_pick_song.html', {'form': create_post_form,
                                                                         'current_status': current_status,
-                                                                        'search_result': spotify_song_response,
-                                                                        'genres': genres})
+                                                                        'songs': songs,
+                                                                        'genres_with_artist_id': genres_with_artist_id})
  
         elif title_from_query:
             current_status = PostCreateStatus.SONG_FOUND
-            [songs_ids, spotify_song_response, genres] = get_spotify_details(title_from_query)
+            [songs_ids, songs, genres_with_artist_id] = get_spotify_details(title_from_query)
             select_song_form = SelectSongForm(data={'title': title_from_query},
                                               songs_ids=songs_ids)
                 
             return render(request, 'posts/post/create_pick_song.html', {'form': select_song_form,
                                                                         'current_status': current_status,
-                                                                        'search_result': spotify_song_response,
-                                                                        'genres': genres})
+                                                                        'songs': songs,
+                                                                        'genres_with_artist_id': genres_with_artist_id})
                          
         else:
             current_status = PostCreateStatus.INIT
