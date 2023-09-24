@@ -150,14 +150,22 @@
                         </div>
                 </div>
 
-
-                 <div class="mb-3 input-name-inline align-items-center justify-content-between">
-                    <span class="fw-bolder">Tagi:</span>
-                    <div class="w-75">
-                        {{ form_pick.author_tags }}
-                        {{ form_pick.author_tags.errors }}
+                
+                <div class="d-flex flex-column my-3">
+                    <div class="mb-3 input-name-inline align-items-center justify-content-between w-75">
+                        <span class="fw-bolder me-3">Tagi:</span>
+                        {{ form.author_tags }}
+                    </div>
+                        
+                    <div class="d-flex flex-wrap">
+                        {% for tag in tags %}
+                        <div class="d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
+                            {{ tag }}
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+
         
                 <div class="mb-3 input-name-inline align-items-center justify-content-between">
                     <span class="fw-bolder">Oznacz znajomych:</span>

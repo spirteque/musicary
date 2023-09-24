@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .forms import PostCreateForm, SelectSongForm, FindSongForm
 from .spotify import get_spotify_details
+from .tag_moods import tag_moods
 from enum import Enum
 import logging
 
@@ -29,11 +30,14 @@ def post_create(request):
             for s in songs:
                 if s['id'] == song_choice_from_query:
                     song = s
+                    
+            tags = tag_moods
                 
             return render(request, 'posts/post/create_post.html', {'form': create_post_form,
-                                                                        'current_status': current_status,
-                                                                        'song': song,
-                                                                        'genres_with_artist_id': genres_with_artist_id})
+                                                                    'current_status': current_status,
+                                                                    'song': song,
+                                                                    'genres_with_artist_id': genres_with_artist_id,
+                                                                    'tags': tags})
  
         elif title_from_query:
             current_status = PostCreateStatus.SONG_FOUND
@@ -42,9 +46,9 @@ def post_create(request):
                                               songs_ids=songs_ids)
                 
             return render(request, 'posts/post/create_post.html', {'form': select_song_form,
-                                                                        'current_status': current_status,
-                                                                        'songs': songs,
-                                                                        'genres_with_artist_id': genres_with_artist_id})
+                                                                    'current_status': current_status,
+                                                                    'songs': songs,
+                                                                    'genres_with_artist_id': genres_with_artist_id})
                          
         else:
             current_status = PostCreateStatus.INIT
