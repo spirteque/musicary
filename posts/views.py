@@ -25,10 +25,14 @@ def post_create(request):
             create_post_form = PostCreateForm(data={'title': title_from_query,
                                                     'song_choice': song_choice_from_query},
                                               songs_ids=songs_ids)
+            
+            for s in songs:
+                if s['id'] == song_choice_from_query:
+                    song = s
                 
-            return render(request, 'posts/post/create_pick_song.html', {'form': create_post_form,
+            return render(request, 'posts/post/create_post.html', {'form': create_post_form,
                                                                         'current_status': current_status,
-                                                                        'songs': songs,
+                                                                        'song': song,
                                                                         'genres_with_artist_id': genres_with_artist_id})
  
         elif title_from_query:
@@ -37,7 +41,7 @@ def post_create(request):
             select_song_form = SelectSongForm(data={'title': title_from_query},
                                               songs_ids=songs_ids)
                 
-            return render(request, 'posts/post/create_pick_song.html', {'form': select_song_form,
+            return render(request, 'posts/post/create_post.html', {'form': select_song_form,
                                                                         'current_status': current_status,
                                                                         'songs': songs,
                                                                         'genres_with_artist_id': genres_with_artist_id})
@@ -46,7 +50,7 @@ def post_create(request):
             current_status = PostCreateStatus.INIT
             find_song_form = FindSongForm()
 
-            return render(request, 'posts/post/create_pick_song.html', {'form': find_song_form,
+            return render(request, 'posts/post/create_post.html', {'form': find_song_form,
                                                                         'current_status': current_status})
     
     if request.method == 'POST':

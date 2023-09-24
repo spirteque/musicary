@@ -21,7 +21,8 @@ class FindSongForm(forms.ModelForm):
         
 
 class SelectSongForm(FindSongForm):    
-    song_choice = forms.ChoiceField(choices=[])
+    song_choice = forms.ChoiceField(choices=[],
+                                    widget=forms.Select(attrs={'class': 'd-none'}))
     
     def __init__(self, songs_ids, *args, **kwargs):
         super(SelectSongForm, self).__init__(*args, **kwargs)
