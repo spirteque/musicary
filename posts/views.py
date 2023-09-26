@@ -14,18 +14,25 @@ class PostCreateStatus(Enum):
     SONG_FOUND_AND_SELECTED = 3
 
 @login_required
-def post_create(request):    
+def post_create(request):
+  
     if request.method == "GET":
         title_from_query = request.GET.get('title')
         song_choice_from_query = request.GET.get('song_choice')
         
         if title_from_query and song_choice_from_query:
             current_status = PostCreateStatus.SONG_FOUND_AND_SELECTED
-
+            
+            followings_users = request.user.following.all()
+            friends_ids = tuple((str(user.id), user.username) for user in followings_users)
+            print(friends_ids)
+            
             [songs_ids, songs, genres_with_artist_id] = get_spotify_details(title_from_query)
+            
             create_post_form = PostCreateForm(data={'title': title_from_query,
                                                     'song_choice': song_choice_from_query},
-                                              songs_ids=songs_ids)
+                                              songs_ids=songs_ids,
+                                              friends_ids=friends_ids)
             
             for s in songs:
                 if s['id'] == song_choice_from_query:

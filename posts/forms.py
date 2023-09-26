@@ -35,6 +35,7 @@ class SelectSongForm(FindSongForm):
         
 
 class PostCreateForm(SelectSongForm):
+    
     author_tags = forms.CharField(
         widget=forms.TextInput(
             attrs={'class': 'form-control',
@@ -42,12 +43,21 @@ class PostCreateForm(SelectSongForm):
         )
     )
     
-    friend_tags = forms.MultipleChoiceField(
-        widget=forms.SelectMultiple(
-            attrs={'class': 'form-control',
-                   'id': 'friend_tags_input'}
-        )
-    )
+    friend_tags = forms.MultipleChoiceField(choices=[],
+                                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+                                            #  widget=forms.Select(attrs={'class': 'd-none'}))
+        
+    def __init__(self, friends_ids, *args, **kwargs):
+        super(PostCreateForm, self).__init__(*args, **kwargs)
+        
+        self.fields['friend_tags'].choices = friends_ids
+    
+    # friend_tags = forms.MultipleChoiceField(
+    #     widget=forms.SelectMultiple(
+    #         attrs={'class': 'form-control',
+    #                'id': 'friend_tags_input'}
+    #     )
+    
     
     # image = forms.ImageField(
     #     error_messages={'invalid_image': _('Prześlij poprawny obraz, np. w formacie .png, .jpeg.')})
