@@ -48,6 +48,10 @@
     color: var(--gentle-color);
 }
 
+.bg-spotify-color {
+    background-color: #191414;
+}
+
 /* ----- fonts ----- */
 
 .main-font {
