@@ -20,49 +20,46 @@ def post_create(request):
         title_from_query = request.GET.get('title')
         song_choice_from_query = request.GET.get('song_choice')
         
-        if title_from_query and song_choice_from_query:
-            current_status = PostCreateStatus.SONG_FOUND_AND_SELECTED
-            
-            followings_users = request.user.following.all()
-            friends_ids = tuple((str(user.id), user.username) for user in followings_users)
-            print(friends_ids)
-            
-            [songs_ids, songs, genres_with_artist_id] = get_spotify_details(title_from_query)
-            
-            create_post_form = PostCreateForm(data={'title': title_from_query,
-                                                    'song_choice': song_choice_from_query},
-                                              songs_ids=songs_ids,
-                                              friends_ids=friends_ids)
-            
-            for s in songs:
-                if s['id'] == song_choice_from_query:
-                    song = s
-                    
-            tags = tag_moods
+        if title_from_query:
+            [songs_ids, songs] = get_spotify_details(title_from_query)
+
+            if song_choice_from_query:
+                current_status = PostCreateStatus.SONG_FOUND_AND_SELECTED
                 
-            return render(request, 'posts/post/create_post.html', {'form': create_post_form,
-                                                                    'current_status': current_status,
-                                                                    'song': song,
-                                                                    'genres_with_artist_id': genres_with_artist_id,
-                                                                    'tags': tags})
+                followings_users = request.user.following.all()
+                friends_ids = tuple((str(user.id), user.username) for user in followings_users)
+                
+                create_post_form = PostCreateForm(data={'title': title_from_query,
+                                                        'song_choice': song_choice_from_query},
+                                                songs_ids=songs_ids,
+                                                friends_ids=friends_ids)
+                
+                for s in songs:
+                    if s['song_id'] == song_choice_from_query:
+                        song = s
+                        
+                tags = tag_moods
+                    
+                return render(request, 'posts/post/create_post.html', {'form': create_post_form,
+                                                                        'current_status': current_status,
+                                                                        'song': song,
+                                                                        'tags': tags})
  
-        elif title_from_query:
+
             current_status = PostCreateStatus.SONG_FOUND
-            [songs_ids, songs, genres_with_artist_id] = get_spotify_details(title_from_query)
             select_song_form = SelectSongForm(data={'title': title_from_query},
                                               songs_ids=songs_ids)
                 
             return render(request, 'posts/post/create_post.html', {'form': select_song_form,
-                                                                    'current_status': current_status,
-                                                                    'songs': songs,
-                                                                    'genres_with_artist_id': genres_with_artist_id})
+                                                                   'current_status': current_status,
+                                                                   'songs': songs,})
                          
         else:
             current_status = PostCreateStatus.INIT
             find_song_form = FindSongForm()
 
             return render(request, 'posts/post/create_post.html', {'form': find_song_form,
-                                                                        'current_status': current_status})
+                                                                   'current_status': current_status})
     
     if request.method == 'POST':
         create_post_form = PostCreateForm(data=request.POST)

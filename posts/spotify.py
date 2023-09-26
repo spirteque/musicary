@@ -5,6 +5,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+cache = {}
+
 def spotify_request(url, params=None):
     headers = create_spotify_headers()
     
@@ -49,18 +51,47 @@ def get_genres_with_artist_id(spotify_song_response):
             
     genres = []
     for id in artists_ids:
-        url = f'{settings.SPOTIFY_API_URL}v1/artists/{id}'
-        spotify_artist_response_json = spotify_request(url=url).json()
-        artist_genres = spotify_artist_response_json['genres']
-        artist_id = spotify_artist_response_json['id']
-
-        genres.append({'artist_id': artist_id, 'artist_genres': artist_genres})
+        
+        if id not in cache.keys():
+            url = f'{settings.SPOTIFY_API_URL}v1/artists/{id}'
+            cache[id] = spotify_request(url=url).json()
+            
+        artist_genres = cache[id]['genres']
+        
+        genres.append({'artist_id': id,
+                       'artist_genres': artist_genres})
 
     return genres
+
+def map_to_internal_songs(spotify_song_response, genres_with_artist_id):
+    
+    songs = spotify_song_response['tracks']['items']
+    
+    songs_informations = [{'song_id': song['id'],
+                           'song_name': song['name'],
+                           'song_album': song['album']['name'],
+                           'song_image': song['album']['images'][1]['url'],
+                           'song_artists': [{'artist_id': artist['id'],
+                                             'artist_name': artist['name'],
+                                            } for artist in song['artists']
+                                           ],
+                           'song_artists_genres': [],
+                           'song_preview': song['preview_url']
+                          } for song in songs]
+            
+    for song in songs_informations:
+        for g_artist in genres_with_artist_id:
+            for s_artist in song['song_artists']:
+                if s_artist['artist_id'] == g_artist['artist_id']:
+                    for genre in g_artist['artist_genres']:
+                        song['song_artists_genres'].append(genre)
+                    
+    return songs_informations
 
 def get_spotify_details(title):
     spotify_song_response = get_spotify_song_response(title)
     songs_ids = get_songs_ids(spotify_song_response)
     genres_with_artist_id = get_genres_with_artist_id(spotify_song_response)
+    songs = map_to_internal_songs(spotify_song_response, genres_with_artist_id)
     
-    return [songs_ids, spotify_song_response['tracks']['items'], genres_with_artist_id]
+    return [songs_ids, songs]
