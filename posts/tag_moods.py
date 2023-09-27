@@ -38,7 +38,6 @@ tag_moods = sorted(['szczęście',
                     'zazdrość',
                     'nadzieja',
                     'wzruszenie',
-                    'zmęczenie',
                     'irytacja',
                     'złamane serce',
                     'tęsknota',
@@ -48,4 +47,10 @@ tag_moods = sorted(['szczęście',
                     'senność',
                     'przygoda',
                     'rodzinnie',
-                    'miłość'])
+                    'miłość',
+                    'radość'])
+
+
+tag_moods_as_choices = tuple([(mood, mood) for mood in tag_moods])
+
+    

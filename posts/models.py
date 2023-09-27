@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
-from taggit.managers import TaggableManager
+from multiselectfield import MultiSelectField
+from .tag_moods import tag_moods_as_choices
 
 
 class Post(models.Model):
@@ -13,7 +14,8 @@ class Post(models.Model):
     album = models.CharField(max_length=200)
     artist = models.CharField(max_length=200)
     genre = models.CharField(max_length=200)
-    author_tags = TaggableManager()
+    author_tags = MultiSelectField(choices=tag_moods_as_choices,
+                                   max_length=len(tag_moods_as_choices))
     friend_tags = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                         #  through=FriendTag,
                                          related_name='tagged_users',

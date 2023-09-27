@@ -37,13 +37,13 @@ def post_create(request):
                 for s in songs:
                     if s['song_id'] == song_choice_from_query:
                         song = s
-                        
-                tags = tag_moods
+
+                
                     
                 return render(request, 'posts/post/create_post.html', {'form': create_post_form,
                                                                         'current_status': current_status,
                                                                         'song': song,
-                                                                        'tags': tags})
+                                                                        'tags': tag_moods})
  
 
             current_status = PostCreateStatus.SONG_FOUND

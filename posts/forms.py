@@ -2,6 +2,7 @@ from django import forms
 from django.forms.utils import ErrorList
 from django.forms.widgets import ClearableFileInput
 from django.utils.translation import gettext_lazy as _
+from multiselectfield import MultiSelectFormField
 from .models import Post
 
 ErrorList.template_name = "main/errors.html"
@@ -36,12 +37,8 @@ class SelectSongForm(FindSongForm):
 
 class PostCreateForm(SelectSongForm):
     
-    author_tags = forms.CharField(
-        widget=forms.TextInput(
-            attrs={'class': 'form-control',
-                   'id': 'author_tags_input'}
-        )
-    )
+    author_tags = MultiSelectFormField(widget=forms.CheckboxSelectMultiple(attrs={'id': 'author_tags_input'}))
+                                            #  widget=forms.Select(attrs={'class': 'd-none'}))
     
     friend_tags = forms.MultipleChoiceField(choices=[],
                                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
@@ -51,12 +48,7 @@ class PostCreateForm(SelectSongForm):
         super(PostCreateForm, self).__init__(*args, **kwargs)
         
         self.fields['friend_tags'].choices = friends_ids
-    
-    # friend_tags = forms.MultipleChoiceField(
-    #     widget=forms.SelectMultiple(
-    #         attrs={'class': 'form-control',
-    #                'id': 'friend_tags_input'}
-    #     )
+        
     
     
     # image = forms.ImageField(

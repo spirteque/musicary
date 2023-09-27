@@ -35,10 +35,10 @@ https://www.geeksforgeeks.org/python-ways-to-remove-duplicates-from-list/
 https://docs.djangoproject.com/en/4.2/howto/logging/
 https://docs.djangoproject.com/en/4.2/topics/logging/
 https://www.freecodecamp.org/news/logging-in-python-debug-your-django-projects/
-
-
-
-
+https://stackoverflow.com/questions/1358810/how-do-i-change-the-text-of-an-element-using-javascript
+https://stackoverflow.com/questions/10792163/change-audio-src-with-javascript
+https://getbootstrap.com/docs/5.0/components/tooltips/
+https://pypi.org/project/django-multiselectfield/
 
 
 

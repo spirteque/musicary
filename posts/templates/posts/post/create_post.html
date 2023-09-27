@@ -57,8 +57,14 @@
                 {% if current_status.value == 2 %}                    
                 <div class="d-flex flex-wrap gap-4 justify-content-start pb-3">
                     {% for song in songs %}
-                        <div data-id="{{ song.song_id }}" class="song pointer main-shadow-box bg-secondary-color d-flex flex-column small-font rounded mt-3 w-45 justify-content-between">
-                            
+                        <div class="song pointer main-shadow-box bg-secondary-color d-flex flex-column small-font rounded mt-3 w-45 justify-content-between"
+                             data-id="{{ song.song_id }}""
+                             data-img="{{ song.song_image }}" 
+                             data-title="{{ song.song_name|truncatechars:50 }}"
+                             data-album="{{ song.song_album|truncatechars:55 }}"
+                             data-artist="{% for artist in song.song_artists %}| {{ artist.artist_name }} | {% endfor %}"
+                             data-audio="{{ song.song_preview }}"> 
+
                             <div class="d-flex mb-1 mt-2">
                                 <div class="w-50">
                                     <img src="{{ song.song_image }}" class="create-post-image img-thumbnail">
@@ -72,6 +78,16 @@
                                             | {{ artist.artist_name }} | 
                                         {% endfor %}
                                     </p>
+
+                                    {% if not song.song_preview %}
+                                    <div class="d-flex justify-content-start mt-1">
+                                        <svg data-bs-toggle="tooltip" data-bs-placement="bottom" title="Fragment piosenki jest niedostępny." xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle accent-color" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                        </svg>
+                                    </div>
+                                    {% endif %}
+                                        
                                 </div>
                             </div>
 
@@ -85,21 +101,6 @@
                                     {% endfor %}
                                 </div>
                                 {% endif %}
-                                    
-                                <div class="d-flex justify-content-center w-100 mb-2">
-                                    
-                                    {% if song.song_preview %}
-                                        <audio controls>
-                                            <source src="{{ song.song_preview }}" type="audio/mpeg">
-                                        </audio>
-                                    {% else %}
-                                        <div class="bg-subtle-color rounded-3 h-100 w-75 p-1 py-2 main-color">
-                                            Podgląd nagrania jest niedostępny.
-                                        </div>
-                                    {% endif %}
-                                        
-
-                                </div>
                             </div>
 
                         </div>
@@ -110,7 +111,8 @@
                 {% if current_status.value == 3 %}
 
                 <div class="my-4 mx-3">
-                        <div data-id="{{ song.song_id }}" class="song pointer ms-5 main-shadow-box bg-secondary-color d-flex flex-column small-font border border-1 border-secondary rounded w-45 justify-content-between">
+                        <div class="song pointer ms-5 main-shadow-box bg-secondary-color d-flex flex-column small-font border border-1 border-secondary rounded w-45 justify-content-between"
+                             data-id="{{ song.song_id }}">
                             
                             <div class="d-flex mb-1 mt-2">
                                 <div class="w-50">
@@ -125,6 +127,16 @@
                                             | {{ artist.artist_name }} | 
                                         {% endfor %}
                                     </p>
+
+                                    {% if not song.song_preview %}
+                                    <div class="d-flex justify-content-start mt-1">
+                                        <svg data-bs-toggle="tooltip" data-bs-placement="bottom" title="Fragment piosenki jest niedostępny." xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle accent-color" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                        </svg>
+                                    </div>
+                                    {% endif %}
+
                                 </div>
                             </div>
     
@@ -134,18 +146,6 @@
                                     {% for genre in song.song_artists_genres %}
                                         | {{ genre }} |
                                     {% endfor %}
-                                </div>
-
-                                <div class="d-flex justify-content-center w-100 mb-2">
-                                    {% if song.song_preview %}
-                                        <audio controls>
-                                            <source src="{{ song.song_preview }}" type="audio/mpeg">
-                                        </audio>
-                                    {% else %}
-                                    <div class="bg-subtle-color rounded-3 h-100 w-75 p-1 py-2 main-color">
-                                        Podgląd nagrania jest niedostępny.
-                                    </div>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                         
                     <div class="d-flex flex-wrap">
                         {% for tag in tags %}
-                        <div class="d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
+                        <div class="post_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
                             {{ tag }}
                         </div>
                         {% endfor %}
@@ -182,11 +182,11 @@
         </div>
 
         <div class="col-5 d-flex flex-column align-items-center">
-            <div>
+            <div class="h-100 w-100">
                 <div class="small-medium-font mb-3">
                     Podgląd
                 </div>
-                <div class="border border-1 border-black rounded bg-spotify-color">
+                <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color">
                     <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
                         <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">
@@ -194,26 +194,46 @@
                         </svg>
                     </div>
 
-                    <div class="d-flex align-items-end m-3">
-                        <div class="d-flex music-image-post-create bg-main-color rounded border mx-3">
-                            {% thumbnail song.song_image "100x100" crop="true" as im %}
-                            <img src="{% if im %}{{ im.url }}{% else %}{% static 'images/no_music_image.png' %}{% endif %}" class="img-fluid {% if im %}p-0{% else %}p-1{% endif %}">
+                    <div class="d-flex align-items-end h-100 m-3">
+                        <div class="d-flex bg-main-color mx-3"> 
+                            {% with song.song_image as im %}
+                            <img src="{% if im %}{{ im }}{% else %}{% static 'images/no_music_image.png' %}{% endif %}" 
+                                 class="create-post-image {% if im %}p-0{% else %}p-1{% endif %}"
+                                 id="preview_image">
+                            {% endwith %}
                         </div>
 
                         <div class="d-flex flex-column text-start">
-                            <p class="m-0 small-medium-font main-color"><b>tytuł</b></p>
-                            <p class="m-0 main-color"><i>album</i></p>
-                            <p class="m-0 main-color">wykonawca</p>
+                            {% if song %}
+                                <p class="m-0 small-medium-font main-color fw-bolder">{{ song.song_name|truncatechars:45  }}</p>
+                                <p class="m-0 main-color fst-italic">{{ song.song_album|truncatechars:45  }}</p>
+                                <p class="m-0 main-color">
+                                    {% for artist in song.song_artists %}
+                                        | {{ artist.artist_name }} |
+                                    {% endfor %} 
+                                </p>
+                            {% else %}
+                                <p class="m-0 small-medium-font main-color fw-bolder" id="preview_title">tytuł</p>
+                                <p class="m-0 main-color fst-italic" id="preview_album">album</p>
+                                <p class="m-0 main-color" id="preview_artist">wykonawca</p>
+                            {% endif %}
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-center mx-2 mb-3 mt-5">
-                        <audio controls class="w-100">
-                            <source src="{{ song.song_preview }}" type="audio/mpeg">
-                        </audio>
+                    <div class="d-flex justify-content-center mx-2 mb-3 mt-5" id="audio_container"> 
+                        {% if song %}
+                            {% if song.song_preview %}
+                                <audio controls class="w-100">
+                                    <source src="{{ song.song_preview }}" type="audio/mpeg">
+                                </audio>
+                            {% endif %}
+                        {% else %}
+                            <audio controls class="w-100" id="preview_audio"></audio>
+                        {% endif %}
                     </div>
+
                 </div>
-                <div class="accent-font medium-font fw-bolder text-start">
+                <div id="preview_main_title" class="accent-font medium-font fw-bolder text-start mt-2">
                     Tytuł piosenki
                 </div>
                 <div class="xsmall-font fst-italic subtle-color text-start">
@@ -224,9 +244,23 @@
     </div>
 
     <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
         const form = document.getElementById('post_form');
         const songs = Array.from(document.getElementsByClassName('song'));
         const song_choice_input = document.getElementById('id_song_choice');
+        const preview_image = document.getElementById('preview_image');
+        const preview_title = document.getElementById('preview_title');
+        const preview_album = document.getElementById('preview_album');
+        const preview_artist = document.getElementById('preview_artist');
+        const preview_audio = document.getElementById('preview_audio');
+        const preview_main_title = document.getElementById('preview_main_title');
+
+        const tags = Array.from(document.getElementsByClassName('post_tag'));
+        const tags_choice_input = document.getElementById('author_tags_input');
 
         const selected_song_css_classes = ['accent-shadow-box']
 
@@ -243,6 +277,11 @@
 
         songs.forEach(song => {
             const song_id = song.dataset.id;
+            const song_img = song.dataset.img;
+            const song_title = song.dataset.title;
+            const song_album = song.dataset.album;
+            const song_artist = song.dataset.artist;
+            const song_audio = song.dataset.audio;
 
             song.addEventListener('click', event => {
                 song_choice_input.value = song_id;
@@ -252,7 +291,37 @@
                 })
 
                 song.classList.add(...selected_song_css_classes)
+
+                preview_image.src=song_img;
+                preview_title.textContent=song_title;
+                preview_album.textContent=song_album;
+                preview_artist.textContent=song_artist;
+                preview_main_title.textContent=song_title;
+                
+                if (song_audio !== 'None'){
+                    preview_audio.style.visibility = 'visible'
+                    preview_audio.src=song_audio;
+
+                    preview_audio.play();
+                } else {
+                    preview_audio.style.visibility = 'hidden'
+                    preview_audio.pause();
+                }
+                
+                
             })
+        
+        console.log(tags)
+        tags.forEach(tag => {
+            tag.addEventListener('click', event => {
+                tag.classList.toggle(...selected_song_css_classes)
+                console.log(tags_choice_input.value)
+
+
+            })
+        })
+
+
         })
     </script>
 {% endblock content %}

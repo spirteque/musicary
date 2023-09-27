@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "taggit",
     "rest_framework",
     "api.apps.ApiConfig",
+    "multiselectfield",
 ]
 
 MIDDLEWARE = [
