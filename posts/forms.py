@@ -37,8 +37,8 @@ class SelectSongForm(FindSongForm):
 
 class PostCreateForm(SelectSongForm):
     
-    author_tags = MultiSelectFormField(widget=forms.CheckboxSelectMultiple(attrs={'id': 'author_tags_input'}))
-                                            #  widget=forms.Select(attrs={'class': 'd-none'}))
+    # author_tags = MultiSelectFormField(widget=forms.CheckboxSelectMultiple(attrs={'id': 'author_tags_input'}))
+    #                                         #  widget=forms.Select(attrs={'class': 'd-none'}))
     
     friend_tags = forms.MultipleChoiceField(choices=[],
                                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))

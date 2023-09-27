@@ -15,7 +15,8 @@ class Post(models.Model):
     artist = models.CharField(max_length=200)
     genre = models.CharField(max_length=200)
     author_tags = MultiSelectField(choices=tag_moods_as_choices,
-                                   max_length=len(tag_moods_as_choices))
+                                   max_length=len(tag_moods_as_choices),
+                                   blank=True)
     friend_tags = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                         #  through=FriendTag,
                                          related_name='tagged_users',
