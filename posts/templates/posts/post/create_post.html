@@ -31,7 +31,8 @@
                     <span class="fw-bolder">Wyszukiwanie:</span>
                     <div class="d-flex w-75 ms-3">
 
-                        {{ form.title }} 
+                        {{ form.title }}
+
                         <button type="submit" class="btn btn-outline-dark px-3 ms-3">
                             {% if current_status.value == 1 %}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -196,7 +197,13 @@
                 <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color">
                     <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
                         <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                             width="24" 
+                             height="24" 
+                             fill="currentColor" 
+                             class="bi bi-tag-fill main-color d-none" 
+                             viewBox="0 0 16 16"
+                             id="friend_tags_icon">
                             <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                         </svg>
                     </div>
@@ -272,6 +279,8 @@
         const tags = Array.from(document.getElementsByClassName('post_tag'));
         const friends_tag = Array.from(document.getElementsByClassName('friend_tag'));
         const preview_tags = document.getElementById('preview_tags');
+        const friend_tags_icon = document.getElementById('friend_tags_icon');
+
         const selected_song_css_classes = ['accent-shadow-box']
 
         const selected_song = songs.filter(song => {
@@ -308,6 +317,8 @@
                 song.classList.add(...selected_song_css_classes);
 
                 preview_image.src=song_img;
+                preview_image.classList.remove(['p-1'])
+
                 preview_title.textContent=song_title;
                 preview_album.textContent=song_album;
                 preview_artist.textContent=song_artist;
@@ -344,6 +355,12 @@
             });
         })
 
+        const getSelectedFriendTag = () => {
+            return friends_tag
+                .map(friend_tag => document.getElementById(friend_tag.dataset['input-friend-id']))
+                .filter(input => input.checked)
+        }
+
         friends_tag.forEach(friend_tag => {
             const input=document.getElementById(friend_tag.dataset['input-friend-id']);
         
@@ -354,6 +371,13 @@
                 } else {
                     input.checked = true;
                     friend_tag.classList.add(...selected_song_css_classes);
+                }
+                
+                const selectedFriendTag = getSelectedFriendTag()
+                if (selectedFriendTag.length > 0) {
+                    friend_tags_icon.classList.remove(['d-none'])
+                } else {
+                    friend_tags_icon.classList.add(['d-none'])
                 }
             });
         })

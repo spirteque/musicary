@@ -44,6 +44,8 @@ class PostCreateForm(SelectSongForm):
         
         self.fields['friend_tags'].choices = friends_ids
         
+    
+    
     # image = forms.ImageField(
     #     error_messages={'invalid_image': _('Prześlij poprawny obraz, np. w formacie .png, .jpeg.')})
         

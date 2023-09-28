@@ -101,6 +101,7 @@
 
     <div class="row d-flex flex-wrap">
         {% for post in posts %}
+            <div class="w-33">
                 <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color">
                     <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
                         <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
@@ -149,7 +150,7 @@
                         # {{ tag }}
                     {% endfor %}
                 </div> 
-                        
+            </div>            
                     {% comment %} #usertag1 #usertag2 #usertag3 #usertag4 #zespoł #album #gatunek1 #gatunek2 #gatunek3 #gatunek4 {% endcomment %}
         
         {% endfor %}
