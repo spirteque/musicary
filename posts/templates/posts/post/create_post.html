@@ -174,7 +174,9 @@
 
                     <div class="d-flex flex-wrap me-3">
                         {% for value, text in form.friend_tags.field.choices %}
-                        <div data-input-friend-id="friend_tag_{{ forloop.counter0 }}" class="friend_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
+                        <div 
+                            data-input-friend-id="friend_tag_{{ forloop.counter0 }}" 
+                            class="friend_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
                             <input class="d-none" id="friend_tag_{{ forloop.counter0 }}" name="{{ form.friend_tags.name }}" type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
                             <label>{{ text }}</label>
                         </div>

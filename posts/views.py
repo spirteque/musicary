@@ -82,7 +82,9 @@ def post_create(request):
                 song = s
                 
         form_data = request.POST.copy()
-        form_data['friend_tags'] = request.POST.get('friend_tags', 1)
+        
+        if not 'friend_tags' in form_data:
+            form_data['friend_tags'] = 1
         
         create_post_form = PostCreateForm(data=form_data,
                                           friends_ids=friends_ids,
@@ -99,7 +101,7 @@ def post_create(request):
             new_post.name = song['song_name']
             new_post.album = song['song_album']
             new_post.artists = ' | '.join([artist['artist_name'] for artist in song['song_artists']])
-            new_post.genre = song['song_artists_genres']
+            new_post.genre = ' #'.join(song['song_artists_genres'])
             new_post.image = song['song_image']
             new_post.audio = song['song_preview']
             new_post.save()

@@ -20,10 +20,11 @@ class Post(models.Model):
                                    blank=True)
     friend_tags = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                         #  through=FriendTag,
-                                         related_name='tagged_users',
+                                         related_name='tagged_in',
                                          blank=True)
     image = models.URLField()
-    audio = models.URLField(blank=True)
+    audio = models.URLField(blank=True,
+                            null=True)
     
     slug = models.SlugField(max_length=200,
                             blank=True)

@@ -1,6 +1,5 @@
 from django import forms
 from django.forms.utils import ErrorList
-from django.forms.widgets import ClearableFileInput
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectFormField
 from .models import Post
@@ -15,7 +14,7 @@ class FindSongForm(forms.ModelForm):
                    'placeholder': 'Wyszukaj tytuł piosenki'}
         )
     )
-    
+       
     class Meta:
         model = Post
         fields = ('title',)
@@ -36,21 +35,15 @@ class SelectSongForm(FindSongForm):
         
 
 class PostCreateForm(SelectSongForm):    
-    friend_tags = forms.MultipleChoiceField(choices=[],
-                                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    friend_tags = MultiSelectFormField(choices=[],
+                                        widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
         
     def __init__(self, friends_ids, *args, **kwargs):
         super(PostCreateForm, self).__init__(*args, **kwargs)
         
         self.fields['friend_tags'].choices = friends_ids
-        
-    
-    
-    # image = forms.ImageField(
-    #     error_messages={'invalid_image': _('Prześlij poprawny obraz, np. w formacie .png, .jpeg.')})
-        
-    # ClearableFileInput.template_name = "main/clearable_file_input.html"
+
     
     class Meta:
         model = Post
-        fields = ('title', 'author_tags', 'friend_tags')
+        fields = ('title', 'author_tags')
