@@ -11,9 +11,10 @@ class Post(models.Model):
                              on_delete=models.CASCADE)
     
     title = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
     album = models.CharField(max_length=200)
-    artist = models.CharField(max_length=200)
-    genre = models.CharField(max_length=200)
+    artists = models.CharField(max_length=300)
+    genre = models.CharField(max_length=400)
     author_tags = MultiSelectField(choices=tag_moods_as_choices,
                                    max_length=len(tag_moods_as_choices),
                                    blank=True)
@@ -22,24 +23,28 @@ class Post(models.Model):
                                          related_name='tagged_users',
                                          blank=True)
     image = models.URLField()
+    audio = models.URLField(blank=True)
     
     slug = models.SlugField(max_length=200,
                             blank=True)
 
-    created = models.DateField(auto_now_add=True,
-                               db_index=True)
+    created = models.DateTimeField(auto_now_add=True,
+                                   db_index=True)
     
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                         related_name='posts_liked',
                                         blank=True)
     
+    class Meta:
+        ordering = ["-created"]
+    
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.name)
         super().save(*args, **kwargs)
     
     def __str__(self):
-        return f'{self.author}: {self.title}'
+        return f'{self.author}: {self.name}'
     
 
 class Comment(models.Model):

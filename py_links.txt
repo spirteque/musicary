@@ -45,6 +45,19 @@ https://github.com/goinnn/django-multiselectfield
 https://www.w3schools.com/tags/att_select_multiple.asp
 https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select_multiple
 https://www.w3schools.com/jsref/prop_checkbox_checked.asp
+https://stackoverflow.com/questions/16381241/django-save-image-from-url-and-connect-with-imagefield
+https://www.geeksforgeeks.org/python-perform-append-at-beginning-of-list/
+https://stackoverflow.com/questions/54953783/auth-user-none-when-rendering-a-manytomanyfield
+https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python
+https://stackoverflow.com/questions/5373069/wrong-order-by-date-in-django-template
+https://stackoverflow.com/questions/30314741/django-date-query-from-newest-to-oldest
+
+
+
+
+
+
+
 
 
 

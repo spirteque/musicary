@@ -15,6 +15,7 @@ from django.core.mail import EmailMessage
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm
 from .token import account_activation_token
 from .models import Profile
+from posts.models import Post
 
 
 def register(request):
@@ -110,6 +111,8 @@ def user_profile(request, username):
     user = get_object_or_404(User,
                              username=username,
                              is_active=True)
+    posts = Post.objects.filter(author=user)
 
-    return render(request, 'account/user/profile.html', {'user': user})
+    return render(request, 'account/user/profile.html', {'user': user,
+                                                         'posts': posts})
     

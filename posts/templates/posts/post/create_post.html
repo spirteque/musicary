@@ -28,8 +28,8 @@
             <form id="post_form" action="." method="{% if current_status.value == 3%}post{% else %}get{% endif %}" class="w-100" enctype="multipart/form-data">
                 
                 <div class="mb-3 input-name-inline align-items-center">
-                    <span class="fw-bolder">Tytuł:</span>
-                    <div class=" d-flex w-75 ms-3">
+                    <span class="fw-bolder">Wyszukiwanie:</span>
+                    <div class="d-flex w-75 ms-3">
 
                         {{ form.title }} 
                         <button type="submit" class="btn btn-outline-dark px-3 ms-3">

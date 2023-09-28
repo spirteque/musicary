@@ -27,8 +27,11 @@ def post_create(request):
                 current_status = PostCreateStatus.SONG_FOUND_AND_SELECTED
                 
                 followings_users = request.user.following.all()
-                friends_ids = tuple((str(user.id), user.username) for user in followings_users)
                 
+                none_friend_tag = [('1', "Nie oznaczam znajomego.")]
+                friends_ids_list = [(str(user.id), user.username) for user in followings_users]
+                friends_ids = tuple(none_friend_tag + friends_ids_list)
+                                
                 create_post_form = PostCreateForm(data={'title': title_from_query,
                                                         'song_choice': song_choice_from_query},
                                                 songs_ids=songs_ids,
@@ -61,7 +64,9 @@ def post_create(request):
     
     if request.method == 'POST':
         followings_users = request.user.following.all()
-        friends_ids = tuple((str(user.id), user.username) for user in followings_users)
+        none_friend_tag = [('1', "Nie oznaczam znajomego.")]
+        friends_ids_list = [(str(user.id), user.username) for user in followings_users]
+        friends_ids = tuple(none_friend_tag + friends_ids_list)
         
         title_from_query = request.POST.get('title')
         song_choice_from_query = request.POST.get('song_choice')
@@ -75,13 +80,21 @@ def post_create(request):
                                           friends_ids=friends_ids,
                                           songs_ids=songs_ids)
         print(request.POST)
+        
+        if not create_post_form.is_valid():
+            print('??????????????!!!!!!!!!!!!')
+            
+            
         if create_post_form.is_valid():
             new_post = create_post_form.save(commit=False)
+            
             new_post.author = request.user
+            new_post.name = song['song_name']
             new_post.album = song['song_album']
-            new_post.artist = [artist['artist_name'] for artist in song['song_artists']]
+            new_post.artists = ' | '.join([artist['artist_name'] for artist in song['song_artists']])
             new_post.genre = song['song_artists_genres']
             new_post.image = song['song_image']
+            new_post.audio = song['song_preview']
             new_post.save()
             create_post_form.save_m2m()
             print(create_post_form.cleaned_data)
