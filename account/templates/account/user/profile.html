@@ -102,7 +102,7 @@
     <div class="row d-flex flex-wrap">
         {% for post in posts %}
             <div class="w-33">
-                <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color">
+                <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
                     <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
                         <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
                         {% if post.friend_tags.all.0.id != 1 %}
@@ -142,7 +142,9 @@
                 </div>
 
                 <div id="preview_main_title" class="accent-font medium-font fw-bolder text-start mt-2"> 
-                    {{ post.name|truncatechars:45 }}
+                    <a href="{{ post.get_absolute_url }}">
+                        {{ post.name|truncatechars:45 }}
+                    </a>
                 </div>
 
                 <div id="preview_tags" class="xsmall-font fst-italic subtle-color text-start mb-3">                    
@@ -150,8 +152,6 @@
                         #{{ tag }}
                     {% endfor %}
                     #{{ post.genre }}
-
-                        
                 </div> 
             </div>            
                     {% comment %} #usertag1 #usertag2 #usertag3 #usertag4 #zespoł #album #gatunek1 #gatunek2 #gatunek3 #gatunek4 {% endcomment %}

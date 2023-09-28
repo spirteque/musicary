@@ -69,6 +69,11 @@
 .large-font {
     font-size: var(--large-font);
 }
+
+.medium-large-font {
+    font-size: var(--medium-large-font);
+}
+
 .medium-font {
     font-size: var(--medium-font);
 }

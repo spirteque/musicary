@@ -1,0 +1,123 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block title %}
+    {{ post.author }} | {{ post.name }}
+{% endblock title %}
+
+{% block header %}
+    <div class="row justify-content-center m-4">
+        <h1 class="m-0 mb-1 medium-large-font">
+            Post użytkownika 
+            <a href="{% url 'user_profile' request.user.username %}"" class="fw-bolder">
+                {{ post.author }}:
+            </a>
+            <span class="fst-italic accent-color">  {{ post.name }}</span>
+        </h1>
+    </div>
+{% endblock header %}
+
+
+{% block content %}
+
+    <div class="row mb-2 d-flex justify-content-center">
+        <hr class="hr hr-bold bg-accent-color w-75" />
+    </div>
+
+<div class="row">
+    <div class="col-6 d-flex justify-content-start flex-column">
+
+        <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
+            <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
+                <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
+                {% if post.friend_tags.all.0.id != 1 %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">
+                        <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                {% endif %}
+            </div>
+
+            <div class="d-flex align-items-end h-100 m-3">
+                <div class="d-flex bg-main-color mx-3"> 
+                    {% with post.image as im %}
+                    <img src="{{ im }}" 
+                        class="create-post-image p-0"
+                        id="preview_image">
+                    {% endwith %}
+                </div>
+
+                <div class="d-flex flex-column text-start">
+                        <p class="m-0 small-medium-font main-color fw-bolder">{{ post.name|truncatechars:45  }}</p>
+                        <p class="m-0 main-color fst-italic">{{ post.album|truncatechars:45  }}</p>
+                        <p class="m-0 main-color">
+                            | {{ post.artists }} |
+                        </p>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center mx-2 mb-3 mt-5" id="audio_container"> 
+
+                    {% if post.audio %}
+                        <audio controls class="w-100">
+                            <source src="{{ post.audio }}" type="audio/mpeg">
+                        </audio>
+                    {% endif %}
+
+            </div>
+        </div>
+
+        <div id="preview_main_title" class="accent-font medium-font fw-bolder text-start mt-2"> 
+            <a href="{{ post.get_absolute_url }}">
+                {{ post.name|truncatechars:45 }}
+            </a>
+        </div>
+
+        <div id="preview_tags" class="xsmall-font fst-italic subtle-color text-start mb-3">                    
+            {% for tag in post.author_tags %}
+                #{{ tag }}
+            {% endfor %}
+            #{{ post.genre }}     
+        </div> 
+    </div>
+
+    <div class="col-6 d-flex justify-content-center flex-column">
+
+        <div>
+            
+            {% for comment in comments %}
+            <div class="d-flex m-3">
+                    {% thumbnail comment.username.profile.photo "90x90" crop="true" as im %}
+                    <img class="profile-pic-xsmall p-1 m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box"
+                         src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}">
+                    <a href="#" class="fw-bolder m-1">{{ comment.username.username }}</a>
+
+                <div class="d-flex flex-column w-100">
+                    <div class="align-self-end xsmall-font subtle-color fst-italic m-1">
+                        {{ comment.created }}
+                    </div>
+                    <div class="text-start m-2 me-5 rounded bg-secondary-color main-shadow-box p-3">
+                        {{ comment.body }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+                
+        </div>
+
+        <form action="." method="post">
+        <div class="d-flex justify-content-center flex-column h-25">
+            <textarea class="form-control" name="body" cols="40" rows="10" required="" id="id_body"></textarea>
+        </div>
+        {% csrf_token %}
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-outline-dark my-3">
+                Dodaj komentarz
+            </button>
+        </div>
+        </form>
+
+    </div>
+</div>
+{% endblock content %}
+    

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.conf import settings
 from django.utils.text import slugify
 from multiselectfield import MultiSelectField
@@ -47,21 +48,25 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.author}: {self.name}'
     
+    def get_absolute_url(self):
+        return reverse("posts:post_detail", args=[self.slug])
+    
+    
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,
                              on_delete=models.CASCADE,
                              related_name='comments')
-    username = models.ManyToManyField(settings.AUTH_USER_MODEL,
-                                      editable=False)
+    username = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                 on_delete=models.CASCADE,
+                                 related_name='comments',
+                                 default=None)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     
     class Meta:
-        ordering = ('created',)
+        ordering = ('-created',)
         
-    def __str__(self):
-        return f'Komentarz dodany przez {self.nick} dla posta {self.post}'
     
 

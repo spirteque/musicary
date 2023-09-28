@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import PostCreateForm, SelectSongForm, FindSongForm
+from .forms import PostCreateForm, SelectSongForm, FindSongForm, CommentForm
 from .spotify import get_spotify_details
 from .tag_moods import tag_moods
+from .models import Post, Comment
 from enum import Enum
 import logging
 
@@ -109,4 +110,30 @@ def post_create(request):
             print(create_post_form.cleaned_data)
                 
             return render(request, 'account/dashboard.html', {'section': 'dashboard',})
+        
+@login_required
+def post_detail(request, post):
+    post = get_object_or_404(Post, slug=post)
+    
+    comments = post.comments.filter(active=True)
+    user = request.user
+    print(user)
+    print(user.username)
+    
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            print(new_comment)
+            new_comment.post = post
+            new_comment.username = user
+            new_comment.save()
+            
+    else:
+        comment_form = CommentForm()
+    
+    return render(request, 'posts/post/detail.html', {'post': post,
+                                                      'comments': comments,
+                                                      'form': comment_form})
+            
             

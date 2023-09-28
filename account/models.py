@@ -32,6 +32,7 @@ class Contact(models.Model):
         return f'{self.user_from} obserwuje {self.user_to}'
 
 
+
 # user_model = get_user_model()
 User.add_to_class('following', models.ManyToManyField('self',
                                                       through=Contact,
