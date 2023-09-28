@@ -58,12 +58,13 @@
                 <div class="d-flex flex-wrap gap-4 justify-content-start pb-3">
                     {% for song in songs %}
                         <div class="song pointer main-shadow-box bg-secondary-color d-flex flex-column small-font rounded mt-3 w-45 justify-content-between"
-                             data-id="{{ song.song_id }}""
+                             data-id="{{ song.song_id }}"
                              data-img="{{ song.song_image }}" 
                              data-title="{{ song.song_name|truncatechars:50 }}"
                              data-album="{{ song.song_album|truncatechars:55 }}"
                              data-artist="{% for artist in song.song_artists %}| {{ artist.artist_name }} | {% endfor %}"
-                             data-audio="{{ song.song_preview }}"> 
+                             data-audio="{{ song.song_preview }}"
+                             data-currstat="{{ current_status.value }}"> 
 
                             <div class="d-flex mb-1 mt-2">
                                 <div class="w-50">
@@ -112,7 +113,8 @@
 
                 <div class="my-4 mx-3">
                         <div class="song pointer ms-5 main-shadow-box bg-secondary-color d-flex flex-column small-font border border-1 border-secondary rounded w-45 justify-content-between"
-                             data-id="{{ song.song_id }}">
+                             data-id="{{ song.song_id }}"
+                             data-currstat="{{ current_status.value }}">
                             
                             <div class="d-flex mb-1 mt-2">
                                 <div class="w-50">
@@ -153,24 +155,29 @@
 
 
                 <div class="d-flex flex-column my-3">
-                    <div class="mb-3 input-name-inline align-items-center justify-content-between w-75">
-                        <span class="fw-bolder me-3">Tagi:</span>
-                        {{ form.author_tags }}
-                    </div>
-                        
-                    <div class="d-flex flex-wrap">
-                        {% for tag in tags %}
-                        <div class="post_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
-                            {{ tag }}
+                    <span class="mb-2 input-name-inline fw-bolder">
+                        Tagi:
+                    </span>
+                        <div class="d-flex flex-wrap me-3">
+                            {% for value, text in form.author_tags.field.choices %}
+                            <div data-input-tag-id="tag_input_{{ forloop.counter0 }}" class="post_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
+                                <input class="d-none" id="tag_input_{{ forloop.counter0 }}" name="{{ form.author_tags.name }}" type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
+                                <label>{{ text }}</label>
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-                    </div>
                 </div>
  
-                <div class="mb-3 input-name-inline">
-                    <span class="fw-bolder me-3">Oznacz znajomych:</span>
-                    <div class="w-25">
-                        {{ form.friend_tags }}
+                <div class="d-flex flex-column my-3">
+                    <span class="mb-2 input-name-inline fw-bolder">Oznacz znajomych:</span>
+
+                    <div class="d-flex flex-wrap me-3">
+                        {% for value, text in form.friend_tags.field.choices %}
+                        <div data-input-friend-id="friend_tag_{{ forloop.counter0 }}" class="friend_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
+                            <input class="d-none" id="friend_tag_{{ forloop.counter0 }}" name="{{ form.friend_tags.name }}" type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
+                            <label>{{ text }}</label>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 
@@ -231,13 +238,17 @@
                             <audio controls class="w-100" id="preview_audio"></audio>
                         {% endif %}
                     </div>
+                </div>
+                <div id="preview_main_title" class="accent-font medium-font fw-bolder text-start mt-2"> 
+                    {% if song %}
+                        {{ song.song_name|truncatechars:45 }}
+                    {% else %}
+                        Tytuł piosenki
+                    {% endif %}
+                </div>
+                <div id="preview_tags" class="xsmall-font fst-italic subtle-color text-start">
+                    {% comment %} #usertag1 #usertag2 #usertag3 #usertag4 #zespoł #album #gatunek1 #gatunek2 #gatunek3 #gatunek4 {% endcomment %}
 
-                </div>
-                <div id="preview_main_title" class="accent-font medium-font fw-bolder text-start mt-2">
-                    Tytuł piosenki
-                </div>
-                <div class="xsmall-font fst-italic subtle-color text-start">
-                    #usertag1 #usertag2 #usertag3 #usertag4 #zespoł #album #gatunek1 #gatunek2 #gatunek3 #gatunek4
                 </div>
             </div>
         </div>
@@ -258,10 +269,9 @@
         const preview_artist = document.getElementById('preview_artist');
         const preview_audio = document.getElementById('preview_audio');
         const preview_main_title = document.getElementById('preview_main_title');
-
         const tags = Array.from(document.getElementsByClassName('post_tag'));
-        const tags_choice_input = document.getElementById('author_tags_input');
-
+        const friends_tag = Array.from(document.getElementsByClassName('friend_tag'));
+        const preview_tags = document.getElementById('preview_tags');
         const selected_song_css_classes = ['accent-shadow-box']
 
         const selected_song = songs.filter(song => {
@@ -282,15 +292,20 @@
             const song_album = song.dataset.album;
             const song_artist = song.dataset.artist;
             const song_audio = song.dataset.audio;
+            const current_status = song.dataset.currstat;
+
+            if (current_status == 3) {
+                return;
+            }
 
             song.addEventListener('click', event => {
                 song_choice_input.value = song_id;
 
                 songs.forEach(song => {
-                    song.classList.remove(...selected_song_css_classes)
-                })
+                    song.classList.remove(...selected_song_css_classes);
+                });
 
-                song.classList.add(...selected_song_css_classes)
+                song.classList.add(...selected_song_css_classes);
 
                 preview_image.src=song_img;
                 preview_title.textContent=song_title;
@@ -299,29 +314,48 @@
                 preview_main_title.textContent=song_title;
                 
                 if (song_audio !== 'None'){
-                    preview_audio.style.visibility = 'visible'
+                    preview_audio.style.visibility = 'visible';
                     preview_audio.src=song_audio;
 
                     preview_audio.play();
                 } else {
-                    preview_audio.style.visibility = 'hidden'
+                    preview_audio.style.visibility = 'hidden';
                     preview_audio.pause();
                 }
                 
                 
-            })
-        
-        console.log(tags)
-        tags.forEach(tag => {
-            tag.addEventListener('click', event => {
-                tag.classList.toggle(...selected_song_css_classes)
-                console.log(tags_choice_input.value)
-
-
-            })
+            });
         })
 
+        tags.forEach(tag => {
+            const input=document.getElementById(tag.dataset['input-tag-id']);
+        
+            tag.addEventListener('click', event => {
+                if(input.checked){
+                    input.checked = false;
+                    tag.classList.remove(...selected_song_css_classes);
 
+                    preview_tags.textContent = preview_tags.textContent.replace(' #' + input.value, '')
+                } else {
+                    input.checked = true;
+                    tag.classList.add(...selected_song_css_classes);
+                    preview_tags.textContent = preview_tags.textContent + ' #' + input.value
+                }
+            });
+        })
+
+        friends_tag.forEach(friend_tag => {
+            const input=document.getElementById(friend_tag.dataset['input-friend-id']);
+        
+            friend_tag.addEventListener('click', event => {
+                if(input.checked){
+                    input.checked = false;
+                    friend_tag.classList.remove(...selected_song_css_classes);
+                } else {
+                    input.checked = true;
+                    friend_tag.classList.add(...selected_song_css_classes);
+                }
+            });
         })
     </script>
 {% endblock content %}

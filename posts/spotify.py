@@ -37,6 +37,7 @@ def get_spotify_song_response(title):
 
 def get_songs_ids(spotify_song_response):
     songs_ids = []
+    
     for item in spotify_song_response['tracks']['items']:
         id = item['id']
         songs_ids.append((id, id))

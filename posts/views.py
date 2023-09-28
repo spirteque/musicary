@@ -37,8 +37,6 @@ def post_create(request):
                 for s in songs:
                     if s['song_id'] == song_choice_from_query:
                         song = s
-
-                
                     
                 return render(request, 'posts/post/create_post.html', {'form': create_post_form,
                                                                         'current_status': current_status,
@@ -62,12 +60,30 @@ def post_create(request):
                                                                    'current_status': current_status})
     
     if request.method == 'POST':
-        create_post_form = PostCreateForm(data=request.POST)
-
+        followings_users = request.user.following.all()
+        friends_ids = tuple((str(user.id), user.username) for user in followings_users)
+        
+        title_from_query = request.POST.get('title')
+        song_choice_from_query = request.POST.get('song_choice')
+        [songs_ids, songs] = get_spotify_details(title_from_query)
+        
+        for s in songs:
+            if s['song_id'] == song_choice_from_query:
+                song = s
+        
+        create_post_form = PostCreateForm(data=request.POST,
+                                          friends_ids=friends_ids,
+                                          songs_ids=songs_ids)
+        print(request.POST)
         if create_post_form.is_valid():
-            # new_post = create_post_form.save(commit=False)
-            # new_post.author = request.user
-            # new_post.save()
+            new_post = create_post_form.save(commit=False)
+            new_post.author = request.user
+            new_post.album = song['song_album']
+            new_post.artist = [artist['artist_name'] for artist in song['song_artists']]
+            new_post.genre = song['song_artists_genres']
+            new_post.image = song['song_image']
+            new_post.save()
+            create_post_form.save_m2m()
             print(create_post_form.cleaned_data)
                 
             return render(request, 'account/dashboard.html', {'section': 'dashboard',})

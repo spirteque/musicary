@@ -39,10 +39,12 @@ https://stackoverflow.com/questions/1358810/how-do-i-change-the-text-of-an-eleme
 https://stackoverflow.com/questions/10792163/change-audio-src-with-javascript
 https://getbootstrap.com/docs/5.0/components/tooltips/
 https://pypi.org/project/django-multiselectfield/
-
-
-
-
+https://linuxhint.com/check-whether-an-element-contains-a-class-in-javascript/
+https://stackoverflow.com/questions/27440861/django-model-multiplechoice
+https://github.com/goinnn/django-multiselectfield
+https://www.w3schools.com/tags/att_select_multiple.asp
+https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select_multiple
+https://www.w3schools.com/jsref/prop_checkbox_checked.asp
 
 
 

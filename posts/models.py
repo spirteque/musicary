@@ -21,7 +21,7 @@ class Post(models.Model):
                                         #  through=FriendTag,
                                          related_name='tagged_users',
                                          blank=True)
-    image = models.ImageField(upload_to='posts_photos/%Y/%m/%d')
+    image = models.URLField()
     
     slug = models.SlugField(max_length=200,
                             blank=True)
