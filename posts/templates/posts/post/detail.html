@@ -67,10 +67,24 @@
             </div>
         </div>
 
-        <div id="preview_main_title" class="accent-font medium-font fw-bolder text-start mt-2"> 
+        <div id="preview_main_title" class=" d-flex accent-font medium-font fw-bolder text-start mt-2 justify-content-between align-items-center"> 
             <a href="{{ post.get_absolute_url }}">
                 {{ post.name|truncatechars:45 }}
             </a>
+            <div class="d-flex align-items-center">
+                <span class="fw-normal">{{ post.users_like.all.count }}</span>
+                <button class="btn btn-link me-2 ps-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill black-color" viewBox="0 0 16 16">
+                        <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                    </svg>
+                </button>
+                <span class="fw-normal">{{ post.comments.all.count }}</span>
+                <button class="btn btn-link ps-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-fill black-color" viewBox="0 0 16 16">
+                        <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div id="preview_tags" class="xsmall-font fst-italic subtle-color text-start mb-3">                    

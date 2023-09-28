@@ -97,3 +97,7 @@ footer {
 .w-33 {
     width: 33%;
 }
+
+.ls-wider {
+    letter-spacing: 0.05rem;
+}
