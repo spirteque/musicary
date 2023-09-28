@@ -51,11 +51,11 @@ https://stackoverflow.com/questions/54953783/auth-user-none-when-rendering-a-man
 https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python
 https://stackoverflow.com/questions/5373069/wrong-order-by-date-in-django-template
 https://stackoverflow.com/questions/30314741/django-date-query-from-newest-to-oldest
-
-
-
-
-
+https://www.w3schools.com/tags/att_input_readonly.asp
+https://forum.djangoproject.com/t/django-template-readonly-form-field/8690
+https://www.programiz.com/python-programming/methods/dictionary/copy
+https://stackoverflow.com/questions/69697255/creating-a-multiplechoice-field-using-many-to-many-relationship
+https://docs.djangoproject.com/en/4.2/ref/forms/fields/#django.forms.ModelMultipleChoiceField
 
 
 

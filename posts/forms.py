@@ -2,7 +2,7 @@ from django import forms
 from django.forms.utils import ErrorList
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectFormField
-from .models import Post
+from .models import Post, Comment
 
 ErrorList.template_name = "main/errors.html"
 
@@ -47,3 +47,9 @@ class PostCreateForm(SelectSongForm):
     class Meta:
         model = Post
         fields = ('title', 'author_tags')
+        
+        
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body',)
