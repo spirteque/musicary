@@ -101,3 +101,7 @@ footer {
 .ls-wider {
     letter-spacing: 0.05rem;
 }
+
+.mw-32 {
+    min-width: 32%;
+}

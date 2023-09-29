@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from .forms import PostCreateForm, SelectSongForm, FindSongForm, CommentForm
 from .spotify import get_spotify_details
 from .tag_moods import tag_moods
@@ -136,4 +138,21 @@ def post_detail(request, post):
                                                       'comments': comments,
                                                       'form': comment_form})
             
-            
+
+@login_required
+@require_POST
+def post_like(request):
+    post_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if post_id and action:
+        try:
+            post = Post.objects.get(id=post_id)
+            if action == 'like':
+                post.users_like.add(request.user)
+            else:
+                post.users_like.remove(request.user)
+            return JsonResponse({'status': 'ok'})
+        except:
+            pass
+    return JsonResponse({'status': 'ok'})
+    

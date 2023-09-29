@@ -72,12 +72,22 @@
                 {{ post.name|truncatechars:45 }}
             </a>
             <div class="d-flex align-items-center">
-                <span class="fw-normal">{{ post.users_like.all.count }}</span>
-                <button class="btn btn-link me-2 ps-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill black-color" viewBox="0 0 16 16">
+                <span class="fw-normal like-count">{{ post.users_like.all.count }}</span>
+
+                <a href="#"
+                   class="btn btn-link me-2 ps-1 like"
+                   data-id="{{ post.id }}"
+                   data-action="{% if request.user in image.users_like.all%}un{% endif %}like">
+                        
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="16" height="16" fill="currentColor"
+                         class="bi bi-suit-heart-fill {% if request.user in image.users_like.all%}accent-color{% endif %}black-color"
+                         viewBox="0 0 16 16"
+                         id="heart-like-icon">
                         <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
                     </svg>
-                </button>
+                </a>
+
                 <span class="fw-normal">{{ post.comments.all.count }}</span>
                 <button class="btn btn-link ps-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-fill black-color" viewBox="0 0 16 16">
@@ -136,4 +146,26 @@
     </div>
 </div>
 {% endblock content %}
+
+
+{% block domready %}
+    $('a.like').click(function(e) {
+        e.preventDefault();
+        $.post('{% url "posts:like" %}', {id: $('a.like').data('id'), action: $('a.like').data('action')},
+        function(response) {
+            if (response['status'] == 'ok') {
+                var previous_action = $('a.like').data('action');
+
+                $('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
+                $('#heart-like-icon').addClass(previous_action == 'like' ? 'accent-color' : 'black-color');
+                $('#heart-like-icon').removeClass(previous_action == 'like' ? 'black-color' : 'accent-color');
+
+                
+                var previous_likes = parseInt($('span.like-count').text());
+                
+                $('span.like-count').text(previous_action == 'like' ? previous_likes + 1: previous_likes - 1);
+            }
+        });
+    });
+{% endblock domready %}
     
