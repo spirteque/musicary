@@ -33,17 +33,18 @@
                     <p></p>
                     
                     <div class="d-flex justify-content-start">
-                        <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user %}{% endif %}">
+
+                        <a href="#"
+                           data-id="{{ user.id }}"
+                           data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
+                           class="follow btn btn-outline-dark">
                             {% if request.user not in user.followers.all %}
-                                <button class="btn btn-outline-dark">
-                                    Obserwuj
-                                </button>  
+                                Obserwuj
                             {% else %}
-                                <button class="btn btn-outline-dark">
-                                    Nie obserwuj
-                                </button>
+                                Nie obserwuj
                             {% endif %}
                         </a>
+
                     </div>
 
                 {% endif %}
@@ -62,7 +63,7 @@
 
         <div class="col-2 p-0">
             <a href="{% url 'followers_list' user.username %}">Obserwujący</a>
-            <p>{{ user.followers.all.count }}</p>
+            <p id="followers">{{ user.followers.all.count }}</p>
         </div>
         
         <div class="col-1 d-flex justify-content-center p-1">
@@ -89,8 +90,8 @@
 
     <div class="row">
         <div class="d-flex mb-2 mt-5 justify-content-evenly">
-            <a href="#" class="small-medium-font">Posty</a>
-            <a href="#" class="small-medium-font">Z oznaczeniem</a>
+            <a href="#" class="small-medium-font fw-bolder">Posty</a>
+            <a href="#" class="small-medium-font subtle-color">Z oznaczeniem</a>
         </div>
     </div>
     
@@ -125,6 +126,23 @@
                 }
             });
         }
+    });
+
+    $('a.follow').click(function(e) {
+        e.preventDefault();
+        $.post('{% url "toggle_follow" %}', {id: $('a.follow').data('id'), action: $('a.follow').data('action')},
+        function(response) {
+            if (response['status'] == 'ok') {
+                var previous_action = $('a.follow').data('action');
+
+                $('a.follow').data('action', previous_action == 'follow' ? 'unfollow' : 'follow');
+                $('a.follow').text(previous_action == 'follow' ? 'Nie obserwuj' : 'Obserwuj');
+
+                var previous_followers = parseInt($('#followers').text());
+                
+                $('#followers').text(previous_action == 'follow' ? previous_followers + 1: previous_followers - 1);
+            }
+        });
     });
 {% endblock domready %}
     

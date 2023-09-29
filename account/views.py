@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -13,7 +14,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm
 from .token import account_activation_token
 from .models import Profile
@@ -154,4 +155,20 @@ def following_list(request, username):
     
     return render(request, 'account/user/following_list.html', {'followings': followings,
                                                                 'user': user})
-    
+
+@login_required
+@require_POST
+def toggle_follow(request):
+    user_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if user_id and action:
+        try:
+            user = User.objects.get(id=user_id)
+            if action == 'follow':
+                user.followers.add(request.user)
+            else:
+                user.followers.remove(request.user)
+            return JsonResponse({'status': 'ok'})
+        except:
+            pass
+    return JsonResponse({'status': 'ok'})

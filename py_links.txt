@@ -59,7 +59,7 @@ https://docs.djangoproject.com/en/4.2/ref/forms/fields/#django.forms.ModelMultip
 https://ngangasn.com/what-is-get_absolute_url-in-django/
 https://www.freecodecamp.org/news/python-datetime-now-how-to-get-todays-date-and-time/
 https://fastbootstrap.com/docs/letter-spacing/
-
+https://groups.google.com/g/django-users/c/5x-qF0Q5Xi8
 
 
 
