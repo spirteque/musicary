@@ -25,7 +25,7 @@ urlpatterns = [
     path('edit/', views.edit, name='edit'),
     
     path('users/followers_list/<username>/', views.followers_list, name='followers_list'),
-    path('users/following_list/<username>/', views.followers_list, name='following_list'),
+    path('users/following_list/<username>/', views.following_list, name='following_list'),
     
     path('users/<username>/', views.user_profile, name='user_profile'),
 ]

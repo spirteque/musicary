@@ -58,6 +58,7 @@ https://stackoverflow.com/questions/69697255/creating-a-multiplechoice-field-usi
 https://docs.djangoproject.com/en/4.2/ref/forms/fields/#django.forms.ModelMultipleChoiceField
 https://ngangasn.com/what-is-get_absolute_url-in-django/
 https://www.freecodecamp.org/news/python-datetime-now-how-to-get-todays-date-and-time/
+https://fastbootstrap.com/docs/letter-spacing/
 
 
 

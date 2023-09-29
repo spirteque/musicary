@@ -132,6 +132,7 @@ def following_list(request, username):
                              username=username,
                              is_active=True)
     followings = user.following.filter(is_active=True)
+    print(followings)
     
     return render(request, 'account/user/following_list.html', {'followings': followings,
                                                                 'user': user})
