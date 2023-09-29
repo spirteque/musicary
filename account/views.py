@@ -126,3 +126,13 @@ def followers_list(request, username):
     return render(request, 'account/user/followers_list.html', {'followers': followers,
                                                                 'user': user})
     
+@login_required
+def following_list(request, username):
+    user = get_object_or_404(User,
+                             username=username,
+                             is_active=True)
+    followings = user.following.filter(is_active=True)
+    
+    return render(request, 'account/user/following_list.html', {'followings': followings,
+                                                                'user': user})
+    

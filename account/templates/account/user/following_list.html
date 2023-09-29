@@ -3,7 +3,7 @@
 {% load thumbnail %}
 
 {% block title %}
-    {{ user.get_username }} | obserwujący
+    {{ user.get_username }} | obserwowani
 {% endblock title %}
 
 
@@ -90,8 +90,8 @@
 
 <div class="row">
     <div class="d-flex mb-2 mt-5 justify-content-evenly">
-        <a href="{% url 'following_list' request.user.username %}" class="small-medium-font subtle-color">Obserwowani</a>
-        <a href="{% url 'followers_list' request.user.username %}" class="small-medium-font fw-bolder">Obserwujący</a>
+        <a href="{% url 'following_list' request.user.username %}" class="small-medium-font">Obserwowani</a>
+        <a href="{% url 'followers_list' request.user.username %}" class="small-medium-font">Obserwujący</a>
     </div>
 </div>
 
@@ -104,26 +104,26 @@
     <div class="col-2"></div>
 
     <div class="col-8 d-flex justify-content-between flex-wrap p-0">
-        {% for follower in followers %}
+        {% for following in followings %}
         <div class="d-flex my-3">
-            {% thumbnail follower.profile.photo "90x90" crop="true" as im %}
+            {% thumbnail following.profile.photo "90x90" crop="true" as im %}
             <img class="profile-pic-medium p-1 m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box"
                  src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}">
             
             <div class="d-flex flex-column align-items-start justify-content-between">
-                <a href="{% url 'user_profile' follower.username %}" class="fw-bolder m-3 mb-1">
-                    {{ follower.username }}
+                <a href="{% url 'user_profile' following.username %}" class="fw-bolder m-3 mb-1">
+                    {{ following.username }}
                 </a>
                 
                 
-                {% if follower in request.user.followers.all %}
+                {% if following in request.user.followers.all %}
                     <p class="small-font fst-italic text-start m-1 ms-3 mb-3">
                         Obserwuje Cię
                     </p>
                 {% endif %}
                     
                 {% comment %} {% if user == request.user %} {% endcomment %}
-                    {% if follower not in request.user.following.all %}
+                    {% if following not in request.user.following.all %}
                         <button class="btn btn-outline-dark mb-3 ms-3">
                             Obserwuj
                         </button>
