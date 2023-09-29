@@ -98,18 +98,14 @@
 <div class="row mb-2 d-flex justify-content-center">
     <hr class="hr hr-bold bg-accent-color w-75" />
 </div>
-
-
-    
-
     
 
 <div class="row d-flex flex-wrap">
     <div class="col-2"></div>
 
-    <div class="col-8 d-flex justify-content-between flex-wrap p-0">
+    <div class="col-8 d-flex flex-wrap p-0">
         {% for follower in followers %}
-        <div class="d-flex my-3">
+        <div class="d-flex my-3 w-33">
             {% thumbnail follower.profile.photo "90x90" crop="true" as im %}
             <img class="profile-pic-medium p-1 m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box"
                  src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}">

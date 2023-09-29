@@ -99,79 +99,34 @@
     </div>
 
 
-    <div class="row d-flex flex-wrap">
-        {% for post in posts %}
-            <div class="w-33">
-                <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
-                    <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
-                        <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
-                        {% if post.friend_tags.all.0.id != 1 %}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">
-                                <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                            </svg>
-                        {% endif %}
-                    </div>
-
-                    <div class="d-flex align-items-end h-100 m-3">
-                        <div class="d-flex bg-main-color mx-3"> 
-                            {% with post.image as im %}
-                            <img src="{{ im }}" 
-                                 class="create-post-image p-0"
-                                 id="preview_image">
-                            {% endwith %}
-                        </div>
-
-                        <div class="d-flex flex-column text-start">
-                                <p class="m-0 small-medium-font main-color fw-bolder">{{ post.name|truncatechars:45  }}</p>
-                                <p class="m-0 main-color fst-italic">{{ post.album|truncatechars:45  }}</p>
-                                <p class="m-0 main-color">
-                                    | {{ post.artists }} |
-                                </p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-center mx-2 mb-3 mt-5" id="audio_container"> 
-
-                            {% if post.audio %}
-                                <audio controls class="w-100">
-                                    <source src="{{ post.audio }}" type="audio/mpeg">
-                                </audio>
-                            {% endif %}
-
-                    </div>
-                </div>
-
-                <div id="preview_main_title" class="d-flex accent-font medium-font fw-bolder text-start mt-2 justify-content-between align-items-center"> 
-                    <a href="{{ post.get_absolute_url }}">
-                        {{ post.name|truncatechars:45 }}
-                    </a>
-                    <div class="d-flex align-items-center">
-                        <span class="fw-normal">{{ post.users_like.all.count }}</span>
-                        <button class="btn btn-link me-2 ps-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill black-color" viewBox="0 0 16 16">
-                                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
-                            </svg>
-                        </button>
-                        <span class="fw-normal">{{ post.comments.all.count }}</span>
-                        <button class="btn btn-link ps-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-fill black-color" viewBox="0 0 16 16">
-                                <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div id="preview_tags" class="xsmall-font fst-italic subtle-color text-start mb-3">                    
-                    {% for tag in post.author_tags %}
-                        #{{ tag }}
-                    {% endfor %}
-                    #{{ post.genre }}
-                </div> 
-            </div>            
-        
-        {% endfor %}
+    <div class="row d-flex flex-wrap" id="post_list">
+        {% include 'account/user/profile_ajax_list.html' %}
     </div>
 
 {% endblock content %}
+
+
+{% block domready %}
+    var page = 1;
+    var empty_page = false;
+    var block_request = false;
+
+    $(window).scroll(function() {
+        var margin = $(document).height() - $(window).height() - 100;
+        if ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+            block_request = true;
+            page += 1;
+            $.get('?page=' + page, function(data) {
+                if (data == '') {
+                    empty_page = true;
+                } else {
+                    block_request = false;
+                    $('#post_list').append(data);
+                }
+            });
+        }
+    });
+{% endblock domready %}
+    
     
     

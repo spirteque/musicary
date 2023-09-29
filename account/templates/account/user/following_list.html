@@ -90,8 +90,8 @@
 
 <div class="row">
     <div class="d-flex mb-2 mt-5 justify-content-evenly">
-        <a href="{% url 'following_list' request.user.username %}" class="small-medium-font">Obserwowani</a>
-        <a href="{% url 'followers_list' request.user.username %}" class="small-medium-font">Obserwujący</a>
+        <a href="{% url 'following_list' request.user.username %}" class="small-medium-font fw-bolder">Obserwowani</a>
+        <a href="{% url 'followers_list' request.user.username %}" class="small-medium-font subtle-color">Obserwujący</a>
     </div>
 </div>
 
@@ -103,9 +103,9 @@
 <div class="row d-flex flex-wrap">
     <div class="col-2"></div>
 
-    <div class="col-8 d-flex justify-content-between flex-wrap p-0">
+    <div class="col-8 d-flex flex-wrap p-0">
         {% for following in followings %}
-        <div class="d-flex my-3">
+        <div class="d-flex my-3 w-33">
             {% thumbnail following.profile.photo "90x90" crop="true" as im %}
             <img class="profile-pic-medium p-1 m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box"
                  src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}">

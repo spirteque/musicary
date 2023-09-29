@@ -12,11 +12,15 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm
 from .token import account_activation_token
 from .models import Profile
 from posts.models import Post
 
+def is_ajax(request): 
+     return request.headers.get('x-requested-with') == 'XMLHttpRequest'
 
 def register(request):
     if request.method == 'POST':
@@ -112,6 +116,20 @@ def user_profile(request, username):
                              username=username,
                              is_active=True)
     posts = Post.objects.filter(author=user)
+    
+    paginator = Paginator(posts, 3)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        if is_ajax(request):
+            return HttpResponse('')
+        posts = paginator.page(paginator.num_pages)
+    if is_ajax(request):
+        return render(request, 'account/user/profile_ajax_list.html', {'user': user,
+                                                                       'posts': posts})    
 
     return render(request, 'account/user/profile.html', {'user': user,
                                                          'posts': posts})
