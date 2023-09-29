@@ -116,3 +116,13 @@ def user_profile(request, username):
     return render(request, 'account/user/profile.html', {'user': user,
                                                          'posts': posts})
     
+@login_required
+def followers_list(request, username):
+    user = get_object_or_404(User,
+                             username=username,
+                             is_active=True)
+    followers = user.followers.filter(is_active=True)
+    
+    return render(request, 'account/user/followers_list.html', {'followers': followers,
+                                                                'user': user})
+    

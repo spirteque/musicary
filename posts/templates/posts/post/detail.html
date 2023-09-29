@@ -10,7 +10,7 @@
     <div class="row justify-content-center m-4">
         <h1 class="m-0 mb-1 medium-large-font">
             Post użytkownika 
-            <a href="{% url 'user_profile' request.user.username %}"" class="fw-bolder">
+            <a href="{% url 'user_profile' request.user.username %}" class="fw-bolder">
                 {{ post.author }}:
             </a>
             <span class="fst-italic accent-color">  {{ post.name }}</span>
@@ -104,7 +104,9 @@
                     {% thumbnail comment.username.profile.photo "90x90" crop="true" as im %}
                     <img class="profile-pic-xsmall p-1 m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box"
                          src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}">
-                    <a href="#" class="fw-bolder m-1">{{ comment.username.username }}</a>
+                    <a href="{% url 'user_profile' comment.username.username %}" class="fw-bolder m-1">
+                        {{ comment.username.username }}
+                    </a>
 
                 <div class="d-flex flex-column w-100">
                     <div class="align-self-end xsmall-font subtle-color fst-italic m-1">
