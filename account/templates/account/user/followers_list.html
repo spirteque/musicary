@@ -1,4 +1,4 @@
-{% extends "main/base.html" %}
+{% extends "account/user/profile_head.html" %}
 {% load static %}
 {% load thumbnail %}
 
@@ -6,123 +6,39 @@
     {{ user.get_username }} | obserwujący
 {% endblock title %}
 
-
-{% block content %}
-<div class="row d-flex justify-content-center my-5">
-
-    <div class="col-2 d-flex justify-content-center p-0 mx-2">
-        <div class="d-flex profile-pic-medium bg-gentle-color rounded border border-black border-2 accent-shadow-box">
-            {% thumbnail user.profile.photo "90x90" crop="true" as im %}
-            <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-1">
+{% block details %}
+    <div class="row">
+        <div class="d-flex mb-2 mt-5 justify-content-evenly">
+            <a href="{% url 'following_list' request.user.username %}" class="small-medium-font subtle-color">Obserwowani</a>
+            <a href="{% url 'followers_list' request.user.username %}" class="small-medium-font fw-bolder">Obserwujący</a>
         </div>
     </div>
 
-    <div class="col-2 d-flex flex-column p-0 justify-content-between">
-        <p class="text-start medium-large-font ls-wider m-0">
-            {{ user.get_username }}
-        </p>
+    <div class="row mb-2 d-flex justify-content-center">
+        <hr class="hr hr-bold bg-accent-color w-75" />
+    </div>
         
-        <div class="d-flex flex-column justify-content-between h-100">
-            {% if request.user != user %}
+    <div class="row d-flex flex-wrap">
+        <div class="col-2"></div>
 
-                {% if user in request.user.followers.all %}
-                <p class="small-font fst-italic text-start m-0">
-                    Obserwuje Cię
-                </p>
-                {% endif %}
-
-                <p></p>
+        <div class="col-8 d-flex flex-wrap p-0">
+            {% for follower in followers %}
+            <div class="d-flex my-3 w-33">
+                {% thumbnail follower.profile.photo "90x90" crop="true" as im %}
+                <img class="profile-pic-medium p-1 m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box"
+                    src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}">
                 
-                <div class="d-flex justify-content-start">
-                    <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user %}{% endif %}">
-                        {% if request.user not in user.followers.all %}
-                            <button class="btn btn-outline-dark">
-                                Obserwuj
-                            </button>  
-                        {% else %}
-                            <button class="btn btn-outline-dark">
-                                Nie obserwuj
-                            </button>
-                        {% endif %}
+                <div class="d-flex flex-column align-items-start justify-content-between">
+                    <a href="{% url 'user_profile' follower.username %}" class="fw-bolder m-3 mb-1">
+                        {{ follower.username }}
                     </a>
-                </div>
-
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="col-2 p-0 justify-content-end">
-        Liczba postów
-        <p>{{ user.posts_created.count }}</p>
-    </div>
-
-    <div class="col-1 p-0">
-        <a href="{% url 'following_list' user.username %}">Obserwowani</a>
-        <p>{{ user.following.all.count }}</p>
-    </div>
-
-    <div class="col-2 p-0">
-        <a href="{% url 'followers_list' user.username %}">Obserwujący</a>
-        <p>{{ user.followers.all.count }}</p>
-    </div>
-    
-    <div class="col-1 d-flex justify-content-center p-1">
-        {% if request.user == user %}
-            <a href="#" class="h-25">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-bar-graph-fill" viewBox="0 0 16 16">
-                    <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-2 11.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1z"/>
-                </svg>
-            </a>
-        {% else %}
-            <div class="btn-group dropend">
-                <button class="btn btn-sm h-25 rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                    </svg>
-                </button>
-                <ul class="dropdown-menu bg-secondary-color">
-                    <li><a class="dropdown-item" href="#">Zgłoś użytkownika</a></li>
-                </ul>
-            </div>
-        {% endif %}
-    </div>
-</div>
-
-<div class="row">
-    <div class="d-flex mb-2 mt-5 justify-content-evenly">
-        <a href="{% url 'following_list' request.user.username %}" class="small-medium-font subtle-color">Obserwowani</a>
-        <a href="{% url 'followers_list' request.user.username %}" class="small-medium-font fw-bolder">Obserwujący</a>
-    </div>
-</div>
-
-<div class="row mb-2 d-flex justify-content-center">
-    <hr class="hr hr-bold bg-accent-color w-75" />
-</div>
-    
-
-<div class="row d-flex flex-wrap">
-    <div class="col-2"></div>
-
-    <div class="col-8 d-flex flex-wrap p-0">
-        {% for follower in followers %}
-        <div class="d-flex my-3 w-33">
-            {% thumbnail follower.profile.photo "90x90" crop="true" as im %}
-            <img class="profile-pic-medium p-1 m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box"
-                 src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}">
-            
-            <div class="d-flex flex-column align-items-start justify-content-between">
-                <a href="{% url 'user_profile' follower.username %}" class="fw-bolder m-3 mb-1">
-                    {{ follower.username }}
-                </a>
-                
-                
-                {% if follower in request.user.followers.all %}
-                    <p class="small-font fst-italic text-start m-1 ms-3 mb-3">
-                        Obserwuje Cię
-                    </p>
-                {% endif %}
                     
-                {% comment %} {% if user == request.user %} {% endcomment %}
+                    {% if follower in request.user.followers.all %}
+                        <p class="small-font fst-italic text-start m-1 ms-3 mb-3">
+                            Obserwuje Cię
+                        </p>
+                    {% endif %}
+                        
                     {% if follower not in request.user.following.all %}
                         <button class="btn btn-outline-dark mb-3 ms-3">
                             Obserwuj
@@ -132,14 +48,12 @@
                             Nie obserwuj
                         </button>
                     {% endif %}
-                {% comment %} {% endif %} {% endcomment %}
-            </div>     
+                </div>     
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+
+        <div class="col-2"></div> 
     </div>
-
-    <div class="col-2"></div> 
-</div>
-
-{% endblock content %}
+{% endblock details %}
     

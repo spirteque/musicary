@@ -132,8 +132,8 @@ def user_profile(request, username):
         return render(request, 'account/user/profile_ajax_list.html', {'user': user,
                                                                        'posts': posts})    
 
-    return render(request, 'account/user/profile.html', {'user': user,
-                                                         'posts': posts})
+    return render(request, 'account/user/profile_posts.html', {'user': user,
+                                                               'posts': posts})
     
 @login_required
 def followers_list(request, username):
