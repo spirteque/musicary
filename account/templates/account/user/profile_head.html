@@ -93,7 +93,7 @@
   
     {% block pagination %}
     {% endblock pagination %}
-        
+         
     $('a.follow').click(function(e) {
         e.preventDefault();
         $.post('{% url "toggle_follow" %}', {id: $('a.follow').data('id'), action: $('a.follow').data('action')},

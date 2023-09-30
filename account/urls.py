@@ -28,6 +28,8 @@ urlpatterns = [
     path('users/following_list/<username>/', views.following_list, name='following_list'),
     
     path('users/<username>/', views.user_profile, name='user_profile'),
+    path('users/<username>/<str:action>/', views.user_profile, name='user_profile'),
+    
     
     path('follow/', views.toggle_follow, name='toggle_follow'),
 ]

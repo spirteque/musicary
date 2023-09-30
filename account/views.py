@@ -112,11 +112,14 @@ class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     
 
 @login_required
-def user_profile(request, username):
+def user_profile(request, username, action=None):
     user = get_object_or_404(User,
                              username=username,
                              is_active=True)
     posts = Post.objects.filter(author=user)
+    
+    if action == 'tagged':
+        posts = user.tagged_in.all()
     
     paginator = Paginator(posts, 3)
     page = request.GET.get('page')
@@ -131,9 +134,9 @@ def user_profile(request, username):
     if is_ajax(request):
         return render(request, 'account/user/profile_ajax_list.html', {'user': user,
                                                                        'posts': posts})    
-
     return render(request, 'account/user/profile_posts.html', {'user': user,
-                                                               'posts': posts})
+                                                               'posts': posts,
+                                                               'action': action})
     
 @login_required
 def followers_list(request, username):

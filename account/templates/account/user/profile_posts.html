@@ -3,14 +3,20 @@
 {% load thumbnail %}
 
 {% block title %}
-    {{ user.get_username }}
+    {{ user.username }}
 {% endblock title %}
 
 {% block details %}
     <div class="row">
         <div class="d-flex mb-2 mt-5 justify-content-evenly">
-            <a href="#" class="small-medium-font fw-bolder">Posty</a>
-            <a href="#" class="small-medium-font subtle-color">Z oznaczeniem</a>
+            <a href="{% url 'user_profile' username=user.username %}"
+               class="small-medium-font {% if not action %}fw-bolder{% else %}subtle-color{% endif %}">
+                    Posty
+            </a>
+            <a href="{% url 'user_profile' username=user.username action='tagged' %}"
+               class="small-medium-font {% if action %}fw-bolder{% else %}subtle-color{% endif %}">
+                    Z oznaczeniem
+            </a>
         </div>
     </div>
     
@@ -20,7 +26,7 @@
 
 
     <div class="row d-flex flex-wrap" id="post_list">
-        
+                    
         {% if posts %}
             {% include 'account/user/profile_ajax_list.html' %}
         {% else %}

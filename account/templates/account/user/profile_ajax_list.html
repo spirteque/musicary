@@ -20,7 +20,11 @@
                                     <ul class="dropdown-menu bg-secondary-color">
                                         
                                         {% for friend in friend_tags %}
-                                            <li><a class="dropdown-item small-font" href="#">{{ friend }}</a></li> 
+                                            <li>
+                                                <a class="dropdown-item small-font fst-italic" href="{% url 'user_profile' friend.username %}">
+                                                    @{{ friend }}
+                                                </a>
+                                            </li> 
                                         {% endfor %}
                                             
                                     </ul>
