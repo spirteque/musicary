@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .forms import PostCreateForm, SelectSongForm, FindSongForm, CommentForm
@@ -85,18 +86,16 @@ def post_create(request):
                 song = s
                 
         form_data = request.POST.copy()
-        print(request.POST)
-        print(form_data)
         if not 'friend_tags' in form_data:
             form_data['friend_tags'] = 1
         
         create_post_form = PostCreateForm(data=form_data,
                                           friends_ids=friends_ids,
                                           songs_ids=songs_ids)
-    
-                    
+                 
         if create_post_form.is_valid():
-            new_post = create_post_form.save(commit=False)            
+            new_post = create_post_form.save(commit=False)
+                        
             new_post.author = request.user
             new_post.name = song['song_name']
             new_post.album = song['song_album']
@@ -104,9 +103,13 @@ def post_create(request):
             new_post.genre = ' #'.join(song['song_artists_genres'])
             new_post.image = song['song_image']
             new_post.audio = song['song_preview']
+            
             new_post.save()
             create_post_form.save_m2m()
-                
+            
+            for id in create_post_form.cleaned_data['friend_tags']:
+                new_post.friend_tags.add(id)
+            
             return render(request, 'account/dashboard.html', {'section': 'dashboard',})
         
 @login_required
@@ -115,8 +118,6 @@ def post_detail(request, post):
     
     comments = post.comments.filter(active=True)
     user = request.user
-    print(user)
-    print(user.username)
     
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
