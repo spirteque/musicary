@@ -85,21 +85,18 @@ def post_create(request):
                 song = s
                 
         form_data = request.POST.copy()
-        
+        print(request.POST)
+        print(form_data)
         if not 'friend_tags' in form_data:
             form_data['friend_tags'] = 1
         
         create_post_form = PostCreateForm(data=form_data,
                                           friends_ids=friends_ids,
                                           songs_ids=songs_ids)
-        
-        if not create_post_form.is_valid():
-            print('??????????????!!!!!!!!!!!!')
-            
-            
+    
+                    
         if create_post_form.is_valid():
-            new_post = create_post_form.save(commit=False)
-            
+            new_post = create_post_form.save(commit=False)            
             new_post.author = request.user
             new_post.name = song['song_name']
             new_post.album = song['song_album']
@@ -109,7 +106,6 @@ def post_create(request):
             new_post.audio = song['song_preview']
             new_post.save()
             create_post_form.save_m2m()
-            print(create_post_form.cleaned_data)
                 
             return render(request, 'account/dashboard.html', {'section': 'dashboard',})
         
