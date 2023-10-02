@@ -6,9 +6,11 @@
             <div class="w-33">
                 <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
                     <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
+
+                        {% with post.friend_tags.all as friend_tags %}
                         
                         <div class="d-flex justify-content-start">
-                            {% if post.author == request.user %}
+                            {% if post.author == request.user or request.user in friend_tags %}
                                 <div class="btn-group dropup">
                                     <button class="btn btn-sm rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical main-color me-2" viewBox="0 0 16 16">
@@ -16,6 +18,8 @@
                                         </svg>
                                     </button>
                                     <ul class="dropdown-menu bg-accent-color">
+                                        
+                                        {% if post.author == request.user %}
                                         <li>
                                             <a class="dropdown-item ps-2 fw-bolder" href="{% url 'posts:delete_post' post.id %}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash2-fill pb-1" viewBox="0 0 16 16">
@@ -24,15 +28,25 @@
                                                 Usuń post
                                             </a>
                                         </li> 
+                                        {% else %}
+                                        <li>
+                                            <a class="dropdown-item ps-2 fw-bolder" href="{% url 'posts:delete_friend_tag' post.id %}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash2-fill pb-1" viewBox="0 0 16 16">
+                                                    <path d="M2.037 3.225A.703.703 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2a.702.702 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671L2.037 3.225zm9.89-.69C10.966 2.214 9.578 2 8 2c-1.58 0-2.968.215-3.926.534-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466-.18-.14-.498-.307-.975-.466z"/>
+                                                </svg>
+                                                Usuń oznaczenie
+                                            </a>
+                                        </li> 
+                                        {% endif %}
+                                            
+
                                     </ul>
                                 </div>
                             {% endif %}
                                 
                             <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo me-4 my-2">
                         </div>
-                        
-                        {% with post.friend_tags.all as friend_tags %}
-                            {% if friend_tags.0.id != 1 %}
+                            {% if friend_tags.0.id != 1 and friend_tags.count > 0%}
                                 <div class="btn-group dropstart">
                                     <button class="btn btn-sm rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">

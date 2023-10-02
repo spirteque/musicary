@@ -5,7 +5,6 @@ from .forms import UserLoginForm, UserSetNewPasswordForm, UserPasswordResetForm,
 from . import views
 
 namespace = 'account'
-# app_name = 'account'
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(authentication_form=UserLoginForm), name='login'),

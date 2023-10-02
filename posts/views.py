@@ -169,4 +169,15 @@ def delete_post(request, post_id):
         messages.error(request, 'Nie możesz tego zrobić.')
 
     return HttpResponseRedirect(f'/account/users/{user.username}/')
-    
+
+
+@login_required
+def delete_friend_tag(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if request.user in post.friend_tags.all():
+        post.friend_tags.remove(request.user)
+        messages.success(request, 'Oznaczenie zostało usunięty.')
+    else:
+        messages.error(request, 'Nie możesz tego zrobić.')
+
+    return HttpResponseRedirect(f'/account/users/{request.user.username}/') 
