@@ -192,10 +192,9 @@ def delete_comment(request, post_id, comment_id):
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.get(id=comment_id)
     if request.user == comment.username:
-        post.comments.filter
-        # comment.delete()
+        post.comments.remove(comment)
         messages.success(request, 'Komentarz został usunięty.')
     else:
         messages.error(request, 'Nie możesz tego zrobić.')
 
-    return HttpResponseRedirect(f'/account/users/{request.user.username}/')
+    return HttpResponseRedirect(f'/posts/details/{post.slug}/')

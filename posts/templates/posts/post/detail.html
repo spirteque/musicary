@@ -8,6 +8,16 @@
 
 
 {% block content %}
+<div class="row d-flex align-items-center justify-content-center">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="d-flex w-50 justify-content-center align-items-center py-3 mb-5 mt-3 rounded bg-secondary-color main-shadow-box" role="alert">
+                {{ message|safe }}
+            </div>
+        {% endfor %}  
+    {% endif %}
+</div>
+
 <div class="row mt-5">
 <div class="d-flex p-0 mb-3 ms-3 ">
     <div class="d-flex profile-pic-small bg-gentle-color rounded border border-black border-2 accent-shadow-box">
@@ -161,20 +171,17 @@
                     </div>
 
                     <div class="d-flex m-2 me-5 rounded bg-secondary-color main-shadow-box flex-column">
-                        
                         {% if request.user == comment.username %}
-                        <div class="d-flex justify-content-end m-1">
-                            <a href="{% url 'posts:delete_comment' post_id=post.id comment_id=comment.id %}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                </svg>
-                            </a>
-                        </div>
+                            <div class="d-flex justify-content-end me-1">
+                                <a href="{% url 'posts:delete_comment' post_id=post.id comment_id=comment.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </a>
+                            </div>
                         {% endif %}
-                            
 
-
-                        <div class="text-start text-break p-3 {% if request.user == comment.username %}pt-1{% endif %}">
+                        <div class="text-start text-break p-3 {% if request.user == comment.username %}pt-0{% endif %}">
                             {{ comment.body }}
                         </div>
                     </div>
