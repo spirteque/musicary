@@ -19,9 +19,8 @@ from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPass
 from .token import account_activation_token
 from .models import Profile
 from posts.models import Post
+from common.decorators import is_ajax
 
-def is_ajax(request): 
-     return request.headers.get('x-requested-with') == 'XMLHttpRequest'
 
 def register(request):
     if request.method == 'POST':
@@ -154,7 +153,6 @@ def following_list(request, username):
                              username=username,
                              is_active=True)
     followings = user.following.filter(is_active=True)
-    print(followings)
     
     return render(request, 'account/user/following_list.html', {'followings': followings,
                                                                 'user': user})
@@ -172,6 +170,6 @@ def toggle_follow(request):
             else:
                 user.followers.remove(request.user)
             return JsonResponse({'status': 'ok'})
-        except:
-            pass
+        except User.DoesNotExist:
+            return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'ok'})

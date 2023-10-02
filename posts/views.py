@@ -1,14 +1,18 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.contrib import messages
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.views.decorators.http import require_POST
+from common.decorators import ajax_required
 from .forms import PostCreateForm, SelectSongForm, FindSongForm, CommentForm
 from .spotify import get_spotify_details
 from .tag_moods import tag_moods
 from .models import Post, Comment
 from enum import Enum
 import logging
+from account.views import user_profile
 
 logger = logging.getLogger(__name__)
 
@@ -111,7 +115,8 @@ def post_create(request):
                 new_post.friend_tags.add(id)
             
             return render(request, 'account/dashboard.html', {'section': 'dashboard',})
-        
+
+    
 @login_required
 def post_detail(request, post):
     post = get_object_or_404(Post, slug=post)
@@ -123,7 +128,6 @@ def post_detail(request, post):
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
-            print(new_comment)
             new_comment.post = post
             new_comment.username = user
             new_comment.save()
@@ -135,7 +139,7 @@ def post_detail(request, post):
                                                       'comments': comments,
                                                       'form': comment_form})
             
-
+@ajax_required
 @login_required
 @require_POST
 def post_like(request):
@@ -152,4 +156,17 @@ def post_like(request):
         except:
             pass
     return JsonResponse({'status': 'ok'})
+
+
+@login_required
+def delete_post(request, post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    if user == post.author:
+        post.delete()
+        messages.success(request, 'Post został usunięty.')
+    else:
+        messages.error(request, 'Nie możesz tego zrobić.')
+
+    return HttpResponseRedirect(f'/account/users/{user.username}/')
     
