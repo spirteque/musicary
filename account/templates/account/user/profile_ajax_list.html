@@ -4,6 +4,18 @@
 
         {% for post in posts %}
             <div class="w-33">
+                {% if 'tagged' in request.path %}
+                <div class="d-flex justify-content-start align-items-end mb-2 ms-2">
+                    <a href="{% url 'user_profile' post.author.username %}" class="d-flex align-items-start">
+                        <div class="d-flex profile-pic-xsmall bg-gentle-color rounded border border-black border-2 accent-shadow-box">
+                            {% thumbnail post.author.profile.photo "90x90" crop="true" as im %}
+                            <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}"
+                                class="img-fluid {% if im %}p-0{% else %}p-1{% endif %}">
+                        </div>    
+                        <span class="ms-3">{{ post.author }}</span>
+                    </a>
+                </div>
+                {% endif %}
                 <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
                     <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
 
@@ -39,14 +51,13 @@
                                         </li> 
                                         {% endif %}
                                             
-
                                     </ul>
                                 </div>
                             {% endif %}
                                 
                             <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo me-4 my-2">
                         </div>
-                            {% if friend_tags.0.id != 1 and friend_tags.count > 0%}
+                            {% if friend_tags.0.id != 1 and friend_tags.count > 0 %}
                                 <div class="btn-group dropstart">
                                     <button class="btn btn-sm rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">

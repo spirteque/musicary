@@ -148,10 +148,15 @@ def post_like(request):
     if post_id and action:
         try:
             post = Post.objects.get(id=post_id)
+            
+            if post.author == request.user:
+                return JsonResponse({'status': 'not_updated'})
+            
             if action == 'like':
                 post.users_like.add(request.user)
             else:
                 post.users_like.remove(request.user)
+                
             return JsonResponse({'status': 'ok'})
         except:
             pass

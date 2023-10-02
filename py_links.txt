@@ -62,7 +62,9 @@ https://fastbootstrap.com/docs/letter-spacing/
 https://groups.google.com/g/django-users/c/5x-qF0Q5Xi8
 https://stackoverflow.com/questions/51781841/delete-a-post-in-django
 https://stackoverflow.com/questions/51781841/delete-a-post-in-django
-
+https://stackoverflow.com/questions/6333068/django-removing-object-from-manytomany-relationship
+https://stackoverflow.com/questions/61035191/django-many-to-many-field-add-got-an-unexpected-keyword-argument-id
+https://stackoverflow.com/questions/2882490/how-to-get-the-current-url-within-a-django-template
 
 
 

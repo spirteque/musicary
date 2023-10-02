@@ -6,26 +6,14 @@
     {{ post.author }} | {{ post.name }}
 {% endblock title %}
 
-{% comment %} {% block header %}
-    <div class="row justify-content-center m-4">
-        <h1 class="m-0 mb-1 medium-large-font">
-            Post użytkownika 
-            <a href="{% url 'user_profile' post.author %}" class="fw-bolder">
-                {{ post.author }}:
-            </a>
-            <span class="fst-italic accent-color">  {{ post.name }}</span>
-        </h1>
-    </div>
-{% endblock header %} {% endcomment %}
-
 
 {% block content %}
-
 <div class="row mt-5">
 <div class="d-flex p-0 mb-3 ms-3 ">
     <div class="d-flex profile-pic-small bg-gentle-color rounded border border-black border-2 accent-shadow-box">
         {% thumbnail post.author.profile.photo "90x90" crop="true" as im %}
-        <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}" class="img-fluid p-1">
+        <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}"
+             class="img-fluid {% if im %}p-0{% else %}p-1{% endif %}">
     </div>
     <div class="d-flex ms-3 flex-column align-items-start justify-content-end">
         <a href="{% url 'user_profile' post.author %}" class="fw-bolder medium-font">
@@ -40,14 +28,30 @@
     <div class="col-6 d-flex justify-content-start flex-column">
 
         <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
+            {% with post.friend_tags.all as friend_tags %}
+            
             <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
                 <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
-                {% if post.friend_tags.all.0.id != 1 %}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">
-                        <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                    </svg>
+                {% if friend_tags.0.id != 1 and friend_tags.count > 0  %}
+                    <div class="btn-group dropstart">
+                        <button class="btn btn-sm rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">
+                                <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                            </svg>
+                        </button>
+                        <ul class="dropdown-menu bg-secondary-color">
+                            {% for friend in friend_tags %}
+                                <li>
+                                    <a class="dropdown-item small-font fst-italic" href="{% url 'user_profile' friend.username %}">
+                                        @{{ friend }}
+                                    </a>
+                                </li> 
+                            {% endfor %}  
+                        </ul>
+                    </div>
                 {% endif %}
             </div>
+            {% endwith %}
 
             <div class="d-flex align-items-end h-100 m-3">
                 <div class="d-flex bg-main-color mx-3"> 
@@ -78,26 +82,47 @@
             </div>
         </div>
 
-        <div id="preview_main_title" class=" d-flex accent-font medium-font fw-bolder text-start mt-2 justify-content-between align-items-center"> 
+        <div id="preview_main_title" class="d-flex accent-font medium-font fw-bolder text-start mt-2 justify-content-between align-items-center"> 
             <a href="{{ post.get_absolute_url }}">
                 {{ post.name|truncatechars:45 }}
             </a>
             <div class="d-flex align-items-center">
-                <span class="fw-normal like-count">{{ post.users_like.all.count }}</span>
-
-                <a href="#"
-                   class="btn btn-link me-2 ps-1 like"
-                   data-id="{{ post.id }}"
-                   data-action="{% if request.user in image.users_like.all%}un{% endif %}like">
+                {% with post.users_like.all as post_likes %}
+                    <div class="btn-group dropstart">
                         
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         width="16" height="16" fill="currentColor"
-                         class="bi bi-suit-heart-fill {% if request.user in image.users_like.all%}accent-color{% endif %}black-color"
-                         viewBox="0 0 16 16"
-                         id="heart-like-icon">
-                        <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
-                    </svg>
-                </a>
+                        <button class="btn rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a href="#">
+                                <span class="fw-normal like-count medium-font">{{ post_likes.count }}</span>
+                            </a>
+                        </button>
+                            
+                        {% if post_likes %}
+                            <ul class="dropdown-menu bg-secondary-color">
+                                {% for user in post_likes %}
+                                    <li>
+                                        <a class="dropdown-item small-font fst-italic main-font" href="{% url 'user_profile' user.username %}">
+                                            @{{ user }}
+                                        </a>
+                                    </li> 
+                                {% endfor %}  
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <a href="#"
+                    class="btn btn-link me-2 ps-1 like"
+                    data-id="{{ post.id }}"
+                    data-action="{% if request.user in post_likes %}un{% endif %}like">
+                            
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            width="16" height="16" fill="currentColor"
+                            class="bi bi-suit-heart-fill {% if request.user in post_likes %}accent-color{% else %}black-color{% endif %}"
+                            viewBox="0 0 16 16"
+                            id="heart-like-icon">
+                            <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                        </svg>
+                    </a>
+                {% endwith %}
 
                 <span class="fw-normal">{{ post.comments.all.count }}</span>
                 <button class="btn btn-link ps-1">
@@ -126,7 +151,7 @@
             {% for comment in comments %}
             <div class="d-flex m-3">
                     {% thumbnail comment.username.profile.photo "90x90" crop="true" as im %}
-                    <img class="profile-pic-xsmall p-1 m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box"
+                    <img class="profile-pic-xsmall m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box {% if im %}p-0{% else %}p-1{% endif %}"
                          src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}">
                     <a href="{% url 'user_profile' comment.username.username %}" class="fw-bolder m-1">
                         {{ comment.username.username }}
@@ -136,7 +161,7 @@
                     <div class="align-self-end xsmall-font subtle-color fst-italic m-1">
                         {{ comment.created }}
                     </div>
-                    <div class="text-start m-2 me-5 rounded bg-secondary-color main-shadow-box p-3">
+                    <div class="text-start text-break m-2 me-5 rounded bg-secondary-color main-shadow-box p-3">
                         {{ comment.body }}
                     </div>
                 </div>
@@ -146,15 +171,15 @@
         </div>
 
         <form action="." method="post">
-        <div class="d-flex justify-content-center flex-column h-25 mt-3">
-            <textarea class="form-control" name="body" cols="40" rows="10" required="" id="id_body"></textarea>
-        </div>
-        {% csrf_token %}
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-outline-dark my-3">
-                Dodaj komentarz
-            </button>
-        </div>
+            <div class="d-flex justify-content-center flex-column h-25 mt-3">
+                <textarea class="form-control" name="body" cols="40" rows="10" required="" id="id_body"></textarea>
+            </div>
+            {% csrf_token %}
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-outline-dark my-3">
+                    Dodaj komentarz
+                </button>
+            </div>
         </form>
 
     </div>
