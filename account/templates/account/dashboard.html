@@ -16,15 +16,25 @@
                     <a href="{% url 'user_profile' request.user.username %}">{{ request.user.username }}</a>
                 </p>
         </div>
-        <div class="col-8">
+        <div class="col-8 ">
             <div class="d-flex mb-2 justify-content-evenly">
-                <a href="#" class="small-medium-font">Znajomi</a>
-                <a href="#" class="small-medium-font">Kanał główny</a>
+                <a href="{% url 'dashboard' %}"
+                   class="small-medium-font {% if not action %}fw-bolder{% else %}subtle-color{% endif %}">
+                   Znajomi
+                </a>
+                <a href="{% url 'dashboard' action='all' %}"
+                   class="small-medium-font {% if action %}fw-bolder{% else %}subtle-color{% endif %}">
+                    Kanał główny
+                </a>
             </div>
             <div class="row mb-2 d-flex justify-content-center">
                 <hr class="hr hr-bold bg-accent-color w-75" />
             </div>
-            <p>POST</p>
+            <div class="d-flex flex-column align-items-center" id="post_list">
+                {% include 'account/user/profile_ajax_list.html' %}
+            </div>
+
+            
         </div>
         <div class="col-2 new-post-btn-container fixed-bottom">
             <a href="{% url 'posts:create_post' %}">
@@ -37,3 +47,25 @@
 {% endblock content %}
     
 
+{% block domready %}
+var page = 1;
+var empty_page = false;
+var block_request = false;
+
+$(window).scroll(function() {
+    var margin = $(document).height() - $(window).height() - 200;
+    if ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+        block_request = true;
+        page += 1;
+        $.get('?page=' + page, function(data) {
+            if (data == '') {
+                empty_page = true;
+            } else {
+                block_request = false;
+                $('#post_list').append(data);
+            }
+        });
+    }
+});
+{% endblock domready %}
+    

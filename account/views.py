@@ -79,8 +79,31 @@ def activate(request, uidb64, token):
 # TODO take query parameter from url and mark znajomi or kanał główny as focus
 # ?views=friends / ?views=main_channel
 @login_required
-def dashboard(request):
-    return render(request, 'account/dashboard.html', {'section': 'dashboard',})
+def dashboard(request, action=None):
+    user = request.user
+    friends = user.following.all()
+    posts = Post.objects.all().filter(author__in=friends)
+    
+    if action == 'all':
+        posts = Post.objects.all()
+
+    paginator = Paginator(posts, 2)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        if is_ajax(request):
+            return HttpResponse('')
+        posts = paginator.page(paginator.num_pages)
+    if is_ajax(request):
+        return render(request, 'account/user/profile_ajax_list.html', {'user': user,
+                                                                       'posts': posts})
+    
+    return render(request, 'account/dashboard.html', {'user': user,
+                                                      'posts': posts,
+                                                      'action': action})
 
 
 @login_required
