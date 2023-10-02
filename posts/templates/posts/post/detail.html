@@ -89,7 +89,6 @@
             <div class="d-flex align-items-center">
                 {% with post.users_like.all as post_likes %}
                     <div class="btn-group dropstart">
-                        
                         <button class="btn rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <a href="#">
                                 <span class="fw-normal like-count medium-font">{{ post_likes.count }}</span>
@@ -110,10 +109,9 @@
                     </div>
 
                     <a href="#"
-                    class="btn btn-link me-2 ps-1 like"
+                    class="btn btn-link me-2 ps-1 like {% if request.user == post.author %}pe-none{% endif %}"
                     data-id="{{ post.id }}"
-                    data-action="{% if request.user in post_likes %}un{% endif %}like">
-                            
+                    data-action="{% if request.user in post_likes %}un{% endif %}like">  
                         <svg xmlns="http://www.w3.org/2000/svg"
                             width="16" height="16" fill="currentColor"
                             class="bi bi-suit-heart-fill {% if request.user in post_likes %}accent-color{% else %}black-color{% endif %}"
@@ -137,7 +135,7 @@
             {% for tag in post.author_tags %}
                 #{{ tag }}
             {% endfor %}
-            #{{ post.genre }}     
+            #{{ post.genre }}
         </div> 
     </div>
 
@@ -161,8 +159,24 @@
                     <div class="align-self-end xsmall-font subtle-color fst-italic m-1">
                         {{ comment.created }}
                     </div>
-                    <div class="text-start text-break m-2 me-5 rounded bg-secondary-color main-shadow-box p-3">
-                        {{ comment.body }}
+
+                    <div class="d-flex m-2 me-5 rounded bg-secondary-color main-shadow-box flex-column">
+                        
+                        {% if request.user == comment.username %}
+                        <div class="d-flex justify-content-end m-1">
+                            <a href="{% url 'posts:delete_comment' post_id=post.id comment_id=comment.id %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </a>
+                        </div>
+                        {% endif %}
+                            
+
+
+                        <div class="text-start text-break p-3 {% if request.user == comment.username %}pt-1{% endif %}">
+                            {{ comment.body }}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -181,8 +181,21 @@ def delete_friend_tag(request, post_id):
     post = Post.objects.get(id=post_id)
     if request.user in post.friend_tags.all():
         post.friend_tags.remove(request.user)
-        messages.success(request, 'Oznaczenie zostało usunięty.')
+        messages.success(request, 'Oznaczenie zostało usunięte.')
     else:
         messages.error(request, 'Nie możesz tego zrobić.')
 
-    return HttpResponseRedirect(f'/account/users/{request.user.username}/') 
+    return HttpResponseRedirect(f'/account/users/{request.user.username}/')
+
+@login_required
+def delete_comment(request, post_id, comment_id):
+    post = Post.objects.get(id=post_id)
+    comment = Comment.objects.get(id=comment_id)
+    if request.user == comment.username:
+        post.comments.filter
+        # comment.delete()
+        messages.success(request, 'Komentarz został usunięty.')
+    else:
+        messages.error(request, 'Nie możesz tego zrobić.')
+
+    return HttpResponseRedirect(f'/account/users/{request.user.username}/')
