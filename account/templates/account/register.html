@@ -40,7 +40,7 @@
 
                 <div class="mb-2">
                     {{ user_form.statute_accept }}
-                    Akceptuję <a href="#" class="font-weight-bolder"> Regulamin</a> serwisu Musicary.
+                    Akceptuję <a href="{% url 'terms' %}" class="font-weight-bolder"> Regulamin</a> serwisu Musicary.
                     {{ user_form.statute_accept.errors }}
                 </div>
 
