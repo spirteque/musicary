@@ -66,7 +66,7 @@ https://stackoverflow.com/questions/6333068/django-removing-object-from-manytoma
 https://stackoverflow.com/questions/61035191/django-many-to-many-field-add-got-an-unexpected-keyword-argument-id
 https://stackoverflow.com/questions/2882490/how-to-get-the-current-url-within-a-django-template
 https://stackoverflow.com/questions/46178144/attributeerror-relatedmanager-object-has-no-attribute-remove
-
+https://stackoverflow.com/questions/65141518/how-to-filter-posts-query-in-order-to-just-see-the-posts-of-friends-and-myself-i
 
 
 

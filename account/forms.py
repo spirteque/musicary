@@ -180,13 +180,14 @@ class UserEditForm(forms.ModelForm):
 class ProfileEditForm(forms.ModelForm):
     photo = forms.ImageField(
         error_messages={'invalid_image': _('Prześlij poprawny obraz, np. w formacie .png, .jpeg.')})
-        # widget=forms.ImageField(
-        #     attrs={'class': 'form-control',
-        #            'id': 'photo_input'}))
         
     ClearableFileInput.template_name = "main/clearable_file_input.html"
     
     class Meta:
         model = Profile
         fields = ('photo',)
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField()
 

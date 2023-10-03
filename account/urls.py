@@ -34,4 +34,6 @@ urlpatterns = [
     
     
     path('follow/', views.toggle_follow, name='toggle_follow'),
+    
+    path('search/', views.user_search, name='user_search'),
 ]

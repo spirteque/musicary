@@ -23,7 +23,7 @@
                 </div>
                 {% endif %}
 
-                {% if 'tagged' in request.path %}
+                {% if 'tagged' in request.path or 'search' in request.path %}
                 <div class="d-flex justify-content-start align-items-end mb-2 ms-2">
                     <a href="{% url 'user_profile' post.author.username %}" class="d-flex align-items-start">
                         <div class="d-flex profile-pic-xsmall bg-gentle-color rounded border border-black border-2 accent-shadow-box">
@@ -31,10 +31,11 @@
                             <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}"
                                 class="img-fluid {% if im %}p-0{% else %}p-1{% endif %}">
                         </div>    
-                        <span class="ms-3">{{ post.author }}</span>
+                        <span class="ms-3 fw-bolder">{{ post.author }}</span>
                     </a>
                 </div>
                 {% endif %}
+
                 <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
                     <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
 

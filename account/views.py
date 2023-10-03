@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.postgres.search import SearchVector, TrigramSimilarity
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -15,7 +16,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, JsonResponse
-from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm
+from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm, SearchForm
 from .token import account_activation_token
 from .models import Profile
 from posts.models import Post
@@ -76,18 +77,18 @@ def activate(request, uidb64, token):
         return render(request, 'account/register_error.html')
     
 
-# TODO take query parameter from url and mark znajomi or kanał główny as focus
-# ?views=friends / ?views=main_channel
 @login_required
 def dashboard(request, action=None):
     user = request.user
     friends = user.following.all()
     posts = Post.objects.all().filter(author__in=friends)
     
+    search_form = SearchForm()
+    
     if action == 'all':
         posts = Post.objects.all()
 
-    paginator = Paginator(posts, 2)
+    paginator = Paginator(posts, 3)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -103,7 +104,8 @@ def dashboard(request, action=None):
     
     return render(request, 'account/dashboard.html', {'user': user,
                                                       'posts': posts,
-                                                      'action': action})
+                                                      'action': action,
+                                                      'form': search_form})
 
 
 @login_required
@@ -196,3 +198,18 @@ def toggle_follow(request):
         except User.DoesNotExist:
             return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'ok'})
+
+
+def user_search(request):
+    # query = None
+    # user_results, post_results = [], []
+    form = SearchForm(request.POST)
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        user_results = User.objects.annotate(similarity=TrigramSimilarity('username', query),).filter(similarity__gt=0.1).order_by('-similarity')
+        post_results = Post.objects.annotate(similarity=TrigramSimilarity('title', query),).filter(similarity__gt=0.1).order_by('-similarity')
+        
+    return render(request, 'account/search.html', {'form': form,
+                                                   'query': query,
+                                                   'user_results': user_results,
+                                                   'post_results': post_results})
