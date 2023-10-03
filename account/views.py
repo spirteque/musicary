@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.conf import settings
@@ -126,7 +126,7 @@ def edit(request):
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
     return render(request, 'account/edit.html', {'user_form': user_form,
-                                                     'profile_form': profile_form})
+                                                 'profile_form': profile_form})
     
 
 class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
@@ -134,6 +134,17 @@ class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     success_url = reverse_lazy("password_change")
     success_message = 'Zmiana hasła zakończyła się sukcesem.'
     
+
+@login_required
+def delete_profile_photo(request):
+    photo = request.user.profile.photo
+    photo.delete()
+    if photo:
+        messages.error(request, 'Nie udało się usunąć zdjęcia profilowego.')
+    else:
+        messages.success(request, 'Zdjęcie profilowe zostało usunięte.')
+    return redirect('edit')
+  
 
 @login_required
 def user_profile(request, username, action=None):

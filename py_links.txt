@@ -69,6 +69,8 @@ https://stackoverflow.com/questions/46178144/attributeerror-relatedmanager-objec
 https://stackoverflow.com/questions/65141518/how-to-filter-posts-query-in-order-to-just-see-the-posts-of-friends-and-myself-i
 https://favicon.io/favicon-generator/
 https://learndjango.com/tutorials/django-favicon-tutorial
+https://www.idownloadblog.com/2020/09/08/refresh-favicons-in-safari-mac/
+
 
 
 

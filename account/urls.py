@@ -25,6 +25,7 @@ urlpatterns = [
     
     
     path('edit/', views.edit, name='edit'),
+    path('edit/delete_photo/', views.delete_profile_photo, name='delete_profile_photo'),
     
     path('users/followers_list/<username>/', views.followers_list, name='followers_list'),
     path('users/following_list/<username>/', views.following_list, name='following_list'),
