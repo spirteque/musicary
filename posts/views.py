@@ -114,7 +114,10 @@ def post_create(request):
             for id in create_post_form.cleaned_data['friend_tags']:
                 new_post.friend_tags.add(id)
             
-            return render(request, 'account/dashboard.html', {'section': 'dashboard',})
+            messages.success(request, 'Post został dodany.')
+            
+            # return render(request, 'account/dashboard.html', {'section': 'dashboard',})
+            return redirect(new_post.get_absolute_url())
 
     
 @login_required
