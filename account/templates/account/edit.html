@@ -59,7 +59,7 @@
             <div class="d-flex justify-content-center profile-pic-large bg-gentle-color rounded border border-black border-2 accent-shadow-box">
                 {% thumbnail request.user.profile.photo "100x100" crop="true" as im %}
                 <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}"
-                class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded">
+                class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
             </div>
             <div class="d-flex mt-3">
                 {% if im %}
