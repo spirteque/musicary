@@ -24,20 +24,16 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/<str:action>/', views.dashboard, name='dashboard'),
     
-    
     path('edit/', views.edit, name='edit'),
     path('edit/delete_photo/', views.delete_profile_photo, name='delete_profile_photo'),
     path('edit/delete_account/', views.delete_account, name='delete_account'),
     path('edit/delete_account_confirm/<uidb64>/<token>/', views.delete_account_confirm, name='delete_account_confirm'),
-    
-    
     
     path('users/followers_list/<username>/', views.followers_list, name='followers_list'),
     path('users/following_list/<username>/', views.following_list, name='following_list'),
     
     path('users/<username>/', views.user_profile, name='user_profile'),
     path('users/<username>/<str:action>/', views.user_profile, name='user_profile'),
-    
     
     path('follow/', views.toggle_follow, name='toggle_follow'),
 ]

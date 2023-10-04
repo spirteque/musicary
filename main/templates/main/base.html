@@ -41,7 +41,7 @@
 
             {% if request.user.is_authenticated %}
             <div class="w-40 ms-5">
-                <form method="post" action="{% url 'search' %}">
+                <form method="post" action="{% url 'search' action='users' %}">
                 <div class="input-group">
                     <input class="form-control bg-gentle-color border-0" name="query" id="id_query" type="text" placeholder="Szukaj..." aria-label="Search" required>
                     {% comment %} TODO: elastyczny guzik z lupką {% endcomment %}

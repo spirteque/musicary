@@ -3,13 +3,21 @@
 {% load thumbnail %}
 
 {% block title %}
-    Dodaj post
+    {% if current_status.value == 3 %}
+        Dodaj post
+    {% else %}
+        Stwórz post
+    {% endif %}
 {% endblock title %}
 
 {% block header %}
     <div class="row justify-content-center m-4">
         <h1 class="m-0 mb-1 font-weight-bolder">
-            Dodaj post
+            {% if current_status.value == 3 %}
+                Dodaj post
+            {% else %}
+                Stwórz post
+            {% endif %}
         </h1>
     </div>
 {% endblock header %}
