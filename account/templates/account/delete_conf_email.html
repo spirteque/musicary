@@ -1,0 +1,6 @@
+{% autoescape off %}
+    Witaj {{ user.username }},
+        Aby potwierdzić usunięcie Twojego konta na portalu Musicary
+        kliknij w poniższy link:
+        http://{{ domain }}{% url 'delete_account_confirm' uidb64=uid token=token %}
+{% endautoescape %}

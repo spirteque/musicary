@@ -1,5 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 
 from .forms import UserLoginForm, UserSetNewPasswordForm, UserPasswordResetForm, UserPasswordChangeForm
 from . import views
@@ -26,6 +27,10 @@ urlpatterns = [
     
     path('edit/', views.edit, name='edit'),
     path('edit/delete_photo/', views.delete_profile_photo, name='delete_profile_photo'),
+    path('edit/delete_account/', views.delete_account, name='delete_account'),
+    path('edit/delete_account_confirm/<uidb64>/<token>/', views.delete_account_confirm, name='delete_account_confirm'),
+    
+    
     
     path('users/followers_list/<username>/', views.followers_list, name='followers_list'),
     path('users/following_list/<username>/', views.following_list, name='following_list'),

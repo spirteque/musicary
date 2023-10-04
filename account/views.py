@@ -16,7 +16,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, JsonResponse
-from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm, SearchForm
+from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm, SearchForm, DeleteAccountForm
 from .token import account_activation_token
 from .models import Profile
 from posts.models import Post
@@ -51,14 +51,10 @@ def register(request):
                                  to=[to_email])
             email.send()
             
-            return render(request,
-                          'account/register_act_link_send.html',
-                          {'new_user': new_user})
+            return render(request, 'account/register_act_link_send.html', {'new_user': new_user})
     else:
         user_form = UserRegistrationForm()
-    return render(request,
-                  'account/register.html',
-                  {'user_form': user_form})
+    return render(request, 'account/register.html', {'user_form': user_form})
 
 
 def activate(request, uidb64, token):
@@ -74,7 +70,7 @@ def activate(request, uidb64, token):
         user.save()
         return render(request, 'account/register_succes.html')
     else:
-        return render(request, 'account/register_error.html')
+        return render(request, 'account/register_link_error.html')
     
 
 @login_required
@@ -144,7 +140,52 @@ def delete_profile_photo(request):
     else:
         messages.success(request, 'Zdjęcie profilowe zostało usunięte.')
     return redirect('edit')
-  
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        form = DeleteAccountForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            
+            current_site = get_current_site(request)
+            mail_subject = 'Link potwierdzający usunięcie konta na portalu Musicary'
+            message = render_to_string('account/delete_conf_email.html',{
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user)
+            })
+                    
+            to_email = user.email
+            email = EmailMessage(subject=mail_subject, 
+                                body=message,
+                                from_email=settings.EMAIL_SENDER,
+                                to=[to_email])
+            email.send()
+            
+            return render(request, 'account/delete_act_link_send.html', {'user': user})
+    else:
+        form = DeleteAccountForm()
+    return render(request, 'account/delete_account.html', {'form': form})
+    
+
+@login_required
+def delete_account_confirm(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+        
+    if user is not None and account_activation_token.check_token(user, token):
+        user.delete()
+        return redirect('home')
+    else:
+        return render(request, 'account/delete_account_error.html')
+      
 
 @login_required
 def user_profile(request, username, action=None):
@@ -212,8 +253,6 @@ def toggle_follow(request):
 
 
 def user_search(request):
-    # query = None
-    # user_results, post_results = [], []
     form = SearchForm(request.POST)
     if form.is_valid():
         query = form.cleaned_data['query']

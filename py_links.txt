@@ -70,7 +70,7 @@ https://stackoverflow.com/questions/65141518/how-to-filter-posts-query-in-order-
 https://favicon.io/favicon-generator/
 https://learndjango.com/tutorials/django-favicon-tutorial
 https://www.idownloadblog.com/2020/09/08/refresh-favicons-in-safari-mac/
-
+https://stackoverflow.com/questions/41653346/remove-user-in-django
 
 
 

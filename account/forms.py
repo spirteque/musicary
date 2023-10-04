@@ -190,4 +190,9 @@ class ProfileEditForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField()
+    
+
+class DeleteAccountForm(forms.Form):
+    confirmation = forms.BooleanField()
+        
 
