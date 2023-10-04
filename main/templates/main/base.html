@@ -35,15 +35,13 @@
         
     <nav class="navbar navbar-expand m-4 rounded bg-secondary-color px-5 main-shadow-box">
         <div class="container-fluid justify-content-start">
-
             <a class="navbar-brand large-font black-color accent-font font-weight-bolder" href="{% if request.user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'home' %}{% endif %}">
                 Musicary
             </a>
 
             {% if request.user.is_authenticated %}
             <div class="w-40 ms-5">
-                <form method="post" action="{% url 'user_search' %}">
-                    {% comment %} {{ form.as_p }} {% endcomment %}
+                <form method="post" action="{% url 'search' %}">
                 <div class="input-group">
                     <input class="form-control bg-gentle-color border-0" name="query" id="id_query" type="text" placeholder="Szukaj..." aria-label="Search" required>
                     {% comment %} TODO: elastyczny guzik z lupką {% endcomment %}

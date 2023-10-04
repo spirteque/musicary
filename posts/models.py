@@ -20,7 +20,6 @@ class Post(models.Model):
                                    max_length=len(tag_moods_as_choices),
                                    blank=True)
     friend_tags = models.ManyToManyField(settings.AUTH_USER_MODEL,
-                                        #  through=FriendTag,
                                          related_name='tagged_in',
                                          blank=True)
     image = models.URLField()

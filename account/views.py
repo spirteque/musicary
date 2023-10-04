@@ -8,7 +8,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import SearchVector, TrigramSimilarity
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -16,7 +15,8 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, JsonResponse
-from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm, SearchForm, DeleteAccountForm
+from main.forms import SearchForm
+from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm, DeleteAccountForm
 from .token import account_activation_token
 from .models import Profile
 from posts.models import Post
@@ -252,14 +252,4 @@ def toggle_follow(request):
     return JsonResponse({'status': 'ok'})
 
 
-def user_search(request):
-    form = SearchForm(request.POST)
-    if form.is_valid():
-        query = form.cleaned_data['query']
-        user_results = User.objects.annotate(similarity=TrigramSimilarity('username', query),).filter(similarity__gt=0.1).order_by('-similarity')
-        post_results = Post.objects.annotate(similarity=TrigramSimilarity('title', query),).filter(similarity__gt=0.1).order_by('-similarity')
-        
-    return render(request, 'account/search.html', {'form': form,
-                                                   'query': query,
-                                                   'user_results': user_results,
-                                                   'post_results': post_results})
+

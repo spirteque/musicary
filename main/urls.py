@@ -5,5 +5,7 @@ namespace = 'main'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('terms/', views.terms, name='terms'),    
+    path('terms/', views.terms, name='terms'),
+    path('search/', views.search, name='search'),
+    
 ]

@@ -188,10 +188,6 @@ class ProfileEditForm(forms.ModelForm):
         fields = ('photo',)
 
 
-class SearchForm(forms.Form):
-    query = forms.CharField()
-    
-
 class DeleteAccountForm(forms.Form):
     confirmation = forms.BooleanField()
         
