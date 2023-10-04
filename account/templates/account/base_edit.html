@@ -13,8 +13,21 @@
         <hr class="hr hr-bold bg-accent-color" />
     </div>
     
+    <div class="row d-flex">
+        <div class="col-3 d-flex justify-content-center mt-5 ">
+            <nav class="nav flex-column justify-content-center flex-nowrap border border-black border-1 rounded bg-secondary-color py-2 side-navbar">
+                <a class="nav-link small-medium-font {% if 'edit/account' in request.path %} fw-bolder {% endif %}"
+                   href="{% url 'edit_account' %}">Konto</a>
+                <a class="nav-link small-medium-font {% if 'password_change' in request.path %} fw-bolder {% endif %}"
+                   href="{% url 'password_change' %}">Hasło</a>
+                <a class="nav-link small-medium-font {% if 'privacy' in request.path %} fw-bolder {% endif %}"
+                   href="{% url 'edit_privacy' %}">Prywatność</a>
+                <a class="nav-link small-medium-font" href="#">Powiadomienia</a>
+            </nav>
+        </div>
     {% block forms %}
     {% endblock forms %}
+    </div>
     
     <div class="row d-flex align-items-center justify-content-center">
         {% if messages %}

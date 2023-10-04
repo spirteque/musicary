@@ -121,14 +121,18 @@ def edit(request):
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
-    return render(request, 'account/edit.html', {'user_form': user_form,
-                                                 'profile_form': profile_form})
+    return render(request, 'account/edit_account.html', {'user_form': user_form,
+                                                         'profile_form': profile_form})
     
 
 class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     form_class = UserPasswordChangeForm
     success_url = reverse_lazy("password_change")
     success_message = 'Zmiana hasła zakończyła się sukcesem.'
+
+@login_required
+def edit_privacy(request):
+    return render(request, 'account/edit_privacy.html')
     
 
 @login_required

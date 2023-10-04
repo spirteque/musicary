@@ -13,9 +13,7 @@ urlpatterns = [
     
     path('register/', views.register, name='register'),
     path('activate/<uidb64>/<token>/', views.activate, name='activate'),
-    
-    path('edit/password_change/', views.UserPasswordChangeView.as_view(), name='password_change'),
-    
+        
     path('password_reset/', auth_views.PasswordResetView.as_view(form_class=UserPasswordResetForm), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(form_class=UserSetNewPasswordForm), name='password_reset_confirm'),
@@ -24,10 +22,12 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/<str:action>/', views.dashboard, name='dashboard'),
     
-    path('edit/', views.edit, name='edit'),
+    path('edit/account/', views.edit, name='edit_account'),
     path('edit/delete_photo/', views.delete_profile_photo, name='delete_profile_photo'),
     path('edit/delete_account/', views.delete_account, name='delete_account'),
     path('edit/delete_account_confirm/<uidb64>/<token>/', views.delete_account_confirm, name='delete_account_confirm'),
+    path('edit/password_change/', views.UserPasswordChangeView.as_view(), name='password_change'),
+    path('edit/privacy/', views.edit_privacy, name='edit_privacy'),
     
     path('users/followers_list/<username>/', views.followers_list, name='followers_list'),
     path('users/following_list/<username>/', views.following_list, name='following_list'),

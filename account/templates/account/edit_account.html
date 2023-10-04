@@ -7,17 +7,6 @@
 {% endblock title %}
 
 {% block forms %}
-    <div class="row d-flex">
-        <div class="col-3 d-flex justify-content-center mt-5 ">
-            <nav class="nav flex-column justify-content-center flex-nowrap border border-black border-1 rounded bg-secondary-color py-2 side-navbar">
-                <a class="nav-link small-medium-font fw-bolder" href="{% url 'edit' %}">Konto</a>
-                <a class="nav-link small-medium-font" href="{% url 'password_change' %}">Hasło</a>
-                <a class="nav-link small-medium-font" href="#">Preferencje</a>
-                <a class="nav-link small-medium-font" href="#">Prywatność</a>
-                <a class="nav-link small-medium-font" href="#">Powiadomienia</a>
-            </nav>
-        </div>
-
         <div class="col-6 d-flex align-items-center justify-content-center text-start mt-5 flex-column">
             <form action="." method="post" enctype="multipart/form-data" class="w-75">
 
@@ -72,7 +61,6 @@
                 {% endif %}
             </div>
         </div>
-    </div>
 {% endblock forms %}
 
     
