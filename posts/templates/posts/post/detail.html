@@ -99,23 +99,26 @@
             <div class="d-flex align-items-center">
                 {% with post.users_like.all as post_likes %}
                     <div class="btn-group dropstart">
-                        <button class="btn rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="count_btn" class="btn rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <a href="#">
                                 <span class="fw-normal like-count medium-font">{{ post_likes.count }}</span>
                             </a>
                         </button>
                             
-                        {% if post_likes %}
-                            <ul class="dropdown-menu bg-secondary-color">
+                        {% comment %} {% if post_likes %} {% endcomment %}
+                            <ul class="dropdown-menu bg-secondary-color {% if not post_likes %}invisible{% endif %}"
+                                id="likes_list"
+                                data-current_user="{{ request.user.username }}">
                                 {% for user in post_likes %}
-                                    <li>
-                                        <a class="dropdown-item small-font fst-italic main-font" href="{% url 'user_profile' user.username %}">
+                                    <li data-user="{{ user.username }}">
+                                        <a class="dropdown-item small-font fst-italic main-font"
+                                           href="{% url 'user_profile' user.username %}">
                                             @{{ user }}
                                         </a>
                                     </li> 
                                 {% endfor %}  
                             </ul>
-                        {% endif %}
+                        {% comment %} {% endif %} {% endcomment %}
                     </div>
 
                     <a href="#"
@@ -220,12 +223,43 @@
                 $('#heart-like-icon').addClass(previous_action == 'like' ? 'accent-color' : 'black-color');
                 $('#heart-like-icon').removeClass(previous_action == 'like' ? 'black-color' : 'accent-color');
 
-                
                 var previous_likes = parseInt($('span.like-count').text());
                 
                 $('span.like-count').text(previous_action == 'like' ? previous_likes + 1: previous_likes - 1);
+            
+                const likes_list = $('#likes_list');
+                const current_user = likes_list.data('current_user')
+                
+                if (previous_action === 'unlike') {
+                    const user_like = Array.from(likes_list.children()).find(el => el.dataset.user === current_user)
+                    
+                    $(user_like).remove()
+
+                    if (likes_list.children().length === 0) {
+                        likes_list.addClass('invisible')
+                   }
+                } else {
+                    const user_like = $("<li></li>");
+                    const user_like_content = $("<a></a>");
+                    user_like.attr('data-user', current_user);
+
+                    user_like_content.addClass('dropdown-item small-font fst-italic main-font')
+                    user_like_content.text('@' + current_user)
+                    user_like_content.attr('href', "/account/users/" + current_user + "/");
+
+                    user_like.prepend(user_like_content)
+
+                    likes_list.prepend(user_like)
+
+                    if (likes_list.children().length > 0) {
+                        likes_list.removeClass('invisible')
+                   }
+                }
+            
+            
             }
         });
     });
+
 {% endblock domready %}
     

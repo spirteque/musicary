@@ -76,6 +76,16 @@ https://note.nkmk.me/en/python-pip-install-requirements/
 https://www.postgresqltutorial.com/postgresql-administration/postgresql-drop-database/
 https://www.postgresqltutorial.com/postgresql-administration/postgresql-show-databases/
 https://simpleisbetterthancomplex.com/tutorial/2016/07/26/how-to-reset-migrations.html
+https://getbootstrap.com/docs/5.0/utilities/visibility/
+https://www.w3schools.com/jquery/traversing_children.asp
+https://api.jquery.com/remove/
+https://www.w3schools.com/jquery/jquery_dom_add.asp
+https://stackoverflow.com/questions/7979671/jquery-dynamically-change-href-on-user-input
+https://api.jquery.com/data/
+
+
+
+
 
 
 
