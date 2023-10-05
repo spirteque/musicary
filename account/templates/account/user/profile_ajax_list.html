@@ -1,7 +1,6 @@
 {% load static %}
 {% load thumbnail %}
 
-
         {% for post in posts %}
             <div class="{% if 'dashboard' in request.path %}w-75{% else %}w-33{% endif %}">
 
@@ -17,7 +16,7 @@
                             <span  class="fw-bolder">
                                 {{ post.author }}
                             </span>
-                            <p class="small-font fst-italic mb-1"> {{ post.created }}</p>
+                            <p class="small-font fst-italic mb-1"> {{ post.created|timesince }} temu</p>
                         </div>
                     </a>
                 </div>

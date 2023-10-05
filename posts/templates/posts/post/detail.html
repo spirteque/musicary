@@ -29,7 +29,7 @@
         <a href="{% url 'user_profile' post.author %}" class="fw-bolder medium-font">
             {{ post.author }}
         </a>
-        <p class="small-font fst-italic mb-1"> {{ post.created }}</p>
+        <p class="small-font fst-italic mb-1"> {{ post.created|timesince }} temu</p>
     </div>
 </div>
 </div>
@@ -167,7 +167,7 @@
 
                 <div class="d-flex flex-column w-100">
                     <div class="align-self-end xsmall-font subtle-color fst-italic m-1">
-                        {{ comment.created }}
+                        {{ comment.created|timesince }} temu
                     </div>
 
                     <div class="d-flex m-2 me-5 rounded bg-secondary-color main-shadow-box flex-column">
