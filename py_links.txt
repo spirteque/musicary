@@ -72,10 +72,10 @@ https://learndjango.com/tutorials/django-favicon-tutorial
 https://www.idownloadblog.com/2020/09/08/refresh-favicons-in-safari-mac/
 https://stackoverflow.com/questions/41653346/remove-user-in-django
 https://docs.djangoproject.com/en/dev/topics/db/queries/#limiting-querysets
-
-
-
-
+https://note.nkmk.me/en/python-pip-install-requirements/
+https://www.postgresqltutorial.com/postgresql-administration/postgresql-drop-database/
+https://www.postgresqltutorial.com/postgresql-administration/postgresql-show-databases/
+https://simpleisbetterthancomplex.com/tutorial/2016/07/26/how-to-reset-migrations.html
 
 
 

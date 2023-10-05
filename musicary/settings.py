@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "api.apps.ApiConfig",
     "multiselectfield",
-    "taggit",
 ]
 
 MIDDLEWARE = [
@@ -91,8 +90,8 @@ WSGI_APPLICATION = "musicary.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "musicary",
-        "USER": "musicary",
+        "NAME": "musicary2",
+        "USER": "musicary2",
         "PASSWORD": os.getenv('PASSWORD'),
     }
 }
