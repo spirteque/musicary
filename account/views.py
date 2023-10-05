@@ -1,6 +1,3 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
-from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -9,12 +6,15 @@ from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
 from main.forms import SearchForm
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm, DeleteAccountForm
 from .token import account_activation_token
@@ -121,7 +121,7 @@ def edit(request):
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
-    return render(request, 'account/edit_account.html', {'user_form': user_form,
+    return render(request, 'account/edit/edit_account.html', {'user_form': user_form,
                                                          'profile_form': profile_form})
     
 
@@ -144,7 +144,7 @@ def delete_profile_photo(request):
         messages.error(request, 'Nie udało się usunąć zdjęcia profilowego.')
     else:
         messages.success(request, 'Zdjęcie profilowe zostało usunięte.')
-    return redirect('edit')
+    return redirect('edit_account')
 
 
 @login_required
@@ -156,7 +156,7 @@ def delete_account(request):
             
             current_site = get_current_site(request)
             mail_subject = 'Link potwierdzający usunięcie konta na portalu Musicary'
-            message = render_to_string('account/delete_conf_email.html',{
+            message = render_to_string('account/edit/delete_conf_email.html',{
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -170,10 +170,10 @@ def delete_account(request):
                                 to=[to_email])
             email.send()
             
-            return render(request, 'account/delete_act_link_send.html', {'user': user})
+            return render(request, 'account/edit/delete_act_link_send.html', {'user': user})
     else:
         form = DeleteAccountForm()
-    return render(request, 'account/delete_account.html', {'form': form})
+    return render(request, 'account/edit/delete_account.html', {'form': form})
     
 
 @login_required
@@ -189,7 +189,7 @@ def delete_account_confirm(request, uidb64, token):
         user.delete()
         return redirect('home')
     else:
-        return render(request, 'account/delete_account_error.html')
+        return render(request, 'account/edit/delete_account_error.html')
       
 
 @login_required

@@ -1,17 +1,17 @@
-from django.shortcuts import render, get_object_or_404, redirect
+import logging
+from common.decorators import ajax_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_POST
-from common.decorators import ajax_required
+from enum import Enum
 from .forms import PostCreateForm, SelectSongForm, FindSongForm, CommentForm
 from .spotify import get_spotify_details
 from .tag_moods import tag_moods
 from .models import Post, Comment
-from enum import Enum
-import logging
 from account.views import user_profile
 
 logger = logging.getLogger(__name__)
