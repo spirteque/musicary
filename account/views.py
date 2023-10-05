@@ -130,9 +130,10 @@ class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     success_url = reverse_lazy("password_change")
     success_message = 'Zmiana hasła zakończyła się sukcesem.'
 
-@login_required
-def edit_privacy(request):
-    return render(request, 'account/edit_privacy.html')
+# @login_required
+# # TODO
+# def edit_privacy(request):
+#     return render(request, 'account/edit_privacy.html')
     
 
 @login_required

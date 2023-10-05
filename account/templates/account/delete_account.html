@@ -2,24 +2,11 @@
 {% load static %}
 {% load thumbnail %}
 
-
 {% block title %}
     Usuwanie konta
 {% endblock title %}
 
-
 {% block forms %}
-<div class="row d-flex">
-    <div class="col-3 d-flex justify-content-center mt-5 ">
-        <nav class="nav flex-column justify-content-center flex-nowrap border border-black border-1 rounded bg-secondary-color py-2 side-navbar">
-            <a class="nav-link small-medium-font fw-bolder" href="{% url 'edit' %}">Konto</a>
-            <a class="nav-link small-medium-font" href="{% url 'password_change' %}">Hasło</a>
-            <a class="nav-link small-medium-font" href="#">Preferencje</a>
-            <a class="nav-link small-medium-font" href="#">Prywatność</a>
-            <a class="nav-link small-medium-font" href="#">Powiadomienia</a>
-        </nav>
-    </div>
-
     <div class="col-6 d-flex align-items-center justify-content-center text-start mt-5 flex-column">
         <p class="fw-bolder accent-color">Czy na pewno chcesz usunąć swoje konto?</p>
         <div class="d-flex">
@@ -33,7 +20,7 @@
                     <button type="submit" class="btn btn-outline-dark my-3 me-3">
                         Tak
                     </button>
-                    <a href="{% url 'edit' %}" class="btn btn-outline-dark my-3 ms-3">
+                    <a href="{% url 'edit_account' %}" class="btn btn-outline-dark my-3 ms-3">
                         Nie
                     </a>
                 </div>
@@ -45,12 +32,11 @@
         <div class="d-flex justify-content-center profile-pic-large bg-gentle-color rounded border border-black border-2 accent-shadow-box">
             {% thumbnail request.user.profile.photo "100x100" crop="true" as im %}
             <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}"
-                 class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded">
+                 class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
         </div>
         <p class="text-start medium-font ls-wider mt-3">
             <a href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
         </p>
     </div>
-</div>
 {% endblock forms %}
     

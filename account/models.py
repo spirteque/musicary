@@ -11,7 +11,7 @@ class Profile(models.Model):
     photo = models.ImageField(upload_to='profile_photos/%Y/%m/%d',
                               blank=True)
     
-    private_mode = models.BooleanField(default=False)
+    # private_mode = models.BooleanField(default=False)
     
     def __str__(self):
         return f'Profil {self.user.username}'

@@ -190,5 +190,11 @@ class ProfileEditForm(forms.ModelForm):
 
 class DeleteAccountForm(forms.Form):
     confirmation = forms.BooleanField()
+    
+
+# class ProfilePrivacyEditForm(forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#         fields = ('private_mode',)
         
 

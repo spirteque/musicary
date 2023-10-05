@@ -27,7 +27,7 @@ urlpatterns = [
     path('edit/delete_account/', views.delete_account, name='delete_account'),
     path('edit/delete_account_confirm/<uidb64>/<token>/', views.delete_account_confirm, name='delete_account_confirm'),
     path('edit/password_change/', views.UserPasswordChangeView.as_view(), name='password_change'),
-    path('edit/privacy/', views.edit_privacy, name='edit_privacy'),
+    # path('edit/privacy/', views.edit_privacy, name='edit_privacy'),
     
     path('users/followers_list/<username>/', views.followers_list, name='followers_list'),
     path('users/following_list/<username>/', views.following_list, name='following_list'),
