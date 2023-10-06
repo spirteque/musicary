@@ -1,0 +1,64 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block title %}
+    Powiadomienia
+{% endblock title %}
+
+{% block header %}
+    <div class="row justify-content-center m-4 mt-5">
+        <h2 class="m-0 font-weight-bolder">
+            Powiadomienia
+        </h2>
+    </div>
+    <div class="row mb-2 d-flex justify-content-center">
+        <hr class="hr hr-bold bg-accent-color w-75" />
+    </div>
+{% endblock header %}
+    
+{% block content %}
+    {% for action in actions %}
+        {% with user=action.user profile=action.user.profile %}
+        <div class="d-flex">
+            <div>
+                <div class="d-flex justify-content-start align-items-end mb-2 ms-2">
+                    <a href="{% url 'user_profile' user.username %}" class="d-flex align-items-start">
+                        <div class="d-flex profile-pic-small bg-gentle-color rounded border border-black border-2 accent-shadow-box">
+                            {% thumbnail user.profile.photo "90x90" crop="true" as im %}
+                            <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}"
+                                class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
+                        </div>    
+                    </a>
+                </div>
+
+                {% if action.target %}
+                    {% with action.target as target %}
+                        {% if target.image %}
+                            {% thumbnail target.image "80x80" crop="100%" as im %}
+                            <a href="#">
+                                <img src="{{ im.url }}">
+                            </a>
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+            </div>
+
+            <div>
+                <p>
+                    <span>{{ action.created|timesince }}</span>
+                    <br />
+                    <a href="#"> {{ user.username }}</a>
+                    {{ action.verb }}
+                    
+                    {% if action.target %}
+                        {% with action.target as target %}
+                            <a href="#">{{ target }}</a>
+                        {% endwith %} 
+                    {% endif %}
+                </p>
+            </div>
+        </div> 
+        {% endwith %}
+    {% endfor %}
+{% endblock content %}

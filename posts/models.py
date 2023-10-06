@@ -45,7 +45,7 @@ class Post(models.Model):
         super().save(*args, **kwargs)
     
     def __str__(self):
-        return f'{self.author}: {self.name}'
+        return f'{self.name}'
     
     def get_absolute_url(self):
         return reverse("posts:post_detail", args=[self.slug])

@@ -21,6 +21,7 @@ from .token import account_activation_token
 from .models import Profile
 from posts.models import Post
 from common.decorators import is_ajax
+from actions.utils import create_action
 
 
 def register(request):
@@ -77,7 +78,8 @@ def activate(request, uidb64, token):
 def dashboard(request, action=None):
     user = request.user
     friends = user.following.all()
-    posts = Post.objects.filter(author__in=friends) | Post.objects.filter(author=request.user)[:50]
+    posts = Post.objects.filter(author__in=friends) | Post.objects.filter(author=request.user)
+    posts = posts[:50]
     
     search_form = SearchForm()
     
@@ -129,6 +131,7 @@ class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     form_class = UserPasswordChangeForm
     success_url = reverse_lazy("password_change")
     success_message = 'Zmiana hasła zakończyła się sukcesem.'
+
 
 @login_required
 def edit_privacy(request):
@@ -263,6 +266,7 @@ def toggle_follow(request):
             user = User.objects.get(id=user_id)
             if action == 'follow':
                 user.followers.add(request.user)
+                create_action(request.user, 'obserwuje użytkownika', user)
             else:
                 user.followers.remove(request.user)
             return JsonResponse({'status': 'ok'})

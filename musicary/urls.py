@@ -25,6 +25,7 @@ urlpatterns = [
     path('account/', include("account.urls")),
     path('posts/', include(('posts.urls', 'posts'), namespace='posts')),
     path('api/music/', include(('api.urls', 'api'), namespace='api')),
+    path('notifications/', include(('actions.urls', 'actions'), namespace='actions'))
     
 ]
 

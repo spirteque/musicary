@@ -1,6 +1,7 @@
 import logging
 from common.decorators import ajax_required
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -10,6 +11,7 @@ from .forms import PostCreateForm, SelectSongForm, FindSongForm, CommentForm
 from .spotify import get_spotify_details
 from .tag_moods import tag_moods
 from .models import Post, Comment
+from actions.utils import create_action
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +22,6 @@ class PostCreateStatus(Enum):
 
 @login_required
 def post_create(request):
-  
     if request.method == "GET":
         title_from_query = request.GET.get('title')
         song_choice_from_query = request.GET.get('song_choice')
@@ -110,10 +111,10 @@ def post_create(request):
             
             for id in create_post_form.cleaned_data['friend_tags']:
                 new_post.friend_tags.add(id)
+                create_action(request.user, 'oznacza w poście', User(id=id))
             
             messages.success(request, 'Post został dodany.')
             
-            # return render(request, 'account/dashboard.html', {'section': 'dashboard',})
             return redirect(new_post.get_absolute_url())
 
     
@@ -131,6 +132,7 @@ def post_detail(request, post):
             new_comment.post = post
             new_comment.username = user
             new_comment.save()
+            create_action(request.user, 'komentuje post', post)
             
     else:
         comment_form = CommentForm()
@@ -154,6 +156,7 @@ def post_like(request):
             
             if action == 'like':
                 post.users_like.add(request.user)
+                create_action(request.user, 'lubi Twój post: ', post)
             else:
                 post.users_like.remove(request.user)
                 

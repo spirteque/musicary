@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "api.apps.ApiConfig",
     "multiselectfield",
+    "actions.apps.ActionsConfig",
 ]
 
 MIDDLEWARE = [

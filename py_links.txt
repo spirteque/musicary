@@ -84,6 +84,7 @@ https://stackoverflow.com/questions/7979671/jquery-dynamically-change-href-on-us
 https://api.jquery.com/data/
 https://www.geeksforgeeks.org/booleanfield-django-forms/
 https://stackoverflow.com/questions/1981524/django-filtering-on-foreign-key-properties
+https://stackoverflow.com/questions/5120071/django-get-contenttype-model-by-model-name-generic-relations
 
 
 
