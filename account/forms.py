@@ -192,9 +192,12 @@ class DeleteAccountForm(forms.Form):
     confirmation = forms.BooleanField()
     
 
-# class ProfilePrivacyEditForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ('private_mode',)
+class ProfilePrivacyEditForm(forms.ModelForm):
+    private_mode = forms.BooleanField(label="Tryb prywatny",
+                                      required=False)
+    
+    class Meta:
+        model = Profile
+        fields = ('private_mode',)
         
 

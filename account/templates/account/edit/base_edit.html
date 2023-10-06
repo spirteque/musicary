@@ -21,8 +21,7 @@
                 <a class="nav-link small-medium-font {% if 'password_change' in request.path %} fw-bolder {% endif %}"
                    href="{% url 'password_change' %}">Hasło</a>
                 <a class="nav-link small-medium-font {% if 'privacy' in request.path %} fw-bolder {% endif %}"
-                   href="#">Prywatność</a>
-                   {% comment %} {% url 'edit_privacy' %} {% endcomment %}
+                   href="{% url 'edit_privacy' %}">Prywatność</a>
                 <a class="nav-link small-medium-font" href="#">Powiadomienia</a>
             </nav>
         </div>

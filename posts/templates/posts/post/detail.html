@@ -82,13 +82,11 @@
             </div>
 
             <div class="d-flex justify-content-center mx-2 mb-3 mt-5" id="audio_container"> 
-
-                    {% if post.audio %}
-                        <audio controls class="w-100">
-                            <source src="{{ post.audio }}" type="audio/mpeg">
-                        </audio>
-                    {% endif %}
-
+                {% if post.audio %}
+                    <audio controls class="w-100">
+                        <source src="{{ post.audio }}" type="audio/mpeg">
+                    </audio>
+                {% endif %}
             </div>
         </div>
 
@@ -105,20 +103,18 @@
                             </a>
                         </button>
                             
-                        {% comment %} {% if post_likes %} {% endcomment %}
-                            <ul class="dropdown-menu bg-secondary-color {% if not post_likes %}invisible{% endif %}"
-                                id="likes_list"
-                                data-current_user="{{ request.user.username }}">
-                                {% for user in post_likes %}
-                                    <li data-user="{{ user.username }}">
-                                        <a class="dropdown-item small-font fst-italic main-font"
-                                           href="{% url 'user_profile' user.username %}">
-                                            @{{ user }}
-                                        </a>
-                                    </li> 
-                                {% endfor %}  
-                            </ul>
-                        {% comment %} {% endif %} {% endcomment %}
+                        <ul class="dropdown-menu bg-secondary-color {% if not post_likes %}invisible{% endif %}"
+                            id="likes_list"
+                            data-current_user="{{ request.user.username }}">
+                            {% for user in post_likes %}
+                                <li data-user="{{ user.username }}">
+                                    <a class="dropdown-item small-font fst-italic main-font"
+                                       href="{% url 'user_profile' user.username %}">
+                                        @{{ user }}
+                                    </a>
+                                </li> 
+                            {% endfor %}  
+                        </ul>
                     </div>
 
                     <a href="#"
@@ -154,11 +150,12 @@
 
     <div class="col-6 d-flex justify-content-center flex-column">
         <p class="m-0 d-flex fw-bolder fst-italic">Komentarze:</p>
+
         <div class="d-flex justify-content-center">
             <hr class="hr hr-bold bg-accent-color w-100" />
         </div>
+
         <div>
-            
             {% for comment in comments %}
             <div class="d-flex m-3">
                     {% thumbnail comment.username.profile.photo "90x90" crop="true" as im %}
@@ -190,8 +187,7 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
-                
+            {% endfor %}   
         </div>
 
         <form action="." method="post">
@@ -205,7 +201,6 @@
                 </button>
             </div>
         </form>
-
     </div>
 </div>
 {% endblock content %}
@@ -255,11 +250,8 @@
                         likes_list.removeClass('invisible')
                    }
                 }
-            
-            
             }
         });
     });
-
 {% endblock domready %}
     

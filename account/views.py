@@ -16,7 +16,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from main.forms import SearchForm
-from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm, DeleteAccountForm
+from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UserPasswordChangeForm, DeleteAccountForm, ProfilePrivacyEditForm
 from .token import account_activation_token
 from .models import Profile
 from posts.models import Post
@@ -81,8 +81,8 @@ def dashboard(request, action=None):
     
     search_form = SearchForm()
     
-    if action == 'all':
-        posts = Post.objects.all()
+    if action == 'all':        
+        posts = Post.objects.all().filter(author__profile__private_mode=False)
 
     paginator = Paginator(posts, 3)
     page = request.GET.get('page')
@@ -130,10 +130,24 @@ class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     success_url = reverse_lazy("password_change")
     success_message = 'Zmiana hasła zakończyła się sukcesem.'
 
-# @login_required
-# # TODO
-# def edit_privacy(request):
-#     return render(request, 'account/edit_privacy.html')
+@login_required
+def edit_privacy(request):
+    if request.method =='POST':
+        form = ProfilePrivacyEditForm(instance=request.user,
+                                      data=request.POST)        
+        if form.is_valid():
+            private_mode = form.cleaned_data['private_mode']
+            request.user.profile.private_mode = private_mode
+            request.user.profile.save()
+            messages.success(request, 'Zmiana ustawień prywatności zakończyła się sukcesem')
+        else:
+            messages.error(request, 'Wystąpił błąd podczas zmiany ustawień prywatności.')
+    else:
+        if request.user.profile.private_mode:
+            form = ProfilePrivacyEditForm(data={'private_mode': ['on']})
+        else:
+            form = ProfilePrivacyEditForm()
+    return render(request, 'account/edit/edit_privacy.html', {'form': form})
     
 
 @login_required

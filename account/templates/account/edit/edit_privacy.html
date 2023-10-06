@@ -7,38 +7,27 @@
 {% endblock title %}
 
 {% block forms %}
-<div class="col-6 d-flex align-items-center justify-content-center text-start mt-5 flex-column">
-    <form action="." method="">
-        <p class="subtle-color fst-italic">
-            Gdy tryb prywatny jest <b class="black-color">włączony</b>, Twoje posty <b class="accent-color">nie będą widoczne w kanale głównym</b>.
-            Również Twoje konto i posty <b class="accent-color">nie będą wyświetlane w wyszukiwarce</b>.
-        </p>
-        
-        {% comment %} {% if request.user.profile.privacy_mode %}
-            <p>Tryb prywatny jest włączony.</p>
-            <p class="subtle-color fst-italic">
-                (Posty oraz konto są <b class="black-color">niewidoczne</b> w kanale głównym i wyszukiwarce.)
-            </p>
-        {% else %}
-            <p>Tryb prywatny jest wyłączony.</p>
-            <p class="subtle-color fst-italic">
-                (Posty oraz konto są <b class="black-color">widoczne</b> w kanale głównym i wyszukiwarce.)
-            </p>
-        {% endif %} {% endcomment %}
-        
+<div class="col-6 d-flex align-items-start justify-content-center text-start mt-5 flex-column">
+    <form action="." method="post" class="w-100">
+        <p class="mt-3">
+            {{ form.as_p }}
+        </p> 
+
         <div class="d-flex flex-column rounded mt-4 main-shadow-box bg-secondary-color">
-            <p class="m-2">Aktualnie tryb prywatny jest <b>wyłączony</b>.</p>
-            <p class="subtle-color fst-italic m-2 mt-0 small-font">
-                (Posty oraz konto są <b class="black-color">widoczne</b> w kanale głównym i wyszukiwarce.)
-            </p>
+            {% if request.user.profile.private_mode %}
+                <p class="m-2 ms-4">Aktualnie tryb prywatny jest <b class="accent-color">włączony</b>.</p>
+                <p class="subtle-color fst-italic m-2 mt-0 small-font ms-4">
+                    (Posty są <b class="black-color">niewidoczne</b> w kanale głównym)
+                </p>
+            {% else %}
+                <p class="m-2 ms-4">Aktualnie tryb prywatny jest <b class="accent-color">wyłączony</b>.</p>
+                <p class="subtle-color fst-italic m-2 mt-0 small-font ms-4">
+                    (Posty są <b class="black-color">widoczne</b> w kanale głównym)
+                </p>
+            {% endif %}
         </div>
 
-
-        <p class="mt-4">
-            <label for="id_confirmation" class="me-1 small-medium-font">Tryb prywatny:</label>
-            <input type="checkbox" name="confirmation" required id="id_confirmation">
-        </p>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end mt-5">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-dark my-3 me-3">
                 Zapisz zmiany

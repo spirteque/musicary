@@ -82,6 +82,8 @@ https://api.jquery.com/remove/
 https://www.w3schools.com/jquery/jquery_dom_add.asp
 https://stackoverflow.com/questions/7979671/jquery-dynamically-change-href-on-user-input
 https://api.jquery.com/data/
+https://www.geeksforgeeks.org/booleanfield-django-forms/
+https://stackoverflow.com/questions/1981524/django-filtering-on-foreign-key-properties
 
 
 
