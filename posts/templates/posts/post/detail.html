@@ -21,8 +21,8 @@
 <div class="row mt-5">
 <div class="d-flex p-0 mb-3 ms-3 ">
     <div class="d-flex profile-pic-small bg-gentle-color rounded border border-black border-2 accent-shadow-box">
-        {% thumbnail post.author.profile.photo "90x90" crop="true" as im %}
-        <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}"
+        {% thumbnail post.author.profile.image "90x90" crop="true" as im %}
+        <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
              class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
     </div>
     <div class="d-flex ms-3 flex-column align-items-start justify-content-end">
@@ -158,9 +158,9 @@
         <div>
             {% for comment in comments %}
             <div class="d-flex m-3">
-                    {% thumbnail comment.username.profile.photo "90x90" crop="true" as im %}
+                    {% thumbnail comment.username.profile.image "90x90" crop="true" as im %}
                     <img class="profile-pic-xsmall m-2 bg-gentle-color rounded border border-black border-2 accent-shadow-box {% if im %}p-0{% else %}p-1{% endif %}"
-                         src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}">
+                         src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}">
                     <a href="{% url 'user_profile' comment.username.username %}" class="fw-bolder m-1">
                         {{ comment.username.username }}
                     </a>

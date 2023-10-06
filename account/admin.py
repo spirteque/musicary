@@ -3,4 +3,4 @@ from .models import Profile
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'photo', 'private_mode')
+    list_display = ('user', 'image', 'private_mode')

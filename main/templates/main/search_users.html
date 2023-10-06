@@ -11,8 +11,8 @@
     {% for user in user_results %}
         <div class="col-2 d-flex align-items-center flex-column">
                 <div class="d-flex justify-content-center profile-pic bg-gentle-color rounded border border-black border-2 accent-shadow-box">
-                    {% thumbnail user.profile.photo "90x90" crop="true" as im %}
-                    <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}"
+                    {% thumbnail user.profile.image "90x90" crop="true" as im %}
+                    <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
                         class="img-fluid {% if im %}p-0{% else %}p-1{% endif %}">
                 </div>
                 <p class="mt-2 small-medium-font">

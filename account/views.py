@@ -154,10 +154,10 @@ def edit_privacy(request):
     
 
 @login_required
-def delete_profile_photo(request):
-    photo = request.user.profile.photo
-    photo.delete()
-    if photo:
+def delete_profile_image(request):
+    image = request.user.profile.image
+    image.delete()
+    if image:
         messages.error(request, 'Nie udało się usunąć zdjęcia profilowego.')
     else:
         messages.success(request, 'Zdjęcie profilowe zostało usunięte.')

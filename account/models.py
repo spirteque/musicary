@@ -8,7 +8,7 @@ class Profile(models.Model):
                                 on_delete=models.CASCADE,
                                 primary_key=True)
     
-    photo = models.ImageField(upload_to='profile_photos/%Y/%m/%d',
+    image = models.ImageField(upload_to='profile_images/%Y/%m/%d',
                               blank=True)
     
     private_mode = models.BooleanField(default=False)

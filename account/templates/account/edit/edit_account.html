@@ -12,9 +12,9 @@
             <div class="mb-3">
                 <span class="me-2 fw-bolder ms-1">Zdjęcie profilowe:</span>
                 <div class="input-group">
-                    <input type="file" name="photo" accept="image/*" id="id_photo" class="form-control">
+                    <input type="file" name="image" accept="image/*" id="id_image" class="form-control">
                 </div>
-                {{ profile_form.photo.errors }}
+                {{ profile_form.image.errors }}
             </div>
 
             <div class="mb-3">
@@ -44,14 +44,14 @@
         
     <div class="col-3 d-flex align-self-start align-items-center justify-content-center mt-5 flex-column">
         <div class="d-flex justify-content-center profile-pic-large bg-gentle-color rounded border border-black border-2 accent-shadow-box">
-            {% thumbnail request.user.profile.photo "100x100" crop="true" as im %}
-            <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_photos/no_image.png' %}{% endif %}"
+            {% thumbnail request.user.profile.image "100x100" crop="true" as im %}
+            <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
                  class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
         </div>
 
         <div class="d-flex mt-3">
             {% if im %}
-                <a href="{% url 'delete_profile_photo' %}">
+                <a href="{% url 'delete_profile_image' %}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x accent-color" viewBox="0 0 16 16">
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                     </svg>

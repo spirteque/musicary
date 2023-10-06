@@ -178,14 +178,14 @@ class UserEditForm(forms.ModelForm):
         
 
 class ProfileEditForm(forms.ModelForm):
-    photo = forms.ImageField(
+    image = forms.ImageField(
         error_messages={'invalid_image': _('Prześlij poprawny obraz, np. w formacie .png, .jpeg.')})
         
     ClearableFileInput.template_name = "main/clearable_file_input.html"
     
     class Meta:
         model = Profile
-        fields = ('photo',)
+        fields = ('image',)
 
 
 class DeleteAccountForm(forms.Form):
