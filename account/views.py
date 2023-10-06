@@ -77,12 +77,12 @@ def activate(request, uidb64, token):
 def dashboard(request, action=None):
     user = request.user
     friends = user.following.all()
-    posts = Post.objects.all().filter(author__in=friends)
+    posts = Post.objects.filter(author__in=friends) | Post.objects.filter(author=request.user)[:50]
     
     search_form = SearchForm()
     
     if action == 'all':        
-        posts = Post.objects.all().filter(author__profile__private_mode=False)
+        posts = Post.objects.filter(author__profile__private_mode=False)[:50]
 
     paginator = Paginator(posts, 3)
     page = request.GET.get('page')
