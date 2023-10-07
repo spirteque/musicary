@@ -11,7 +11,7 @@
 {% block header %}
     <div class="row justify-content-center m-4 mt-5">
         <h2 class="m-0 font-weight-bolder">
-            Powiadomienia
+            Aktywność
         </h2>
     </div>
     <div class="row mb-2 d-flex justify-content-center">
@@ -20,7 +20,6 @@
 {% endblock header %}
     
 {% block content %}
-
 <div class="d-flex flex-column align-items-center mb-2">
     {% if actions %}    
         {% for action in actions %}
@@ -63,14 +62,18 @@
         {% endfor %}
     {% else %}
     <div class="w-75 mt-4">
-        <p>Skrzynka Twoich powiadomień jest jeszcze pusta.</p>
+        <p>Na Twoim koncie nie ma jeszcze żadnych aktywności.</p>
 
         <p class="subtle-color">
-            <a href="{% url 'posts:create_post' %}" class="fw-bolder">Dodaj nowy post</a>, oznacz znajomych, a poprzez tagi opisz jakie emocje opisuje wybrana przez Ciebie piosenka.
+            Na <a href="{% url 'dashboard' action='all' %}" class="fw-bolder">Kanale głównym</a>, poszukaj interesujących Cię postów, zostaw lajka, lub komentarz.
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="accent-color bi bi-hearts" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M4.931.481c1.627-1.671 5.692 1.254 0 5.015-5.692-3.76-1.626-6.686 0-5.015Zm6.84 1.794c1.084-1.114 3.795.836 0 3.343-3.795-2.507-1.084-4.457 0-3.343ZM7.84 7.642c2.71-2.786 9.486 2.09 0 8.358-9.487-6.268-2.71-11.144 0-8.358Z"/>
             </svg>
         </p>
+        <p class="subtle-color">
+            Zobaczysz tutaj również aktywności takie jak usunięcie swojego profilu z oznaczeń na postach Twoich znajomych itp.
+        </p>
+
     </div>
     {% endif %}
 </div>

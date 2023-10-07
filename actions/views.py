@@ -18,3 +18,18 @@ def show_notifications(request):
     actions = actions[:20]
             
     return render(request, 'actions/notifications.html', {'actions': actions})
+
+
+@login_required
+def show_activity(request):
+    actions = Action.objects.all().filter(user=request.user)
+
+    user_type = ContentType.objects.get(model='user')
+    post_type = ContentType.objects.get(model='post')
+    
+    
+    actions = actions.filter(target_ct=user_type) | actions.filter(target_ct=post_type)
+    actions = actions[:20]
+    
+    print(actions)
+    return render(request, 'actions/activity.html', {'actions': actions})

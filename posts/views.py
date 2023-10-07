@@ -111,7 +111,7 @@ def post_create(request):
             
             for id in create_post_form.cleaned_data['friend_tags']:
                 new_post.friend_tags.add(id)
-                create_action(request.user, 'oznacza Cię w swoim poście.', User(id=id))
+                create_action(request.user, 'oznacza w swoim poście', User(id=id))
             
             messages.success(request, 'Post został dodany.')
             
@@ -132,7 +132,7 @@ def post_detail(request, post):
             new_comment.post = post
             new_comment.username = user
             new_comment.save()
-            create_action(request.user, 'komentuje Twój post: ', post)
+            create_action(request.user, 'komentuje post: ', post)
             
     else:
         comment_form = CommentForm()
@@ -156,7 +156,7 @@ def post_like(request):
             
             if action == 'like':
                 post.users_like.add(request.user)
-                create_action(request.user, 'lubi Twój post: ', post)
+                create_action(request.user, 'lubi post: ', post)
             else:
                 post.users_like.remove(request.user)
                 
@@ -173,6 +173,7 @@ def delete_post(request, post_id):
     if user == post.author:
         post.delete()
         messages.success(request, 'Post został usunięty.')
+        
     else:
         messages.error(request, 'Nie możesz tego zrobić.')
 
@@ -185,10 +186,12 @@ def delete_friend_tag(request, post_id):
     if request.user in post.friend_tags.all():
         post.friend_tags.remove(request.user)
         messages.success(request, 'Oznaczenie zostało usunięte.')
+        create_action(request.user, 'usunięto oznaczenie z posta: ', post)
+        
     else:
         messages.error(request, 'Nie możesz tego zrobić.')
 
-    return HttpResponseRedirect(f'/account/users/{request.user.username}/')
+    return HttpResponseRedirect(f'/account/users/{post.author.username}/')
 
 @login_required
 def delete_comment(request, post_id, comment_id):
@@ -197,6 +200,8 @@ def delete_comment(request, post_id, comment_id):
     if request.user == comment.username:
         post.comments.remove(comment)
         messages.success(request, 'Komentarz został usunięty.')
+        create_action(request.user, 'usuwa komentarz z posta: ', post)
+        
     else:
         messages.error(request, 'Nie możesz tego zrobić.')
 

@@ -266,7 +266,7 @@ def toggle_follow(request):
             user = User.objects.get(id=user_id)
             if action == 'follow':
                 user.followers.add(request.user)
-                create_action(user=request.user, verb='Cię obserwuje')
+                create_action(user=request.user, verb='obserwuje', target=user)
             else:
                 user.followers.remove(request.user)
             return JsonResponse({'status': 'ok'})
