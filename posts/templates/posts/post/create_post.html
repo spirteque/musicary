@@ -26,6 +26,7 @@
     <div class="row mb-3">
         <hr class="hr hr-bold bg-accent-color" />
     </div>
+
     <div class="row mb-5 small-medium-font fst-italic subtle-color justify-content-center">
         Co gra Ci dzisiaj w duszy?
     </div>
@@ -62,28 +63,91 @@
                 {% endif %}
 
                 {% if current_status.value == 2 %}   
-                <p class="text-start fw-bolder accent-color mb-1">
-                    Wyniki wyszukiwania:
-                </p>
+                    <p class="text-start fw-bolder accent-color mb-1">
+                        Wyniki wyszukiwania:
+                    </p>
 
-                <p class="text-start fst-italic subtle-color small-font">
-                    (Wybierz jedną z poniższych piosenek, a następnie przejdź dalej 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                    </svg>)
-                </p>
+                    <p class="text-start fst-italic subtle-color small-font">
+                        (Wybierz jedną z poniższych piosenek, a następnie przejdź dalej 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>)
+                    </p>
 
-                <div class="d-flex flex-wrap gap-4 justify-content-start pb-3">
-                    {% for song in songs %}
-                        <div class="song pointer main-shadow-box bg-secondary-color d-flex flex-column small-font rounded mt-3 w-45 justify-content-between"
-                             data-id="{{ song.song_id }}"
-                             data-img="{{ song.song_image }}" 
-                             data-title="{{ song.song_name|truncatechars:50 }}"
-                             data-album="{{ song.song_album|truncatechars:55 }}"
-                             data-artist="{% for artist in song.song_artists %}| {{ artist.artist_name }} | {% endfor %}"
-                             data-audio="{{ song.song_preview }}"
-                             data-currstat="{{ current_status.value }}"> 
+                    <div class="d-flex flex-wrap gap-4 justify-content-start pb-3">
+                        {% for song in songs %}
+                            <div class="song pointer main-shadow-box bg-secondary-color d-flex flex-column small-font rounded mt-3 w-45 justify-content-between"
+                                 data-id="{{ song.song_id }}"
+                                 data-img="{{ song.song_image }}" 
+                                 data-title="{{ song.song_name|truncatechars:50 }}"
+                                 data-album="{{ song.song_album|truncatechars:55 }}"
+                                 data-artist="{% for artist in song.song_artists %}| {{ artist.artist_name }} | {% endfor %}"
+                                 data-audio="{{ song.song_preview }}"
+                                 data-currstat="{{ current_status.value }}"> 
 
+                                <div class="d-flex mb-1 mt-2">
+                                    <div class="w-50">
+                                        <img src="{{ song.song_image }}" class="create-post-image img-thumbnail">
+                                    </div>
+
+                                    <div class="w-50">
+                                        <p class="me-1 mb-1 text-start">
+                                            <b>{{ song.song_name|truncatechars:45 }}</b>
+                                        </p>
+
+                                        <p class="me-1 mb-1 text-start">
+                                            <i>{{ song.song_album|truncatechars:45 }}</i>
+                                        </p>
+
+                                        <p class="me-1 mb-1 text-start">
+                                            {% for artist in song.song_artists %}
+                                                | {{ artist.artist_name }} | 
+                                            {% endfor %}
+                                        </p>
+
+                                        {% if not song.song_preview %}
+                                            <div class="d-flex justify-content-start mt-1">
+                                                <svg data-bs-toggle="tooltip" data-bs-placement="bottom" title="Fragment piosenki jest niedostępny." xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle accent-color" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                                </svg>
+                                            </div>
+                                        {% endif %}       
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-column justify-content-end mt-1">  
+                                    {% if song.song_artists_genres %}
+                                        <div class="my-1 w-100">gatunki muzyczne wykonawcy:
+                                            <br>
+                                            {% for genre in song.song_artists_genres %}
+                                                | {{ genre }} |
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}  
+                    </div>
+                {% endif %}
+
+                {% if current_status.value == 3 %}
+                    <div class="my-4 mx-3">
+                        <p class="text-start fst-italic subtle-color small-font mb-2">
+                            Jeśli chcesz, poprzez <b class="black-color">tagi</b> opisz swój nastrój towarzyszący wybranej piosence!
+                        </p>
+
+                        <p class="text-start fst-italic subtle-color small-font mb-4">
+                            Opcjonalnie, możesz również <b class="black-color">oznaczyć znajomych</b> w poście 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill accent-color" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                            </svg>.
+                        </p>
+
+                        <div class="song pointer ms-5 main-shadow-box bg-secondary-color d-flex flex-column small-font border border-1 border-secondary rounded w-45 justify-content-between"
+                            data-id="{{ song.song_id }}"
+                            data-currstat="{{ current_status.value }}">
+                            
                             <div class="d-flex mb-1 mt-2">
                                 <div class="w-50">
                                     <img src="{{ song.song_image }}" class="create-post-image img-thumbnail">
@@ -91,7 +155,7 @@
 
                                 <div class="w-50">
                                     <p class="me-1 mb-1 text-start"><b>{{ song.song_name|truncatechars:45 }}</b></p>
-                                    <p class="me-1 mb-1 text-start"><i>{{ song.song_album|truncatechars:45 }}</i></p>
+                                    <p class="me-1 mb-1 text-start">{{ song.song_album|truncatechars:45 }}</p>
                                     <p class="me-1 mb-1 text-start">
                                         {% for artist in song.song_artists %}
                                             | {{ artist.artist_name }} | 
@@ -105,111 +169,56 @@
                                                 <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
                                             </svg>
                                         </div>
-                                    {% endif %}       
+                                    {% endif %}
                                 </div>
                             </div>
-
-                            <div class="d-flex flex-column justify-content-end mt-1">  
-                                {% if song.song_artists_genres %}
-                                    <div class="my-1 w-100">gatunki muzyczne wykonawcy:
-                                        <br>
-                                        {% for genre in song.song_artists_genres %}
-                                            | {{ genre }} |
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}  
-                </div>
-                {% endif %}
-
-                {% if current_status.value == 3 %}
-
-                <div class="my-4 mx-3">
-                    <p class="text-start fst-italic subtle-color small-font mb-2">
-                        Jeśli chcesz, poprzez <b class="black-color">tagi</b> opisz swój nastrój towarzyszący wybranej piosence!
-                    </p>
-                    <p class="text-start fst-italic subtle-color small-font mb-4">
-                        Opcjonalnie, możesz również <b class="black-color">oznaczyć znajomych</b> w poście 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill accent-color" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                        </svg>.
-                    </p>
-
-                    <div class="song pointer ms-5 main-shadow-box bg-secondary-color d-flex flex-column small-font border border-1 border-secondary rounded w-45 justify-content-between"
-                         data-id="{{ song.song_id }}"
-                         data-currstat="{{ current_status.value }}">
-                        
-                        <div class="d-flex mb-1 mt-2">
-                            <div class="w-50">
-                                <img src="{{ song.song_image }}" class="create-post-image img-thumbnail">
-                            </div>
-
-                            <div class="w-50">
-                                <p class="me-1 mb-1 text-start"><b>{{ song.song_name|truncatechars:45 }}</b></p>
-                                <p class="me-1 mb-1 text-start">{{ song.song_album|truncatechars:45 }}</p>
-                                <p class="me-1 mb-1 text-start">
-                                    {% for artist in song.song_artists %}
-                                        | {{ artist.artist_name }} | 
+        
+                            <div class="d-flex flex-column justify-content-end mt-1">
+                                <div class="my-1 w-100">gatunki muzyczne wykonawcy:
+                                    <br>
+                                    {% for genre in song.song_artists_genres %}
+                                        | {{ genre }} |
                                     {% endfor %}
-                                </p>
-
-                                {% if not song.song_preview %}
-                                <div class="d-flex justify-content-start mt-1">
-                                    <svg data-bs-toggle="tooltip" data-bs-placement="bottom" title="Fragment piosenki jest niedostępny." xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle accent-color" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
-                                    </svg>
                                 </div>
-                                {% endif %}
                             </div>
                         </div>
+                    </div>
+
+                    <div class="d-flex flex-column my-3">
+                        <span class="mb-2 input-name-inline fw-bolder">
+                            Tagi:
+                        </span>
+
+                        <div class="d-flex flex-wrap me-3">
+                            {% for value, text in form.author_tags.field.choices %}
+                                <div data-input-tag-id="tag_input_{{ forloop.counter0 }}"
+                                    class="post_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
+                                    <input class="d-none" id="tag_input_{{ forloop.counter0 }}"
+                                        name="{{ form.author_tags.name }}" type="checkbox" value="{{ value }}"
+                                        {% if value in checked_providers %}checked="checked"{% endif %}>
+                                    <label>{{ text }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
     
-                        <div class="d-flex flex-column justify-content-end mt-1">
-                            <div class="my-1 w-100">gatunki muzyczne wykonawcy:
-                                <br>
-                                {% for genre in song.song_artists_genres %}
-                                    | {{ genre }} |
-                                {% endfor %}
-                            </div>
+                    <div class="d-flex flex-column my-3">
+                        <span class="mb-2 input-name-inline fw-bolder">Oznacz znajomych:</span>
+
+                        <div class="d-flex flex-wrap me-3">
+                            {% for value, text in form.friend_tags.field.choices %}
+                                <div 
+                                    data-input-friend-id="friend_tag_{{ forloop.counter0 }}" 
+                                    class="friend_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
+                                    <input class="d-none" id="friend_tag_{{ forloop.counter0 }}" name="{{ form.friend_tags.name }}"
+                                        type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
+                                    <label>{{ text }}</label>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                </div>
 
-                <div class="d-flex flex-column my-3">
-                    <span class="mb-2 input-name-inline fw-bolder">
-                        Tagi:
-                    </span>
-                    <div class="d-flex flex-wrap me-3">
-                        {% for value, text in form.author_tags.field.choices %}
-                            <div data-input-tag-id="tag_input_{{ forloop.counter0 }}"
-                                 class="post_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
-                                <input class="d-none" id="tag_input_{{ forloop.counter0 }}"
-                                       name="{{ form.author_tags.name }}" type="checkbox" value="{{ value }}"
-                                       {% if value in checked_providers %}checked="checked"{% endif %}>
-                                <label>{{ text }}</label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
- 
-                <div class="d-flex flex-column my-3">
-                    <span class="mb-2 input-name-inline fw-bolder">Oznacz znajomych:</span>
-
-                    <div class="d-flex flex-wrap me-3">
-                        {% for value, text in form.friend_tags.field.choices %}
-                            <div 
-                                data-input-friend-id="friend_tag_{{ forloop.counter0 }}" 
-                                class="friend_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
-                                <input class="d-none" id="friend_tag_{{ forloop.counter0 }}" name="{{ form.friend_tags.name }}" type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
-                                <label>{{ text }}</label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% csrf_token %}
-
+                    {% csrf_token %}
                 {% endif %}
             </form>
         </div>
@@ -219,9 +228,11 @@
                 <div class="small-medium-font mb-3">
                     Podgląd
                 </div>
+
                 <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
                     <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
                         <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
+                        
                         <svg xmlns="http://www.w3.org/2000/svg" 
                              width="24" 
                              height="24" 
@@ -236,25 +247,37 @@
                     <div class="d-flex align-items-end h-100 m-3">
                         <div class="d-flex bg-main-color mx-3"> 
                             {% with song.song_image as im %}
-                            <img src="{% if im %}{{ im }}{% else %}{% static 'images/no_music_image.png' %}{% endif %}" 
-                                 class="create-post-image {% if im %}p-0{% else %}p-1{% endif %}"
-                                 id="preview_image">
+                                <img src="{% if im %}{{ im }}{% else %}{% static 'images/no_music_image.png' %}{% endif %}" 
+                                     class="create-post-image {% if im %}p-0{% else %}p-1{% endif %}"
+                                     id="preview_image">
                             {% endwith %}
                         </div>
 
                         <div class="d-flex flex-column text-start">
                             {% if song %}
-                                <p class="m-0 small-medium-font main-color fw-bolder">{{ song.song_name|truncatechars:45  }}</p>
-                                <p class="m-0 main-color fst-italic">{{ song.song_album|truncatechars:45  }}</p>
+                                <p class="m-0 small-medium-font main-color fw-bolder">
+                                    {{ song.song_name|truncatechars:45 }}
+                                </p>
+
+                                <p class="m-0 main-color fst-italic">
+                                    {{ song.song_album|truncatechars:45 }}
+                                </p>
+
                                 <p class="m-0 main-color">
                                     {% for artist in song.song_artists %}
                                         | {{ artist.artist_name }} |
                                     {% endfor %} 
                                 </p>
                             {% else %}
-                                <p class="m-0 small-medium-font main-color fw-bolder" id="preview_title">tytuł</p>
-                                <p class="m-0 main-color fst-italic" id="preview_album">album</p>
-                                <p class="m-0 main-color" id="preview_artist">wykonawca</p>
+                                <p class="m-0 small-medium-font main-color fw-bolder" id="preview_title">
+                                    tytuł
+                                </p>
+                                <p class="m-0 main-color fst-italic" id="preview_album">
+                                    album
+                                </p>
+                                <p class="m-0 main-color" id="preview_artist">
+                                    wykonawca
+                                </p>
                             {% endif %}
                         </div>
                     </div>
@@ -271,6 +294,7 @@
                         {% endif %}
                     </div>
                 </div>
+
                 <div id="preview_main_title" class="accent-font medium-font fw-bolder text-start mt-2"> 
                     {% if song %}
                         {{ song.song_name|truncatechars:45 }}
@@ -284,7 +308,6 @@
         </div>
     </div>
 {% endblock content %}
-
 
 {% block domready %}
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

@@ -9,63 +9,78 @@
 {% block content %}
     <div class="row mt-5">
         <div class="col-2 d-flex align-items-center flex-column">
-                <div class="d-flex mt-4 justify-content-center profile-pic bg-gentle-color rounded border border-black border-2 accent-shadow-box">
-                    {% thumbnail request.user.profile.image "90x90" crop="true" as im %}
-                    <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
-                         class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
+            <div class="d-flex mt-4 justify-content-center profile-pic bg-gentle-color rounded border border-black border-2 accent-shadow-box">
+                {% thumbnail request.user.profile.image "90x90" crop="true" as im %}
+                <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
+                     class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
+            </div>
+
+            <p class="mt-2 small-medium-font fw-bolder">
+                <a href="{% url 'user_profile' request.user.username %}">
+                    {{ request.user.username }}
+                </a>
+            </p>
+
+            <div class="d-flex flex-column main-shadow-box rounded bg-secondary-color mt-4 w-75 align-items-start">
+                <div class="p-1 mt-2 ms-2">
+                    <a href="{% url 'user_profile' request.user.username %}">
+                        Posty:
+                    </a>
+
+                    <b>{{ request.user.posts_created.count }}</b>
                 </div>
-                <p class="mt-2 small-medium-font fw-bolder">
-                    <a href="{% url 'user_profile' request.user.username %}">{{ request.user.username }}</a>
-                </p>
-                <div class="d-flex flex-column main-shadow-box rounded bg-secondary-color mt-4 w-75 align-items-start">
-                    <div class="p-1 mt-2 ms-2">
-                        <a href="{% url 'user_profile' request.user.username %}">Posty:</a>
-                        <b>{{ request.user.posts_created.count }}</b>
-                    </div>
             
-                    <div class="p-1 ms-2">
-                        <a href="{% url 'following_list' user.username %}">Obserwowani:</a>
-                        <b>{{ request.user.following.all.count }}</b>
-                    </div>
-            
-                    <div class="p-1 mb-2 ms-2">
-                        <a href="{% url 'followers_list' user.username %}">Obserwujący:</a>
-                        <b>{{ request.user.followers.all.count }}</b>
-                    </div>
+                <div class="p-1 ms-2">
+                    <a href="{% url 'following_list' user.username %}">
+                        Obserwowani:
+                    </a>
+
+                    <b>{{ request.user.following.all.count }}</b>
                 </div>
+            
+                <div class="p-1 mb-2 ms-2">
+                    <a href="{% url 'followers_list' user.username %}">
+                        Obserwujący:
+                    </a>
+
+                    <b>{{ request.user.followers.all.count }}</b>
+                </div>
+            </div>
         </div>
+
         <div class="col-8 ">
             <div class="d-flex mb-2 justify-content-evenly">
                 <a href="{% url 'dashboard' %}"
                    class="small-medium-font {% if not action %}fw-bolder{% else %}subtle-color{% endif %}">
                    Twój kanał
                 </a>
+
                 <a href="{% url 'dashboard' action='all' %}"
                    class="small-medium-font {% if action %}fw-bolder{% else %}subtle-color{% endif %}">
                     Kanał główny
                 </a>
             </div>
+
             <div class="row mb-2 d-flex justify-content-center">
                 <hr class="hr hr-bold bg-accent-color w-75" />
             </div>
+
             <div class="d-flex flex-column align-items-center" id="post_list">
-                
                 {% if posts %}
                     {% include 'account/user/profile_ajax_list.html' %}
                 {% else %}
-                <div class="w-75 mt-4">
-                    <p>Lista obserwowanych przez Ciebie osób świeci pustkami :(</p>
-                    <p class="subtle-color">
-                        Skorzystaj z <b class="accent-color">wyszukiwarki</b> w górnym pasku nawigacji, aby znaleźć interesujące Cię posty, lub znajomych,
-                        bądź wejdź na <b class="accent-color">Kanał główny</b>, gdzie możesz zobaczyć najświeższe aktywności naszych użytkowników!
-                    </p>
-                </div>
-                {% endif %}
-                    
-            </div>
+                    <div class="w-75 mt-4">
+                        <p>Lista obserwowanych przez Ciebie osób świeci pustkami :(</p>
 
-            
+                        <p class="subtle-color">
+                            Skorzystaj z <b class="accent-color">wyszukiwarki</b> w górnym pasku nawigacji, aby znaleźć interesujące Cię posty, lub znajomych,
+                            bądź wejdź na <b class="accent-color">Kanał główny</b>, gdzie możesz zobaczyć najświeższe aktywności naszych użytkowników!
+                        </p>
+                    </div>
+                {% endif %}     
+            </div>
         </div>
+        
         <div class="col-2 new-post-btn-container fixed-bottom">
             <a href="{% url 'posts:create_post' %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">

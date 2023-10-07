@@ -2,61 +2,62 @@
 {% load thumbnail %}
 {% load humanize %}
 
-        {% for post in posts %}
-            <div class="{% if 'dashboard' in request.path %}w-75{% else %}w-33{% endif %}">
+{% for post in posts %}
+    <div class="{% if 'dashboard' in request.path %}w-75{% else %}w-33{% endif %}">
+        {% if 'dashboard' in request.path %}
+            <div class="d-flex justify-content-start align-items-end mb-2 ms-2">
+                <a href="{% url 'user_profile' post.author.username %}" class="d-flex align-items-start">
+                    <div class="d-flex profile-pic-small bg-gentle-color rounded border border-black border-2 accent-shadow-box">
+                        {% thumbnail post.author.profile.image "90x90" crop="true" as im %}
+                        <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
+                             class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
+                    </div>
 
-                {% if 'dashboard' in request.path %}
-                <div class="d-flex justify-content-start align-items-end mb-2 ms-2">
-                    <a href="{% url 'user_profile' post.author.username %}" class="d-flex align-items-start">
-                        <div class="d-flex profile-pic-small bg-gentle-color rounded border border-black border-2 accent-shadow-box">
-                            {% thumbnail post.author.profile.image "90x90" crop="true" as im %}
-                            <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
-                                class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
-                        </div>    
-                        <div class="d-flex ms-3 flex-column align-items-start justify-content-between">
-                            <span class="fw-bolder">
-                                {{ post.author }}
-                            </span>
-                            <p class="small-font fst-italic mb-1 subtle-color"> {{ post.created|naturaltime }}</p>
+                    <div class="d-flex ms-3 flex-column align-items-start justify-content-between">
+                        <span class="fw-bolder">
+                            {{ post.author }}
+                        </span>
+
+                        <p class="small-font fst-italic mb-1 subtle-color"> {{ post.created|naturaltime }}</p>
                             
-                            <p class="small-font mb-1">
-                                {% if request.user in post.author.followers.all %}
-                                    Obserwujesz
-                                {% endif %}    
-                            </p>
-                        </div>
-                    </a>
-                </div>
-                {% endif %}
+                        <p class="small-font mb-1">
+                            {% if request.user in post.author.followers.all %}
+                                Obserwujesz
+                            {% endif %}    
+                        </p>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
 
-                {% if 'tagged' in request.path or 'search' in request.path %}
-                <div class="d-flex justify-content-start align-items-end mb-2 ms-2">
-                    <a href="{% url 'user_profile' post.author.username %}" class="d-flex align-items-start">
-                        <div class="d-flex profile-pic-xsmall bg-gentle-color border border-black rounded border-2 accent-shadow-box">
-                            {% thumbnail post.author.profile.image "90x90" crop="true" as im %}
-                            <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
-                                class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
-                        </div>    
-                        <span class="ms-3 fw-bolder">{{ post.author }}</span>
-                    </a>
-                </div>
-                {% endif %}
+        {% if 'tagged' in request.path or 'search' in request.path %}
+            <div class="d-flex justify-content-start align-items-end mb-2 ms-2">
+                <a href="{% url 'user_profile' post.author.username %}" class="d-flex align-items-start">
+                    <div class="d-flex profile-pic-xsmall bg-gentle-color border border-black rounded border-2 accent-shadow-box">
+                        {% thumbnail post.author.profile.image "90x90" crop="true" as im %}
+                        <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
+                             class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
+                    </div>
 
-                <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
-                    <div class="d-flex justify-content-between mx-2 mt-3 mb-3">
+                    <span class="ms-3 fw-bolder">{{ post.author }}</span>
+                </a>
+            </div>
+        {% endif %}
 
-                        {% with post.friend_tags.all as friend_tags %}
-                        <div class="d-flex justify-content-start">
-                            {% if post.author == request.user or request.user in friend_tags %}
-                                <div class="btn-group dropup">
-                                    <button class="btn btn-sm rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical main-color me-2" viewBox="0 0 16 16">
-                                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                        </svg>
-                                    </button>
+        <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
+            <div class="d-flex justify-content-between mx-2 mt-3 mb-3">
+                {% with post.friend_tags.all as friend_tags %}
+                    <div class="d-flex justify-content-start">
+                        {% if post.author == request.user or request.user in friend_tags %}
+                            <div class="btn-group dropup">
+                                <button class="btn btn-sm rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical main-color me-2" viewBox="0 0 16 16">
+                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                    </svg>
+                                </button>
 
-                                    <ul class="dropdown-menu bg-accent-color"> 
-                                        {% if post.author == request.user %}
+                                <ul class="dropdown-menu bg-accent-color"> 
+                                    {% if post.author == request.user %}
                                         <li>
                                             <a class="dropdown-item ps-2 fw-bolder" href="{% url 'posts:delete_post' post.id %}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash2-fill pb-1" viewBox="0 0 16 16">
@@ -65,7 +66,7 @@
                                                 Usuń post
                                             </a>
                                         </li> 
-                                        {% else %}
+                                    {% else %}
                                         <li>
                                             <a class="dropdown-item ps-2 fw-bolder" href="{% url 'posts:delete_friend_tag' post.id %}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash2-fill pb-1" viewBox="0 0 16 16">
@@ -74,90 +75,95 @@
                                                 Usuń oznaczenie
                                             </a>
                                         </li> 
-                                        {% endif %}     
-                                    </ul>
-                                </div>
-                            {% endif %}
-                        </div>
-
-                        {% if friend_tags.0.id != 1 and friend_tags.count > 0 %}
-                            <div class="btn-group dropstart">
-                                <button class="btn btn-sm rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">
-                                        <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                    </svg>
-                                </button>
-
-                                <ul class="dropdown-menu bg-secondary-color">
-                                    {% for friend in friend_tags %}
-                                        <li>
-                                            <a class="dropdown-item small-font fst-italic" href="{% url 'user_profile' friend.username %}">
-                                                @{{ friend }}
-                                            </a>
-                                        </li> 
-                                    {% endfor %}  
+                                    {% endif %}     
                                 </ul>
                             </div>
                         {% endif %}
-                        {% endwith %}
                     </div>
+
+                    {% if friend_tags.0.id != 1 and friend_tags.count > 0 %}
+                        <div class="btn-group dropstart">
+                            <button class="btn btn-sm rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">
+                                    <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                </svg>
+                            </button>
+
+                            <ul class="dropdown-menu bg-secondary-color">
+                                {% for friend in friend_tags %}
+                                    <li>
+                                        <a class="dropdown-item small-font fst-italic" href="{% url 'user_profile' friend.username %}">
+                                            @{{ friend }}
+                                        </a>
+                                    </li> 
+                                {% endfor %}  
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
                     
-                    <div class="d-flex justify-content-start">
-                        <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo ms-4 mb-2">
-                    </div>
+            <div class="d-flex justify-content-start">
+                <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo ms-4 mb-2">
+            </div>
 
-                    <div class="d-flex align-items-end h-100 m-3">
-                        <div class="d-flex bg-main-color mx-3"> 
-                            {% with post.image as im %}
-                            <img src="{{ im }}" 
-                                 class="create-post-image p-0"
-                                 id="preview_image">
-                            {% endwith %}
-                        </div>
-
-                        <div class="d-flex flex-column text-start">
-                                <p class="m-0 small-medium-font main-color fw-bolder">{{ post.name|truncatechars:45  }}</p>
-                                <p class="m-0 main-color fst-italic">{{ post.album|truncatechars:45  }}</p>
-                                <p class="m-0 main-color">
-                                    | {{ post.artists }} |
-                                </p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-center mx-2 mb-3 mt-5" id="audio_container"> 
-
-                            {% if post.audio %}
-                                <audio controls class="w-100">
-                                    <source src="{{ post.audio }}" type="audio/mpeg">
-                                </audio>
-                            {% endif %}
-
-                    </div>
+            <div class="d-flex align-items-end h-100 m-3">
+                <div class="d-flex bg-main-color mx-3"> 
+                    {% with post.image as im %}
+                    <img src="{{ im }}" 
+                         class="create-post-image p-0"
+                         id="preview_image">
+                    {% endwith %}
                 </div>
 
-                <div id="preview_main_title" class="d-flex text-start mt-2 justify-content-between align-items-start"> 
-                    <a href="{{ post.get_absolute_url }}" class="accent-font medium-font fw-bolder me-2">
-                        {{ post.name|truncatechars:55 }}
-                    </a>
-                        <a href="{{ post.get_absolute_url }}" class="mw-32 btn btn-outline-dark small-font">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-music-note-list" viewBox="0 0 16 16">
-                                <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2z"/>
-                                <path fill-rule="evenodd" d="M12 3v10h-1V3h1z"/>
-                                <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1V2.82z"/>
-                                <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
-                            </svg>
-                            Zobacz więcej!
-                        </a>
-                </div>
+                <div class="d-flex flex-column text-start">
+                    <p class="m-0 small-medium-font main-color fw-bolder">
+                        {{ post.name|truncatechars:45 }}
+                    </p>
 
-                <div id="preview_tags" class="xsmall-font fst-italic subtle-color text-start mb-5 mt-1">                    
-                    {% for tag in post.author_tags %}
-                        #{{ tag }}
-                    {% endfor %}
-                    #{{ post.genre }}
-                </div> 
-            </div>            
-        
-        {% endfor %}
+                    <p class="m-0 main-color fst-italic">
+                        {{ post.album|truncatechars:45 }}
+                    </p>
+
+                    <p class="m-0 main-color">
+                        | {{ post.artists }} |
+                    </p>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center mx-2 mb-3 mt-5" id="audio_container"> 
+                {% if post.audio %}
+                    <audio controls class="w-100">
+                        <source src="{{ post.audio }}" type="audio/mpeg">
+                    </audio>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="preview_main_title" class="d-flex text-start mt-2 justify-content-between align-items-start"> 
+            <a href="{{ post.get_absolute_url }}" class="accent-font medium-font fw-bolder me-2">
+                {{ post.name|truncatechars:55 }}
+            </a>
+
+            <a href="{{ post.get_absolute_url }}" class="mw-32 btn btn-outline-dark small-font">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-music-note-list" viewBox="0 0 16 16">
+                    <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2z"/>
+                    <path fill-rule="evenodd" d="M12 3v10h-1V3h1z"/>
+                    <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1V2.82z"/>
+                    <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+                Zobacz więcej!
+            </a>
+        </div>
+
+        <div id="preview_tags" class="xsmall-font fst-italic subtle-color text-start mb-5 mt-1">                    
+            {% for tag in post.author_tags %}
+                #{{ tag }}
+            {% endfor %}
+
+            #{{ post.genre }}
+        </div> 
+    </div>                    
+{% endfor %}
 
     

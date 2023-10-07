@@ -6,29 +6,31 @@
     Wyszukiwanie: {{ query }}
 {% endblock title %}
 
-
 {% block header %}
-<div class="row d-flex mt-5 mb-3">
-   <h2 class="text-start">
-        Wyniki wyszukiwania: 
-        <span class="fst-italic subtle-color">"{{ query }}"</span>
-   </h2>
-</div>
+    <div class="row d-flex mt-5 mb-3">
+        <h2 class="text-start">
+            Wyniki wyszukiwania:
 
-<div class="row">
-    <div class="d-flex mb-3 mt-5 justify-content-evenly">
-        <a href="{% url 'search' action='users' %}?query={{ query }}"
-           class="medium-font {% if 'users' in request.path %}fw-bolder{% else %}subtle-color{% endif %}">
-                Użytkownicy
-        </a>
-        <a href="{% url 'search' action='posts' %}?query={{ query }}"
-           class="medium-font {% if 'posts' in request.path %}fw-bolder{% else %}subtle-color{% endif %}">
-                Posty
-        </a>
+            <span class="fst-italic subtle-color">
+                "{{ query }}"
+            </span>
+        </h2>
     </div>
-</div>
 
-<div class="row mb-2">
-    <hr class="hr hr-bold bg-black-color" />
-</div>
+    <div class="row">
+        <div class="d-flex mb-3 mt-5 justify-content-evenly">
+            <a href="{% url 'search' action='users' %}?query={{ query }}"
+               class="medium-font {% if 'users' in request.path %}fw-bolder{% else %}subtle-color{% endif %}">
+                Użytkownicy
+            </a>
+            <a href="{% url 'search' action='posts' %}?query={{ query }}"
+               class="medium-font {% if 'posts' in request.path %}fw-bolder{% else %}subtle-color{% endif %}">
+                Posty
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <hr class="hr hr-bold bg-black-color" />
+    </div>
 {% endblock header %}

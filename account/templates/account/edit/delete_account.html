@@ -8,18 +8,26 @@
 
 {% block forms %}
     <div class="col-6 d-flex align-items-center justify-content-center text-start mt-5 flex-column">
-        <p class="fw-bolder accent-color">Czy na pewno chcesz usunąć swoje konto?</p>
+        <p class="fw-bolder accent-color">
+            Czy na pewno chcesz usunąć swoje konto?
+        </p>
+
         <div class="d-flex">
             <form action="." method="post">
                 <p>
-                    <label for="id_confirmation" class="me-1">Aby potwierdzić zaznacz to pole:</label>
+                    <label for="id_confirmation" class="me-1">
+                        Aby potwierdzić zaznacz to pole:
+                    </label>
                     <input type="checkbox" name="confirmation" required id="id_confirmation">
                 </p>
+
                 <div class="d-flex justify-content-center">
                     {% csrf_token %}
+
                     <button type="submit" class="btn btn-outline-dark my-3 me-3">
                         Tak
                     </button>
+
                     <a href="{% url 'edit_account' %}" class="btn btn-outline-dark my-3 ms-3">
                         Nie
                     </a>
@@ -34,6 +42,7 @@
             <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
                  class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
         </div>
+        
         <p class="text-start medium-font ls-wider mt-3">
             <a href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
         </p>

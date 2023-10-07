@@ -2,44 +2,54 @@
 {% load static %}
 {% load thumbnail %}
 
-
 {% block content %}
-<div class="row">
-    <div class="d-flex">
-        <p class="fw-bolder fst-italic">Użytkownicy:</p>
-    </div>
-    {% for user in user_results %}
-        <div class="col-2 d-flex align-items-center flex-column">
+    <div class="row">
+        <div class="d-flex">
+            <p class="fw-bolder fst-italic">
+                Użytkownicy:
+            </p>
+        </div>
+
+        {% for user in user_results %}
+            <div class="col-2 d-flex align-items-center flex-column">
                 <div class="d-flex justify-content-center profile-pic bg-gentle-color rounded border border-black border-2 accent-shadow-box">
                     {% thumbnail user.profile.image "90x90" crop="true" as im %}
                     <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
                         class="img-fluid {% if im %}p-0{% else %}p-1{% endif %}">
                 </div>
                 <p class="mt-2 small-medium-font">
-                    <a href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
+                    <a href="{% url 'user_profile' user.username %}">
+                        {{ user.username }}
+                    </a>
                 </p>
-        </div>
-    {% empty %}
-        <p>Brak wyników wyszukiwania.</p>
-    {% endfor %}
-</div>
-
-<div class="row mb-2">
-    <hr class="hr hr-bold bg-accent-color" />
-</div>
-
-<div class="row">
-    <div class="d-flex">
-        <p class="fw-bolder fst-italic">Oznaczenia:</p>
+            </div>
+        {% empty %}
+            <p>
+                Brak wyników wyszukiwania.
+            </p>
+        {% endfor %}
     </div>
-    {% with user_tag_results as posts %}       
-        {% if posts %}
-            {% include 'account/user/profile_ajax_list.html' %}
-        {% else %}
-            <p>Brak wyników wyszukiwania.</p>
-        {% endif %}
-    {% endwith %}
-</div>
-        
+
+    <div class="row mb-2">
+        <hr class="hr hr-bold bg-accent-color" />
+    </div>
+
+    <div class="row">
+        <div class="d-flex">
+            <p class="fw-bolder fst-italic">
+                Oznaczenia:
+            </p>
+        </div>
+
+        {% with user_tag_results as posts %}       
+            {% if posts %}
+                {% include 'account/user/profile_ajax_list.html' %}
+            {% else %}
+                <p>
+                    Brak wyników wyszukiwania.
+                </p>
+            {% endif %}
+        {% endwith %}
+    </div>
 {% endblock content %}
     

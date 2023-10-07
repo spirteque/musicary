@@ -17,15 +17,24 @@
         <div class="col-3 align-items-center">
             <div class="d-flex flex-column justify-content-center mt-5 ms-5 main-shadow-box rounded bg-secondary-color w-50">
                 <a class="p-2 mt-3 small-medium-font {% if 'edit/account' in request.path or 'delete_account' in request.path %} fw-bolder {% endif %}"
-                   href="{% url 'edit_account' %}">Konto</a>
+                   href="{% url 'edit_account' %}">
+                   Konto
+                </a>
+
                 <a class="p-2 small-medium-font {% if 'password_change' in request.path %} fw-bolder {% endif %}"
-                   href="{% url 'password_change' %}">Hasło</a>
+                   href="{% url 'password_change' %}">
+                   Hasło
+                </a>
+                
                 <a class="p-2 mb-3 small-medium-font {% if 'privacy' in request.path %} fw-bolder {% endif %}"
-                   href="{% url 'edit_privacy' %}">Prywatność</a>
+                   href="{% url 'edit_privacy' %}">
+                   Prywatność
+                </a>
             </div>       
         </div>
-    {% block forms %}
-    {% endblock forms %}
+
+        {% block forms %}
+        {% endblock forms %}
     </div>
     
     <div class="row d-flex align-items-center justify-content-center">

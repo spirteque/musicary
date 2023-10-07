@@ -2,79 +2,87 @@
 {% load static %}
 {% load thumbnail %}
 
-
 {% block content %}
-<div class="row">
-    <div class="d-flex">
-        <p class="fw-bolder fst-italic">Posty (tytuł):</p>
+    <div class="row">
+        <div class="d-flex">
+            <p class="fw-bolder fst-italic">
+                Posty (tytuł):
+            </p>
+        </div>
+
+        {% with post_results as posts %}
+            {% if posts %}
+                {% include 'account/user/profile_ajax_list.html' %}
+            {% else %}
+                <p>Brak wyników wyszukiwania.</p>
+            {% endif %}
+        {% endwith %}
     </div>
-    {% with post_results as posts %}
-        
-        {% if posts %}
-            {% include 'account/user/profile_ajax_list.html' %}
-        {% else %}
-            <p>Brak wyników wyszukiwania.</p>
-        {% endif %}
-        
-    {% endwith %}
-</div>
 
-<div class="row mb-2">
-    <hr class="hr hr-bold bg-accent-color" />
-</div>
-
-<div class="row">
-    <div class="d-flex">
-        <p class="fw-bolder fst-italic">Posty (artysta):</p>
+    <div class="row mb-2">
+        <hr class="hr hr-bold bg-accent-color" />
     </div>
-    {% with artist_results as posts %}
-        
-        {% if posts %}
-            {% include 'account/user/profile_ajax_list.html' %}
-        {% else %}
-            <p>Brak wyników wyszukiwania.</p>
-        {% endif %}
-        
-    {% endwith %}
-</div>
 
-<div class="row mb-2">
-    <hr class="hr hr-bold bg-accent-color" />
-</div>
+    <div class="row">
+        <div class="d-flex">
+            <p class="fw-bolder fst-italic">
+                Posty (artysta):
+            </p>
+        </div>
 
-<div class="row">
-    <div class="d-flex">
-        <p class="fw-bolder fst-italic">Posty (tagi):</p>
+        {% with artist_results as posts %}
+            {% if posts %}
+                {% include 'account/user/profile_ajax_list.html' %}
+            {% else %}
+                <p>
+                    Brak wyników wyszukiwania.
+                </p>
+            {% endif %}
+        {% endwith %}
     </div>
-    {% with mood_tag_results as posts %}
-        
-        {% if posts %}
-            {% include 'account/user/profile_ajax_list.html' %}
-        {% else %}
-            <p>Brak wyników wyszukiwania.</p>
-        {% endif %}
-        
-    {% endwith %}
-</div>
 
-<div class="row mb-2">
-    <hr class="hr hr-bold bg-accent-color" />
-</div>
-
-<div class="row">
-    <div class="d-flex">
-        <p class="fw-bolder fst-italic">Posty (gatunki):</p>
+    <div class="row mb-2">
+        <hr class="hr hr-bold bg-accent-color" />
     </div>
-    {% with genre_results as posts %}
-        
-        {% if posts %}
-            {% include 'account/user/profile_ajax_list.html' %}
-        {% else %}
-            <p>Brak wyników wyszukiwania.</p>
-        {% endif %}
-        
-    {% endwith %}
-</div>
-        
+
+    <div class="row">
+        <div class="d-flex">
+            <p class="fw-bolder fst-italic">
+                Posty (tagi):
+            </p>
+        </div>
+
+        {% with mood_tag_results as posts %}
+            {% if posts %}
+                {% include 'account/user/profile_ajax_list.html' %}
+            {% else %}
+                <p>
+                    Brak wyników wyszukiwania.
+                </p>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="row mb-2">
+        <hr class="hr hr-bold bg-accent-color" />
+    </div>
+
+    <div class="row">
+        <div class="d-flex">
+            <p class="fw-bolder fst-italic">
+                Posty (gatunki):
+            </p>
+        </div>
+
+        {% with genre_results as posts %}
+            {% if posts %}
+                {% include 'account/user/profile_ajax_list.html' %}
+            {% else %}
+                <p>
+                    Brak wyników wyszukiwania.
+                </p>
+            {% endif %}
+        {% endwith %}
+    </div>
 {% endblock content %}
     

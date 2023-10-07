@@ -1,7 +1,9 @@
 {% extends "main/base.html" %}
 {% load static %}
  
-{% block title %}Utwórz konto{% endblock %}
+{% block title %}
+    Utwórz konto
+{% endblock title %}
  
 {% block header %}
     <div class="row justify-content-center m-4 mt-5">
@@ -14,10 +16,9 @@
 {% block content %}
     <div class="row">
         <div class="col-6 offset-3">
-
             <p>Wypełnij poniższy formularz, aby się zarejestrować:</p>
-            <form id="register_form" action="." method="post">
 
+            <form id="register_form" action="." method="post">
                 <div class="mb-1">
                     {{ user_form.username }}
                     {{ user_form.username.errors }}
@@ -55,11 +56,9 @@
                         </button>
                     </div>
                 {% endverbatim %}
-
             </form>
         </div>
     </div>
 
     <script src="{% static 'js/register_button.js' %}"></script>
-
 {% endblock %}
