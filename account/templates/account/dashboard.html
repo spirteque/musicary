@@ -33,7 +33,19 @@
                 <hr class="hr hr-bold bg-accent-color w-75" />
             </div>
             <div class="d-flex flex-column align-items-center" id="post_list">
-                {% include 'account/user/profile_ajax_list.html' %}
+                
+                {% if posts %}
+                    {% include 'account/user/profile_ajax_list.html' %}
+                {% else %}
+                <div class="w-75 mt-4">
+                    <p>Lista obserwowanych przez Ciebie osób świeci pustkami :(</p>
+                    <p class="subtle-color">
+                        Skorzystaj z <b class="accent-color">wyszukiwarki</b> w górnym pasku nawigacji, aby znaleźć interesujące Cię posty, lub znajomych,
+                        bądź wejdź na <b class="accent-color">Kanał główny</b>, gdzie możesz zobaczyć najświeższe aktywności naszych użytkowników!
+                    </p>
+                </div>
+                {% endif %}
+                    
             </div>
 
             
