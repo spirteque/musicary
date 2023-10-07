@@ -87,8 +87,8 @@ https://stackoverflow.com/questions/1981524/django-filtering-on-foreign-key-prop
 https://stackoverflow.com/questions/5120071/django-get-contenttype-model-by-model-name-generic-relations
 https://stackoverflow.com/questions/76964044/django-trigramsimilarity-error-for-searches
 https://docs.djangoproject.com/en/dev/ref/contrib/humanize/#naturaltime
-
-
+https://getbootstrap.com/docs/5.3/components/carousel/
+https://stackoverflow.com/questions/67995857/multiple-carousels-per-page-bootstrap-5
 
 
 

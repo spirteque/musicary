@@ -23,12 +23,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script> {% endcomment %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
-
-
 </head>
 
 <body class="bg-main-color main-font d-flex flex-column min-vh-100">
@@ -81,7 +77,6 @@
                         <ul class="dropdown-menu dropdown-menu-end bg-secondary-color rounded-bottom-only mt-1">
                             <li><a class="dropdown-item" href="{% url 'edit_account' %}">Ustawienia</a></li>
                             <li><a class="dropdown-item" href="{% url 'actions:activity' %}">Aktywność</a></li>
-                            <li><a class="dropdown-item disabled" href="#">FAQ</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'logout' %}">Wyloguj się</a></li>
                         </ul>
@@ -127,7 +122,6 @@
     <script>
         var csrftoken = Cookies.get('csrftoken');
         function csrfSafeMethod(method) {
-          // these HTTP methods do not require CSRF protection
           return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
         }
         $.ajaxSetup({
