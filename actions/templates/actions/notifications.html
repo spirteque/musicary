@@ -18,47 +18,50 @@
 {% endblock header %}
     
 {% block content %}
+<div class="d-flex flex-column align-items-center mb-2">
     {% for action in actions %}
-        {% with user=action.user profile=action.user.profile %}
-        <div class="d-flex">
-            <div>
-                <div class="d-flex justify-content-start align-items-end mb-2 ms-2">
+        {% with action.user as user %}
+            <div class="d-flex rounded main-shadow-box my-2 w-50 bg-secondary-color justify-content-evenly">
+                <div class="d-flex justify-content-center align-items-center m-3">
                     <a href="{% url 'user_profile' user.username %}" class="d-flex align-items-start">
                         <div class="d-flex profile-pic-small bg-gentle-color rounded border border-black border-2 accent-shadow-box">
                             {% thumbnail user.profile.image "90x90" crop="true" as im %}
                             <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
-                                class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
+                                 class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
                         </div>    
                     </a>
                 </div>
 
-                {% if action.target %}
-                    {% with action.target as target %}
-                        {% if target.image %}
-                            {% thumbnail target.image "80x80" crop="100%" as im %}
+                <div class="d-flex flex-column justify-content-evenly align-items-start my-1 w-75">
+                    <div>
+                        <a href="{% url 'user_profile' user.username %}"> {{ user.username }}</a>
+                        {{ action.verb }}
+                        {% if action.verb != 'oznacza Cię w swoim poście.' %}
+                            <a href="{{ action.target.get_absolute_url }}">{{ action.target }}</a>
+                        {% endif %}
+                    </div>
+                    <span class="small-font subtle-color fst-italic m-1">
+                        {{ action.created|timesince }} temu
+                    </span>
+                </div>
+
+                <div class="d-flex m-3">
+                        {% if action.target.image %}
                             <a href="#">
-                                <img src="{{ im.url }}">
+                                <img src="{{ action.target.image }}" 
+                                class="notification-post-image">
                             </a>
                         {% endif %}
-                    {% endwith %}
-                {% endif %}
-            </div>
+                        {% if action.verb == 'oznacza Cię w swoim poście.' %}
+                        <a href="#">
+                            <img src="{{ action.target.image }}" 
+                            class="notification-post-image">
+                        </a>
+                        {% endif %}
 
-            <div>
-                <p>
-                    <span>{{ action.created|timesince }}</span>
-                    <br />
-                    <a href="#"> {{ user.username }}</a>
-                    {{ action.verb }}
-                    
-                    {% if action.target %}
-                        {% with action.target as target %}
-                            <a href="#">{{ target }}</a>
-                        {% endwith %} 
-                    {% endif %}
-                </p>
-            </div>
-        </div> 
+                </div>
+            </div> 
         {% endwith %}
     {% endfor %}
+</div>
 {% endblock content %}

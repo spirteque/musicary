@@ -111,7 +111,7 @@ def post_create(request):
             
             for id in create_post_form.cleaned_data['friend_tags']:
                 new_post.friend_tags.add(id)
-                create_action(request.user, 'oznacza w poście', User(id=id))
+                create_action(request.user, 'oznacza Cię w swoim poście.', User(id=id))
             
             messages.success(request, 'Post został dodany.')
             
@@ -132,7 +132,7 @@ def post_detail(request, post):
             new_comment.post = post
             new_comment.username = user
             new_comment.save()
-            create_action(request.user, 'komentuje post', post)
+            create_action(request.user, 'komentuje Twój post: ', post)
             
     else:
         comment_form = CommentForm()

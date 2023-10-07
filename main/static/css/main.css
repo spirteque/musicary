@@ -90,6 +90,11 @@ footer {
     height: 125px;
 }
 
+.notification-post-image {
+    width: 70px;
+    height: 70px;
+}
+
 .w-45 {
     width: 45%;
 }
