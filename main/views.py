@@ -35,12 +35,15 @@ def search(request, action=None):
     if action == 'posts':
         post_results = Post.objects.annotate(similarity=TrigramSimilarity('title', query),
                                              ).filter(similarity__gt=0.1).order_by('-similarity')[:9]
+        artist_results = Post.objects.annotate(search=SearchVector('artists'),
+                                              ).filter(search=query)[:9]
         mood_tag_results = Post.objects.annotate(search=SearchVector('author_tags'),
                                                  ).filter(search=query)[:9]
         genre_results = Post.objects.annotate(search=SearchVector('genre'),
                                               ).filter(search=query)[:9]
-        
+        print(artist_results)
         return render(request, 'main/search_posts.html', {'query': query,
                                                           'post_results': post_results,
+                                                          'artist_results': artist_results,
                                                           'mood_tag_results': mood_tag_results,
                                                           'genre_results': genre_results})

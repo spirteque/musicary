@@ -42,7 +42,7 @@
                                 <a href="{{ action.target.get_absolute_url }}">{{ action.target }}</a>
                             {% endif %}
                         </div>
-                        
+
                         <span class="small-font subtle-color fst-italic m-1">
                             {{ action.created|timesince }} temu
                         </span>
@@ -50,14 +50,7 @@
 
                     <div class="d-flex m-3">
                         {% if action.target.image %}
-                            <a href="#">
-                                <img src="{{ action.target.image }}" 
-                                class="notification-post-image">
-                            </a>
-                        {% endif %}
-
-                        {% if action.verb == 'oznacza Cię w swoim poście.' %}
-                            <a href="#">
+                            <a href="{{ action.target.get_absolute_url }}">
                                 <img src="{{ action.target.image }}" 
                                 class="notification-post-image">
                             </a>

@@ -9,14 +9,30 @@
 {% block content %}
     <div class="row mt-5">
         <div class="col-2 d-flex align-items-center flex-column">
-                <div class="d-flex justify-content-center profile-pic bg-gentle-color rounded border border-black border-2 accent-shadow-box">
+                <div class="d-flex mt-4 justify-content-center profile-pic bg-gentle-color rounded border border-black border-2 accent-shadow-box">
                     {% thumbnail request.user.profile.image "90x90" crop="true" as im %}
                     <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
                          class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
                 </div>
-                <p class="mt-2 small-medium-font">
+                <p class="mt-2 small-medium-font fw-bolder">
                     <a href="{% url 'user_profile' request.user.username %}">{{ request.user.username }}</a>
                 </p>
+                <div class="d-flex flex-column main-shadow-box rounded bg-secondary-color mt-4 w-75 align-items-start">
+                    <div class="p-1 mt-2 ms-2">
+                        <a href="{% url 'user_profile' request.user.username %}">Posty:</a>
+                        <b>{{ request.user.posts_created.count }}</b>
+                    </div>
+            
+                    <div class="p-1 ms-2">
+                        <a href="{% url 'following_list' user.username %}">Obserwowani:</a>
+                        <b>{{ request.user.following.all.count }}</b>
+                    </div>
+            
+                    <div class="p-1 mb-2 ms-2">
+                        <a href="{% url 'followers_list' user.username %}">Obserwujący:</a>
+                        <b>{{ request.user.followers.all.count }}</b>
+                    </div>
+                </div>
         </div>
         <div class="col-8 ">
             <div class="d-flex mb-2 justify-content-evenly">

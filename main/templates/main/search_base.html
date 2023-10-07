@@ -16,7 +16,7 @@
 </div>
 
 <div class="row">
-    <div class="d-flex mb-2 mt-5 justify-content-evenly">
+    <div class="d-flex mb-3 mt-5 justify-content-evenly">
         <a href="{% url 'search' action='users' %}?query={{ query }}"
            class="medium-font {% if 'users' in request.path %}fw-bolder{% else %}subtle-color{% endif %}">
                 Użytkownicy
@@ -29,6 +29,6 @@
 </div>
 
 <div class="row mb-2">
-    <hr class="hr hr-bold bg-accent-color" />
+    <hr class="hr hr-bold bg-black-color" />
 </div>
 {% endblock header %}
