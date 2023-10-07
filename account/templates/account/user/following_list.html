@@ -9,8 +9,12 @@
 {% block details %}
     <div class="row">
         <div class="d-flex mb-2 mt-5 justify-content-evenly">
-            <a href="{% url 'following_list' request.user.username %}" class="small-medium-font fw-bolder">Obserwowani</a>
-            <a href="{% url 'followers_list' request.user.username %}" class="small-medium-font subtle-color">Obserwujący</a>
+            <a href="{% url 'following_list' request.user.username %}" class="small-medium-font fw-bolder main-shadow">
+                Obserwowani
+            </a>
+            <a href="{% url 'followers_list' request.user.username %}" class="small-medium-font subtle-color">
+                Obserwujący
+            </a>
         </div>
     </div>
 

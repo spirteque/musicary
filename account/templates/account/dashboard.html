@@ -51,12 +51,12 @@
         <div class="col-8 ">
             <div class="d-flex mb-2 justify-content-evenly">
                 <a href="{% url 'dashboard' %}"
-                   class="small-medium-font {% if not action %}fw-bolder{% else %}subtle-color{% endif %}">
+                   class="small-medium-font {% if not action %}fw-bolder main-shadow{% else %}subtle-color{% endif %}">
                    Twój kanał
                 </a>
 
                 <a href="{% url 'dashboard' action='all' %}"
-                   class="small-medium-font {% if action %}fw-bolder{% else %}subtle-color{% endif %}">
+                   class="small-medium-font {% if action %}fw-bolder main-shadow{% else %}subtle-color{% endif %}">
                     Kanał główny
                 </a>
             </div>
@@ -82,7 +82,7 @@
         </div>
         
         <div class="col-2 new-post-btn-container fixed-bottom">
-            <a href="{% url 'posts:create_post' %}">
+            <a href="{% url 'posts:create_post' %}" class="main-shadow">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                 </svg>

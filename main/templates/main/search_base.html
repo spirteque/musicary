@@ -20,11 +20,11 @@
     <div class="row">
         <div class="d-flex mb-3 mt-5 justify-content-evenly">
             <a href="{% url 'search' action='users' %}?query={{ query }}"
-               class="medium-font {% if 'users' in request.path %}fw-bolder{% else %}subtle-color{% endif %}">
+               class="medium-font {% if 'users' in request.path %}fw-bolder main-shadow{% else %}subtle-color{% endif %}">
                 Użytkownicy
             </a>
             <a href="{% url 'search' action='posts' %}?query={{ query }}"
-               class="medium-font {% if 'posts' in request.path %}fw-bolder{% else %}subtle-color{% endif %}">
+               class="medium-font {% if 'posts' in request.path %}fw-bolder main-shadow{% else %}subtle-color{% endif %}">
                 Posty
             </a>
         </div>

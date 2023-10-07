@@ -22,7 +22,8 @@ def show_notifications(request):
 
 @login_required
 def show_activity(request):
-    actions = Action.objects.all().filter(user=request.user)
+    user_type = ContentType.objects.get(model='user')
+    actions = Action.objects.all().filter(user=request.user).exclude(target_ct=user_type, target_id=1)
     actions = actions[:20]
-    
+    print(actions)
     return render(request, 'actions/activity.html', {'actions': actions})

@@ -24,11 +24,5 @@ class Action(models.Model):
     class Meta:
         ordering = ('-created',)
         
-    def __str__(self):
-        if self.target:
-            try:
-                name = self.target.name
-            except:
-                name = self.target.username
-     
-        return f'{self.user} {self.verb} {name}'
+    def __str__(self):     
+        return f'{self.user} {self.verb}'

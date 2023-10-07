@@ -10,11 +10,11 @@
     <div class="row">
         <div class="d-flex mb-2 mt-5 justify-content-evenly">
             <a href="{% url 'user_profile' username=user.username %}"
-               class="small-medium-font {% if not action %}fw-bolder{% else %}subtle-color{% endif %}">
+               class="small-medium-font {% if not action %}fw-bolder main-shadow{% else %}subtle-color{% endif %}">
                     Posty
             </a>
             <a href="{% url 'user_profile' username=user.username action='tagged' %}"
-               class="small-medium-font {% if action %}fw-bolder{% else %}subtle-color{% endif %}">
+               class="small-medium-font {% if action %}fw-bolder main-shadow{% else %}subtle-color{% endif %}">
                     Z oznaczeniem
             </a>
         </div>

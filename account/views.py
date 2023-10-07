@@ -142,7 +142,7 @@ def edit_privacy(request):
             private_mode = form.cleaned_data['private_mode']
             request.user.profile.private_mode = private_mode
             request.user.profile.save()
-            messages.success(request, 'Zmiana ustawień prywatności zakończyła się sukcesem')
+            messages.success(request, 'Zmiana ustawień prywatności zakończyła się sukcesem.')
         else:
             messages.error(request, 'Wystąpił błąd podczas zmiany ustawień prywatności.')
     else:
