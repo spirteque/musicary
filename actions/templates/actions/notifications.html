@@ -1,6 +1,8 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% load thumbnail %}
+{% load humanize %}
+
 
 {% block title %}
     Powiadomienia
@@ -44,7 +46,7 @@
                         </div>
 
                         <span class="small-font subtle-color fst-italic m-1">
-                            {{ action.created|timesince }} temu
+                            {{ action.created|naturaltime }}
                         </span>
                     </div>
 

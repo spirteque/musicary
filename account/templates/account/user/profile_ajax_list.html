@@ -1,5 +1,6 @@
 {% load static %}
 {% load thumbnail %}
+{% load humanize %}
 
         {% for post in posts %}
             <div class="{% if 'dashboard' in request.path %}w-75{% else %}w-33{% endif %}">
@@ -16,7 +17,7 @@
                             <span class="fw-bolder">
                                 {{ post.author }}
                             </span>
-                            <p class="small-font fst-italic mb-1 subtle-color"> {{ post.created|timesince }} temu</p>
+                            <p class="small-font fst-italic mb-1 subtle-color"> {{ post.created|naturaltime }}</p>
                             
                             <p class="small-font mb-1">
                                 {% if request.user in post.author.followers.all %}
