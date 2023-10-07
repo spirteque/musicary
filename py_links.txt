@@ -89,7 +89,7 @@ https://stackoverflow.com/questions/76964044/django-trigramsimilarity-error-for-
 https://docs.djangoproject.com/en/dev/ref/contrib/humanize/#naturaltime
 https://getbootstrap.com/docs/5.3/components/carousel/
 https://stackoverflow.com/questions/67995857/multiple-carousels-per-page-bootstrap-5
-
+https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_link_target
 
 
 
