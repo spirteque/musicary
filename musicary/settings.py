@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "api.apps.ApiConfig",
     "multiselectfield",
     "actions.apps.ActionsConfig",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
