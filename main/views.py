@@ -41,7 +41,6 @@ def search(request, action=None):
                                                  ).filter(search=query)[:9]
         genre_results = Post.objects.annotate(search=SearchVector('genre'),
                                               ).filter(search=query)[:9]
-        print(artist_results)
         return render(request, 'main/search_posts.html', {'query': query,
                                                           'post_results': post_results,
                                                           'artist_results': artist_results,
