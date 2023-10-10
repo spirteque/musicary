@@ -1,2 +1,5 @@
 venv_musicary
 musicary/.env
+
+**/__pycache__
+logs
