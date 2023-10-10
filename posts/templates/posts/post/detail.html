@@ -39,8 +39,10 @@
             <div class="d-flex flex-column justify-content-between border border-1 border-black rounded bg-spotify-color main-shadow-box">
                 {% with post.friend_tags.all as friend_tags %}
                     <div class="d-flex justify-content-between mx-2 mt-2 mb-4">
-                        <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
-                        {% if friend_tags.0.id != 1 and friend_tags.count > 0  %}
+                        <a href="https://open.spotify.com" target="_blank">
+                            <img src="{% static 'images/Spotify_Logo_CMYK_Green.png' %}" class="create-post-spotify-logo mx-4 my-2">
+                        </a>
+                            {% if friend_tags.0.id != 1 and friend_tags.count > 0  %}
                             <div class="btn-group dropstart">
                                 <button class="btn btn-sm rounded border-0 p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tag-fill main-color" viewBox="0 0 16 16">

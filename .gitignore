@@ -4,3 +4,5 @@ musicary/.env
 **/__pycache__
 logs
 .DS_Store
+
+cert.*
