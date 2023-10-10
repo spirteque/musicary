@@ -93,6 +93,15 @@ https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_link_target
 https://pypi.org/project/django-extensions/
 https://pypi.org/project/Werkzeug/
 https://pypi.org/project/pyOpenSSL/
+https://unix.stackexchange.com/questions/230673/how-to-generate-a-random-string
+https://stackoverflow.com/questions/3855127/find-and-kill-process-locking-port-3000-on-mac
+https://www.stackhawk.com/blog/django-http-strict-transport-security-guide-what-it-is-and-how-to-enable-it/
+https://stackoverflow.com/questions/16808813/nginx-serve-static-file-and-got-403-forbidden
+https://docs.djangoproject.com/en/4.2/howto/static-files/
+https://stackoverflow.com/questions/37185392/django-static-root-in-var-www-no-permissions-to-collectstatic
+https://stackoverflow.com/questions/75237746/django-403-forbidden-only-happens-at-login-in-prod-environment
+https://www.cyberciti.biz/faq/linux-unix-bsd-nginx-413-request-entity-too-large/
+https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
 
 
 

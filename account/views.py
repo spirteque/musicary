@@ -23,7 +23,6 @@ from posts.models import Post
 from common.decorators import is_ajax
 from actions.utils import create_action
 
-
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
