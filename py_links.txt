@@ -103,6 +103,7 @@ https://stackoverflow.com/questions/75237746/django-403-forbidden-only-happens-a
 https://www.cyberciti.biz/faq/linux-unix-bsd-nginx-413-request-entity-too-large/
 https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
 
+https://stackoverflow.com/questions/872565/remove-sensitive-files-and-their-commits-from-git-history
 
 
 
