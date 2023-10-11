@@ -35,7 +35,14 @@
         <div class="col-7 d-flex">
             <form id="post_form" action="." method="{% if current_status.value == 3%}post{% else %}get{% endif %}" class="w-100" enctype="multipart/form-data">
                 <div class="mb-3 input-name-inline align-items-center">
-                    <span class="fw-bolder">Wyszukiwanie:</span>
+                    <span class="fw-bolder">
+                        
+                        {% if current_status.value == 1 %}    
+                            Wyszukiwanie:
+                        {% else %}
+                            Wybrano:
+                        {% endif %}
+                    </span>
 
                     <div class="d-flex w-75 ms-3">
                         {{ form.title }}
@@ -223,7 +230,7 @@
             </form>
         </div>
 
-        <div class="col-5 d-flex flex-column align-items-center">
+        <div class="col-5 d-flex flex-column align-items-center mb-5">
             <div class="h-100 w-100">
                 <div class="small-medium-font mb-3">
                     Podgląd
