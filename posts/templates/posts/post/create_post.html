@@ -191,7 +191,7 @@
 
                         <div class="d-flex flex-wrap me-3">
                             {% for value, text in form.author_tags.field.choices %}
-                                <div data-input-tag-id="tag_input_{{ forloop.counter0 }}"
+                                <div data-input_tag_id="tag_input_{{ forloop.counter0 }}"
                                     class="post_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
                                     <input class="d-none" id="tag_input_{{ forloop.counter0 }}"
                                         name="{{ form.author_tags.name }}" type="checkbox" value="{{ value }}"
@@ -208,7 +208,7 @@
                         <div class="d-flex flex-wrap me-3">
                             {% for value, text in form.friend_tags.field.choices %}
                                 <div 
-                                    data-input-friend-id="friend_tag_{{ forloop.counter0 }}" 
+                                    data-input_friend_id="friend_tag_{{ forloop.counter0 }}" 
                                     class="friend_tag d-flex m-1 p-1 rounded bg-secondary-color small-font main-shadow-box">
                                     <input class="d-none" id="friend_tag_{{ forloop.counter0 }}" name="{{ form.friend_tags.name }}"
                                         type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
@@ -387,7 +387,8 @@
     })
 
     tags.forEach(tag => {
-        const input=document.getElementById(tag.dataset['input-tag-id']);
+        const input=document.getElementById(tag.dataset['input_tag_id']);
+        console.log(tag.dataset)
     
         tag.addEventListener('click', event => {
             if(input.checked){
@@ -405,12 +406,12 @@
 
     const getSelectedFriendTag = () => {
         return friends_tag
-            .map(friend_tag => document.getElementById(friend_tag.dataset['input-friend-id']))
+            .map(friend_tag => document.getElementById(friend_tag.dataset['input_friend_id']))
             .filter(input => input.checked)
     }
 
     friends_tag.forEach(friend_tag => {
-        const input=document.getElementById(friend_tag.dataset['input-friend-id']);
+        const input=document.getElementById(friend_tag.dataset['input_friend_id']);
     
         friend_tag.addEventListener('click', event => {
             if(input.checked){
