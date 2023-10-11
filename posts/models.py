@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils.text import slugify
 from multiselectfield import MultiSelectField
 from .tag_moods import tag_moods_as_choices
+from uuid import uuid4
 
 
 class Post(models.Model):
@@ -41,7 +42,7 @@ class Post(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name) + '-' + uuid4().hex
         super().save(*args, **kwargs)
     
     def __str__(self):
