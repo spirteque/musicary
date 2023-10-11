@@ -37,10 +37,10 @@
     </div>
     
     <div class="col-3 d-flex align-self-start align-items-center justify-content-center mt-5 flex-column">
-        <div class="d-flex justify-content-center profile-pic-large bg-gentle-color rounded border border-black border-2 accent-shadow-box">
+        <div class="d-flex justify-content-center bg-gentle-color rounded border border-black border-2 accent-shadow-box">
             {% thumbnail request.user.profile.image "100x100" crop="true" as im %}
             <img src="{% if im %}{{ im.url }}{% else %}{% static 'profile_images/no_image.png' %}{% endif %}"
-                 class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1">
+                 class="img-fluid {% if im %}p-0{% else %}p-1{% endif %} rounded-1 profile-pic-large">
         </div>
         
         <p class="text-start medium-font ls-wider mt-3">
