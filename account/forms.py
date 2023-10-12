@@ -160,14 +160,16 @@ class UserPasswordChangeForm(PasswordChangeForm):
 
 class UserEditForm(forms.ModelForm):
     username = UsernameField(
+        required=False,
         error_messages={'unique': 'Podana nazwa użytkownika już istnieje.'},
         widget=forms.TextInput(
             attrs={'class': 'form-control',
                    'placeholder': 'Nazwa użytkownika',
-                   'id': 'username_input',}))
+                   'id': 'username_input'}))
     
     email = forms.EmailField(
-        error_messages={'invalid': 'Podany adres e-mail jest nieprawidłowy.'},
+        error_messages={'invalid': 'Podany adres e-mail jest nieprawidłowy.',
+                        'unique': 'Podany adres e-mail jest już używany przez inne konto.'},
         widget=forms.TextInput(
             attrs={'class': 'form-control',
                     'placeholder': 'Adres e-mail',

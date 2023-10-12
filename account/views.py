@@ -22,6 +22,9 @@ from .models import Profile
 from posts.models import Post
 from common.decorators import is_ajax
 from actions.utils import create_action
+import logging
+
+logger = logging.getLogger(__name__)
 
 def register(request):
     if request.method == 'POST':
@@ -32,8 +35,9 @@ def register(request):
                 user_form.cleaned_data['password'])
             new_user.is_active = False
             new_user.save()
+            logger.info(msg=f'Created inactive user with id: {new_user.id}')
             
-            profile = Profile.objects.create(user=new_user)
+            Profile.objects.get_or_create(user=new_user)
             
             current_site = get_current_site(request)
             mail_subject = 'Link aktywacyjny do konta Musicary'
@@ -50,6 +54,7 @@ def register(request):
                                  from_email=settings.EMAIL_SENDER,
                                  to=[to_email])
             email.send()
+            logger.info(msg=f'Activation mail send to user with id: {new_user.id}')
             
             return render(request, 'account/register_act_link_send.html', {'new_user': new_user})
     else:
@@ -65,11 +70,20 @@ def activate(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
         
-    if user is not None and account_activation_token.check_token(user, token):
+    user_exist = user is not None
+    token_valid = account_activation_token.check_token(user, token)
+    
+    if user_exist and token_valid:
         user.is_active = True
         user.save()
+        logger.info(msg=f'Succesfull account activation for user with id: {user.id}')
+        
         return render(request, 'account/register_succes.html')
     else:
+        user_id = getattr(user, 'id', None)
+        
+        logger.error(msg=f'Account activation error user_exist={user_exist}, token_valid={token_valid}, user_id={user_id}')
+        
         return render(request, 'account/register_link_error.html')
     
 
@@ -113,7 +127,7 @@ def edit(request):
     if request.method == 'POST':
         users_with_new_username = User.objects.filter(username = request.POST['username'])
         
-        if not users_with_new_username:
+        if not users_with_new_username or request.user.username == request.POST['username']:
             user_form = UserEditForm(instance=request.user,
                                      data=request.POST)
             profile_form = ProfileEditForm(instance=request.user.profile,
@@ -122,8 +136,11 @@ def edit(request):
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
                 profile_form.save()
+                
+                logger.info(msg=f'Succesfull account edit for user with id: {request.user.id}')
                 messages.success(request, 'Uaktualnienie profilu zakończyło się sukcesem.')
             else:
+                logger.error(msg=f'Error during account edition for user with id: {request.user.id}')
                 messages.error(request, 'Wystąpił błąd podczas uaktualniania profilu.')
         else:
             messages.error(request, 'Podana nazwa użytkownika już istnieje.')
@@ -147,8 +164,11 @@ def edit_privacy(request):
             private_mode = form.cleaned_data['private_mode']
             request.user.profile.private_mode = private_mode
             request.user.profile.save()
+            
+            logger.info(msg=f'Succesfull privacy edit for user with id: {request.user.id}')
             messages.success(request, 'Zmiana ustawień prywatności zakończyła się sukcesem.')
         else:
+            logger.error(msg=f'Error during privacy edition for user with id: {request.user.id}')
             messages.error(request, 'Wystąpił błąd podczas zmiany ustawień prywatności.')
     else:
         if request.user.profile.private_mode:
@@ -163,8 +183,10 @@ def delete_profile_image(request):
     image = request.user.profile.image
     image.delete()
     if image:
+        logger.error(msg=f'Profile image NOT removed for user with id: {request.user.id}')
         messages.error(request, 'Nie udało się usunąć zdjęcia profilowego.')
     else:
+        logger.info(msg=f'Profile image removed for user with id: {request.user.id}')
         messages.success(request, 'Zdjęcie profilowe zostało usunięte.')
     return redirect('edit_account')
 
@@ -191,6 +213,7 @@ def delete_account(request):
                                 from_email=settings.EMAIL_SENDER,
                                 to=[to_email])
             email.send()
+            logger.info(msg=f'Confirmation delete acount mail send to user with id: {user.id}')
             
             return render(request, 'account/edit/delete_act_link_send.html', {'user': user})
     else:
@@ -201,16 +224,23 @@ def delete_account(request):
 @login_required
 def delete_account_confirm(request, uidb64, token):
     User = get_user_model()
+        
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
+    
+    user_id = getattr(user, 'id', None)
         
     if user is not None and account_activation_token.check_token(user, token):
         user.delete()
+        logger.info(msg=f'Delete account by user with id: {user_id}')
+        
         return redirect('home')
     else:
+        logger.error(msg=f'Account not deleted by user with id: {user_id}')
+        
         return render(request, 'account/edit/delete_account_error.html')
       
 
@@ -272,10 +302,16 @@ def toggle_follow(request):
             if action == 'follow':
                 user.followers.add(request.user)
                 create_action(user=request.user, verb='obserwuje', target=user)
+                logger.info(msg=f'New follow from {request.user.id} to {user_id}')
+                
             else:
                 user.followers.remove(request.user)
+                logger.info(msg=f'Removed follow from {request.user.id} to {user_id}')
+                
             return JsonResponse({'status': 'ok'})
         except User.DoesNotExist:
+            logger.error(msg=f'Follow not finished: user_id={user_id}, action={action}')
+
             return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'ok'})
 
