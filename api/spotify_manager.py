@@ -1,13 +1,14 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from django.conf import settings
-from musicary.utils import log_message
 import requests
+import logging
 
+logger = logging.getLogger(__name__)
 
 def spotify_headers_manager():
     # https://stackoverflow.com/questions/1291755/how-can-i-tell-whether-my-django-application-is-running-on-development-server-or
     if settings.DEBUG:
-        log_message('Using Spotify headers manager DEBUG version.')
+        logger.info(msg='Using Spotify headers manager DEBUG version.')
         
         def create():
             return {
@@ -30,7 +31,7 @@ def spotify_headers_manager():
             should_fetch_new_token = True
             
         if not should_fetch_new_token:
-            print('Present token is up to date, using: ' + headers['Authorization'][0:15] + '... .')
+            logger.info(msg='Present token is up to date, using: ' + headers['Authorization'][0:15] + '... .')
         
         if not headers or should_fetch_new_token:
             spotify_access_response = requests.post(url=settings.SPOTIFY_API_TOKEN_URL,
@@ -46,7 +47,7 @@ def spotify_headers_manager():
             access_token = json['access_token']
             headers = {'Authorization': f'{token_type} {access_token}'}
             
-            print('Token has been updated, using: ' + headers['Authorization'][0:15] + '... .')
+            logger.info(msg='Token has been updated, using: ' + headers['Authorization'][0:15] + '... .')
             
         return headers
     

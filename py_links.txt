@@ -109,6 +109,6 @@ https://stackoverflow.com/questions/5773970/django-auth-user-with-unique-email
 https://github.com/newren/git-filter-repo/
 https://stackoverflow.com/questions/10067848/remove-folder-and-its-contents-from-git-githubs-history
 https://github.com/newren/git-filter-repo/blob/main/INSTALL.md
-
+https://docs.djangoproject.com/en/4.2/ref/models/querysets/  #get_or_create
 
 

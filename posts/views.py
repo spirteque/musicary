@@ -31,6 +31,8 @@ def post_create(request):
 
             if song_choice_from_query:
                 current_status = PostCreateStatus.SONG_FOUND_AND_SELECTED
+                logger.info(msg=f'User with id={request.user.id} selected {song_choice_from_query}')
+                
                 
                 followings_users = request.user.following.all()
                 
@@ -55,6 +57,8 @@ def post_create(request):
  
 
             current_status = PostCreateStatus.SONG_FOUND
+            logger.info(msg=f'User with id={request.user.id} searched for {title_from_query}')
+            
             select_song_form = SelectSongForm(data={'title': title_from_query},
                                               songs_ids=songs_ids)
             
@@ -113,6 +117,7 @@ def post_create(request):
                 new_post.friend_tags.add(id)
                 create_action(request.user, 'oznacza w swoim poście użytkownika:', User(id=id))
             
+            logger.info(msg=f'Created new post with id={new_post.id} by user with id={request.user.id}')
             messages.success(request, 'Post został dodany.')
             
             return redirect(new_post.get_absolute_url())
@@ -133,7 +138,8 @@ def post_detail(request, post):
             new_comment.username = user
             new_comment.save()
             create_action(request.user, 'komentuje post: ', post)
-            
+            logger.info(msg=f'New comment id={new_comment.id} added by user id={request.user.id} to post id={post.id}')
+             
     else:
         comment_form = CommentForm()
     
@@ -157,8 +163,12 @@ def post_like(request):
             if action == 'like':
                 post.users_like.add(request.user)
                 create_action(request.user, 'lubi post: ', post)
+                logger.info(msg=f'New like from user id={request.user.id} to post id={post_id}')
+                
             else:
                 post.users_like.remove(request.user)
+                logger.info(msg=f'Removed like from user id={request.user.id} to post id={post_id}')
+                
                 
             return JsonResponse({'status': 'ok'})
         except:
@@ -173,8 +183,10 @@ def delete_post(request, post_id):
     if user == post.author:
         post.delete()
         messages.success(request, 'Post został usunięty.')
+        logger.info(msg=f'User id={user.id} removed post id={post_id}')   
         
     else:
+        logger.info(msg=f'Error post id={post_id} remove by user id={user.id}')   
         messages.error(request, 'Nie możesz tego zrobić.')
 
     return HttpResponseRedirect(f'/account/users/{user.username}/')
@@ -187,6 +199,7 @@ def delete_friend_tag(request, post_id):
         post.friend_tags.remove(request.user)
         messages.success(request, 'Oznaczenie zostało usunięte.')
         create_action(request.user, 'usuwa oznaczenie z posta: ', post)
+        logger.info(msg=f'User id={request.user.id} removed friend_tag from post id={post_id}')   
         
     else:
         messages.error(request, 'Nie możesz tego zrobić.')
@@ -201,6 +214,7 @@ def delete_comment(request, post_id, comment_id):
         post.comments.remove(comment)
         messages.success(request, 'Komentarz został usunięty.')
         create_action(request.user, 'usuwa komentarz z posta: ', post)
+        logger.info(msg=f'User id={request.user.id} removed comment id={comment_id} from post id={post_id}')   
         
     else:
         messages.error(request, 'Nie możesz tego zrobić.')

@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.search import TrigramSimilarity, SearchVector
 from .forms import SearchForm
 from posts.models import Post
+import logging
 
+logger = logging.getLogger(__name__)
 
 def home(request):
     return render(request, "main/welcome_page.html")
@@ -22,6 +24,8 @@ def search(request, action=None):
         
         if form.is_valid():
             query = form.cleaned_data['query']
+            logger.info(msg=f'Search by query={query} for user with id={request.user.id}')
+            
         
     if action == 'users':
         user_results = User.objects.annotate(similarity=TrigramSimilarity('username', query),
