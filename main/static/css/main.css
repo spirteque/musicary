@@ -124,3 +124,7 @@ footer {
 .opacity-90 {
     opacity: 0.9
 }
+
+.account-info-bar {
+    width: 150px;
+}

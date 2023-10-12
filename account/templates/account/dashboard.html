@@ -21,8 +21,8 @@
                 </a>
             </p>
 
-            <div class="d-flex flex-column main-shadow-box rounded bg-secondary-color mt-4 w-75 align-items-start">
-                <div class="p-1 mt-2 ms-2">
+            <div class="d-flex flex-column main-shadow-box rounded bg-secondary-color mt-4 account-info-bar align-items-start">
+                <div class="p-1 mt-2 mx-2 text-start">
                     <a href="{% url 'user_profile' request.user.username %}">
                         Posty:
                     </a>
@@ -30,7 +30,7 @@
                     <b>{{ request.user.posts_created.count }}</b>
                 </div>
             
-                <div class="p-1 ms-2">
+                <div class="p-1 mx-2 text-start">
                     <a href="{% url 'following_list' user.username %}">
                         Obserwowani:
                     </a>
@@ -38,7 +38,7 @@
                     <b>{{ request.user.following.all.count }}</b>
                 </div>
             
-                <div class="p-1 mb-2 ms-2">
+                <div class="p-1 mb-2 mx-2 text-start">
                     <a href="{% url 'followers_list' user.username %}">
                         Obserwujący:
                     </a>
