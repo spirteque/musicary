@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.conf import settings
 from musicary.utils import log_message
 import requests
@@ -25,7 +25,7 @@ def spotify_headers_manager():
         
         current_time = datetime.now()
         if previous_time:
-            should_fetch_new_token = getattr(current_time - previous_time, 'hours', 0) >= 1
+            should_fetch_new_token = getattr(current_time - previous_time, 'seconds', 0) >= 3000
         else:
             should_fetch_new_token = True
             
