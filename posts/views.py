@@ -111,7 +111,7 @@ def post_create(request):
             
             for id in create_post_form.cleaned_data['friend_tags']:
                 new_post.friend_tags.add(id)
-                create_action(request.user, 'oznacza w swoim poście', User(id=id))
+                create_action(request.user, 'oznacza w swoim poście użytkownika:', User(id=id))
             
             messages.success(request, 'Post został dodany.')
             
@@ -186,7 +186,7 @@ def delete_friend_tag(request, post_id):
     if request.user in post.friend_tags.all():
         post.friend_tags.remove(request.user)
         messages.success(request, 'Oznaczenie zostało usunięte.')
-        create_action(request.user, 'usunięto oznaczenie z posta: ', post)
+        create_action(request.user, 'usuwa oznaczenie z posta: ', post)
         
     else:
         messages.error(request, 'Nie możesz tego zrobić.')
