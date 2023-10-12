@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 
+User._meta.get_field('email')._unique = True
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,

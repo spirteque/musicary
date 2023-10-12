@@ -105,7 +105,7 @@ https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basi
 
 https://stackoverflow.com/questions/872565/remove-sensitive-files-and-their-commits-from-git-history
 https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html
-
+https://stackoverflow.com/questions/5773970/django-auth-user-with-unique-email
 
 
 

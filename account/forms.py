@@ -38,7 +38,8 @@ class UserRegistrationForm(forms.ModelForm):
                    'id': 'username_input',}))
     
     email = forms.EmailField(
-        error_messages={'invalid': 'Podany adres e-mail jest nieprawidłowy.'},
+        error_messages={'invalid': 'Podany adres e-mail jest nieprawidłowy.',
+                        'unique': 'Podany adres e-mail jest już powiązany z istniejącym kontem.'},
         widget=forms.TextInput(
             attrs={'class': 'form-control',
                     'placeholder': 'Adres e-mail',
