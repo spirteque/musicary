@@ -155,8 +155,10 @@
                 {% for tag in post.author_tags %}
                     #{{ tag }}
                 {% endfor %}
-
-                #{{ post.genre }}
+                
+                {% if post.genre %}
+                    #{{ post.genre }}
+                {% endif %}
             </div> 
         </div>
 
