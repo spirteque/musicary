@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
@@ -34,11 +35,16 @@ def register(request):
             new_user.set_password(
                 user_form.cleaned_data['password'])
             new_user.is_active = False
-            new_user.save()
-            logger.info(msg=f'Created inactive user with id: {new_user.id}')
             
-            Profile.objects.get_or_create(user=new_user)
-            
+            try:
+                new_user.save()
+                logger.info(msg=f'Created inactive user with id: {new_user.id}')
+                Profile.objects.get_or_create(user=new_user)
+            except IntegrityError:
+                # TODO google chrome issue: calling the endpoint twice
+                logger.info(f'IntegrityError catched')
+                pass
+
             current_site = get_current_site(request)
             mail_subject = 'Link aktywacyjny do konta Musicary'
             message = render_to_string('account/register_conf_email.html',{
