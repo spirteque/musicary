@@ -133,9 +133,9 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-center mx-2 mb-3 mt-5" id="audio_container"> 
+            <div class="d-flex justify-content-center mx-2 mb-3 mt-5 audio-post-container" id="audio_container_{{ post.id }}"> 
                 {% if post.audio %}
-                    <audio controls class="w-100">
+                    <audio controls class="w-100" id="post_audio_{{ post.id }}" >
                         <source src="{{ post.audio }}" type="audio/mpeg">
                     </audio>
                 {% endif %}
@@ -171,4 +171,17 @@
     </div>                    
 {% endfor %}
 
+<script>
+    const players = $('audio');
+
+    players.each((_, element) => {
+        element.onplay = () => {
+            players.each((_, _element) => {
+                if (_element.id !== element.id) {
+                    _element.pause()
+                }
+            })
+        }
+    })
+</script>
     
