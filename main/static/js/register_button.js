@@ -18,7 +18,7 @@ createApp({
             if (username.checkValidity() && email.checkValidity() && password.checkValidity() && password2.checkValidity() && statute.checkValidity()) {
                 this.clicked = true
 
-                setTimeout(() => form.submit(), 25)
+                form.submit();
             } else {
                 const notValidInputs = [username, email, password, password2, statute].filter(element => !element.checkValidity());
 
