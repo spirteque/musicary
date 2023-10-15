@@ -43,7 +43,7 @@ def search(request, action=None):
                                                           'user_results': user_results,
                                                           'user_tag_results': user_tag_results})
     if action == 'posts':
-        post_results = find_by_similarity(Post, 'title', query, logger=logger, limit=9)
+        post_results = find_by_similarity(Post, 'name', query, logger=logger, limit=9)
         artist_results = find_by_similarity(Post, 'artists', query, logger=logger, limit=9)
         mood_tag_results = find_by_similarity(Post, 'author_tags', query, logger=logger, limit=9)
         genre_results = find_by_similarity(Post, 'genre', query, logger=logger, limit=9)
