@@ -172,7 +172,7 @@
 {% endfor %}
 
 <script>
-    const players = $('audio');
+    var players = $('audio');
 
     players.each((_, element) => {
         element.onplay = () => {
